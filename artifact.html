@@ -387,19 +387,36 @@ svg.icon { display: block; }
 .orbit {
   position: relative;
   width: 100%;
-  aspect-ratio: 1000 / 640;
+  aspect-ratio: 1000 / 585;
   container-type: inline-size;
 }
 
 .orbit-leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .orbit-leads line {
-  stroke: rgba(21, 7, 33, 0.34);
-  stroke-width: 1.6;
-  stroke-dasharray: 1.5 5;
+  stroke: rgba(21, 7, 33, 0.45);
+  stroke-width: 2;
+  stroke-dasharray: 2 5;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
   animation: drawLead 700ms var(--ease-out) both;
   animation-delay: 260ms;
+  transition: stroke 160ms ease, opacity 160ms ease;
+}
+
+/* Hovering one competency quiets the other four, so a single spoke — disc,
+   dotted lead, pointer, chip — reads as one object. */
+.orbit[data-focus=''] .orbit-node,
+.orbit[data-focus=''] .orbit-chip,
+.orbit[data-focus=''] .orbit-leads line { opacity: 1; }
+
+@media (hover: hover) and (pointer: fine) {
+  .orbit:not([data-focus='']) .orbit-node,
+  .orbit:not([data-focus='']) .orbit-chip,
+  .orbit:not([data-focus='']) .orbit-leads line { opacity: 0.34; }
+  .orbit:not([data-focus='']) .orbit-node.is-focus,
+  .orbit:not([data-focus='']) .orbit-chip.is-focus,
+  .orbit:not([data-focus='']) .orbit-leads line.is-focus { opacity: 1; }
+  .orbit-leads line.is-focus { stroke: var(--ink); }
 }
 
 /* `top` and `width` come from CORE in brand.js so all orbit geometry stays
@@ -420,21 +437,24 @@ svg.icon { display: block; }
   padding: 3.5%;
   animation: popIn 460ms var(--ease-out) both;
 }
+/* The core's text column is kept narrower than the circle so the satellite
+   discs, which sit on the circumference at the same height, never cover it. */
 .orbit-core .core-title {
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-  font-size: clamp(17px, 3.5cqw, 44px);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  font-size: clamp(15px, 2.66cqw, 34px);
+  max-width: 78%;
 }
 .orbit-core .core-kicker {
   margin-top: 0.75em;
-  font-size: clamp(9.5px, 1.28cqw, 15px);
+  font-size: clamp(9.5px, 1.22cqw, 14px);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.01em;
   color: var(--core-sub);
-  max-width: 16ch;
+  max-width: 74%;
 }
 .orbit-core .core-blurb {
   margin-top: 0.6em;
@@ -443,7 +463,7 @@ svg.icon { display: block; }
   line-height: 1.38;
   color: var(--core-sub);
   opacity: 0.82;
-  max-width: 22ch;
+  max-width: 72%;
 }
 
 .orbit-node {
@@ -459,9 +479,12 @@ svg.icon { display: block; }
   place-items: center;
   background: var(--fill);
   color: var(--node-ink);
-  box-shadow: 0 0 0 0.9cqw var(--halo);
+  /* A paper ring first, then the tinted halo: without it the peach disc
+     disappears into the peach core, and the red one into the navy. */
+  box-shadow: 0 0 0 0.32cqw var(--paper), 0 0 0 1.15cqw var(--halo);
   animation: orbitIn 460ms var(--ease-out) both;
-  transition: box-shadow 200ms var(--ease-out);
+  transition: box-shadow 200ms var(--ease-out), opacity 160ms ease;
+  z-index: 2;
 }
 .orbit-node svg { width: 58%; height: 58%; }
 
@@ -476,11 +499,28 @@ svg.icon { display: block; }
   background: var(--fill);
   color: var(--chip-ink);
   animation: chipIn 460ms var(--ease-out) both;
-  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+  transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out), opacity 160ms ease;
 }
 .orbit-chip[data-side='left'] { transform: translate(-100%, -50%); }
 .orbit-chip[data-side='right'] { transform: translate(0, -50%); }
 .orbit-chip[data-side='top'] { transform: translate(-50%, -100%); }
+
+/* A pointer on the chip's inner edge, aimed back down the spoke at its disc —
+   the detail that makes which chip belongs to which icon unambiguous. */
+.orbit-chip::after {
+  content: '';
+  position: absolute;
+  width: 1.4cqw;
+  height: 1.4cqw;
+  min-width: 10px;
+  min-height: 10px;
+  background: var(--fill);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.orbit-chip[data-side='left']::after { right: -0.6cqw; top: 50%; margin-top: -0.7cqw; }
+.orbit-chip[data-side='right']::after { left: -0.6cqw; top: 50%; margin-top: -0.7cqw; }
+.orbit-chip[data-side='top']::after { bottom: -0.6cqw; left: 50%; margin-left: -0.7cqw; }
 
 .orbit-chip .chip-name {
   display: block;
@@ -504,7 +544,7 @@ svg.icon { display: block; }
   .orbit-chip[data-side='left']:hover { --hover-transform: translate(-100%, -50%) scale(1.035); }
   .orbit-chip[data-side='right']:hover { --hover-transform: translate(0, -50%) scale(1.035); }
   .orbit-chip[data-side='top']:hover { --hover-transform: translate(-50%, -100%) scale(1.035); }
-  .orbit-node:hover { box-shadow: 0 0 0 12px var(--halo); }
+  .orbit-node:hover { box-shadow: 0 0 0 0.32cqw var(--paper), 0 0 0 1.7cqw var(--halo); }
 }
 
 .orbit-foot {
@@ -1250,22 +1290,43 @@ const COMP_META = {
   performance: { fill: C.lime, ink: C.navy, icon: 'growth', slot: 'lower-right' },
 };
 
-/* Orbit geometry, as percentages of the diagram box (which is 1000 x 720).
-   `icon` is the centre of the satellite disc; `anchor` is where its dotted
-   lead meets the chip, and which chip edge is pinned there. Chips are sized by
-   their content, so the anchors leave room for the tallest of them. */
-const SLOTS = {
-  top: { icon: [50, 32.7], anchor: [50, 23.7], chip: 'top' },
-  'upper-left': { icon: [30, 46.3], anchor: [26, 37.2], chip: 'left' },
-  'upper-right': { icon: [70, 46.3], anchor: [74, 37.2], chip: 'right' },
-  'lower-left': { icon: [30, 77.7], anchor: [26, 88.9], chip: 'left' },
-  'lower-right': { icon: [70, 77.7], anchor: [74, 88.9], chip: 'right' },
+/* ---------- Orbit geometry ------------------------------------------------
+   Everything is polar, measured from the centre of the core circle, so the
+   five competencies read as a ring around it rather than a row either side.
+   Radii are in "width units" — percentages of the diagram box's width — and
+   angles are degrees anticlockwise from three o'clock, matching the artwork.
+   ------------------------------------------------------------------------- */
+
+const BOX = { w: 1000, h: 585 };
+
+/* `y` is a percentage of the box height; `size` a percentage of its width.
+   The core sits low because the ring occupies the top two thirds of it and
+   the bottom of the circle is deliberately left open, as in the artwork. */
+const CORE = { y: 69.3, size: 31 };
+
+const RING = {
+  icon: 15.5, // = the core's radius, so each disc straddles its circumference
+  chip: 25.1, // where the chip's inner edge and its pointer sit
+  disc: 4.4, // radius of a satellite disc, for where the dotted lead starts
 };
 
-/* The core sits below the geometric centre: the top chip is one line shorter
-   than the bottom ones, so an optically centred diagram needs the extra room
-   above. `size` is a percentage of the box width. */
-const CORE = { y: 55.2, size: 31 };
+const SLOTS = {
+  top: { angle: 90, chip: 'top' },
+  'upper-left': { angle: 146, chip: 'left' },
+  'lower-left': { angle: 193, chip: 'left' },
+  'upper-right': { angle: 31, chip: 'right' },
+  'lower-right': { angle: -17, chip: 'right' },
+};
+
+/* Polar to percentage-of-box. A vertical offset given in width units has to be
+   restated as a percentage of the height, hence the aspect correction. */
+function polar(angle, radius) {
+  const a = (angle * Math.PI) / 180;
+  return {
+    x: 50 + radius * Math.cos(a),
+    y: CORE.y - radius * Math.sin(a) * (BOX.w / BOX.h),
+  };
+}
 
 /* ---------- Icons ---------------------------------------------------------
    Drawn to match the competency artwork: single-weight strokes, round caps,
@@ -1720,14 +1781,24 @@ function searchResults() {
    ------------------------------------------------------------------------- */
 
 function orbit(driver) {
-  const placed = driver.competencies.map((c) => ({ c, slot: SLOTS[c.slot] }));
+  const placed = driver.competencies.map((c) => {
+    const slot = SLOTS[c.slot];
+    return {
+      c,
+      slot,
+      disc: polar(slot.angle, RING.icon),
+      // The lead starts at the disc's outer edge, not its centre, so the whole
+      // dotted run is visible instead of half-hidden under the icon.
+      from: polar(slot.angle, RING.icon + RING.disc),
+      to: polar(slot.angle, RING.chip),
+    };
+  });
 
   const leads = placed
     .map(
       (p, i) =>
-        '<line x1="' + p.slot.icon[0] + '%" y1="' + p.slot.icon[1] + '%" ' +
-        'x2="' + p.slot.anchor[0] + '%" y2="' + p.slot.anchor[1] + '%" ' +
-        'style="animation-delay:' + (260 + i * 60) + 'ms"/>'
+        '<line x1="' + p.from.x + '%" y1="' + p.from.y + '%" x2="' + p.to.x + '%" y2="' + p.to.y + '%" ' +
+        'data-comp="' + p.c.id + '" style="animation-delay:' + (260 + i * 60) + 'ms"/>'
     )
     .join('');
 
@@ -1735,7 +1806,7 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<button class="orbit-node" style="' + compVars(p.c) +
-        ';left:' + p.slot.icon[0] + '%;top:' + p.slot.icon[1] + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
+        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
         'data-act="open-comp" data-comp="' + p.c.id + '" aria-label="' + esc(p.c.name) + '">' +
         icon(p.c.icon, 30) + '</button>'
     )
@@ -1745,7 +1816,7 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + compVars(p.c) +
-        ';left:' + p.slot.anchor[0] + '%;top:' + p.slot.anchor[1] + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
+        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
         'data-act="open-comp" data-comp="' + p.c.id + '">' +
         '<span class="chip-name">' + esc(p.c.name) + '</span>' +
         p.c.behaviours.map((b) => '<span class="chip-beh">' + esc(b.name) + '</span>').join('') +
@@ -1772,7 +1843,7 @@ function orbit(driver) {
 
   return (
     '<section class="driver-block" style="' + driverVars(driver) + '" aria-label="' + esc(driver.name) + '">' +
-    '<div class="orbit-wrap"><div class="orbit">' +
+    '<div class="orbit-wrap"><div class="orbit" data-focus="">' +
     '<svg class="orbit-leads" preserveAspectRatio="none" aria-hidden="true">' + leads + '</svg>' +
     core + nodes + chips +
     '</div>' +
@@ -2454,6 +2525,25 @@ document.addEventListener('click', (e) => {
   if (!el || el.disabled) return;
   const fn = ACTIONS[el.dataset.act];
   if (fn) fn(el);
+});
+
+/* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
+   Decorative only — the diagram is fully usable without it. */
+function focusOrbit(orbit, compId) {
+  orbit.setAttribute('data-focus', compId || '');
+  orbit.querySelectorAll('.orbit-node, .orbit-chip, .orbit-leads line').forEach((n) => {
+    n.classList.toggle('is-focus', !!compId && n.dataset.comp === compId);
+  });
+}
+
+document.addEventListener('pointerover', (e) => {
+  const orbit = e.target.closest ? e.target.closest('.orbit') : null;
+  if (!orbit) {
+    document.querySelectorAll('.orbit:not([data-focus=""])').forEach((o) => focusOrbit(o, null));
+    return;
+  }
+  const part = e.target.closest('[data-comp]');
+  focusOrbit(orbit, part ? part.dataset.comp : null);
 });
 
 document.addEventListener('input', (e) => {

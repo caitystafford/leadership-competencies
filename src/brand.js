@@ -92,22 +92,43 @@ const COMP_META = {
   performance: { fill: C.lime, ink: C.navy, icon: 'growth', slot: 'lower-right' },
 };
 
-/* Orbit geometry, as percentages of the diagram box (which is 1000 x 720).
-   `icon` is the centre of the satellite disc; `anchor` is where its dotted
-   lead meets the chip, and which chip edge is pinned there. Chips are sized by
-   their content, so the anchors leave room for the tallest of them. */
-const SLOTS = {
-  top: { icon: [50, 32.7], anchor: [50, 23.7], chip: 'top' },
-  'upper-left': { icon: [30, 46.3], anchor: [26, 37.2], chip: 'left' },
-  'upper-right': { icon: [70, 46.3], anchor: [74, 37.2], chip: 'right' },
-  'lower-left': { icon: [30, 77.7], anchor: [26, 88.9], chip: 'left' },
-  'lower-right': { icon: [70, 77.7], anchor: [74, 88.9], chip: 'right' },
+/* ---------- Orbit geometry ------------------------------------------------
+   Everything is polar, measured from the centre of the core circle, so the
+   five competencies read as a ring around it rather than a row either side.
+   Radii are in "width units" — percentages of the diagram box's width — and
+   angles are degrees anticlockwise from three o'clock, matching the artwork.
+   ------------------------------------------------------------------------- */
+
+const BOX = { w: 1000, h: 585 };
+
+/* `y` is a percentage of the box height; `size` a percentage of its width.
+   The core sits low because the ring occupies the top two thirds of it and
+   the bottom of the circle is deliberately left open, as in the artwork. */
+const CORE = { y: 69.3, size: 31 };
+
+const RING = {
+  icon: 15.5, // = the core's radius, so each disc straddles its circumference
+  chip: 25.1, // where the chip's inner edge and its pointer sit
+  disc: 4.4, // radius of a satellite disc, for where the dotted lead starts
 };
 
-/* The core sits below the geometric centre: the top chip is one line shorter
-   than the bottom ones, so an optically centred diagram needs the extra room
-   above. `size` is a percentage of the box width. */
-const CORE = { y: 55.2, size: 31 };
+const SLOTS = {
+  top: { angle: 90, chip: 'top' },
+  'upper-left': { angle: 146, chip: 'left' },
+  'lower-left': { angle: 193, chip: 'left' },
+  'upper-right': { angle: 31, chip: 'right' },
+  'lower-right': { angle: -17, chip: 'right' },
+};
+
+/* Polar to percentage-of-box. A vertical offset given in width units has to be
+   restated as a percentage of the height, hence the aspect correction. */
+function polar(angle, radius) {
+  const a = (angle * Math.PI) / 180;
+  return {
+    x: 50 + radius * Math.cos(a),
+    y: CORE.y - radius * Math.sin(a) * (BOX.w / BOX.h),
+  };
+}
 
 /* ---------- Icons ---------------------------------------------------------
    Drawn to match the competency artwork: single-weight strokes, round caps,

@@ -385,14 +385,24 @@ function searchResults() {
    ------------------------------------------------------------------------- */
 
 function orbit(driver) {
-  const placed = driver.competencies.map((c) => ({ c, slot: SLOTS[c.slot] }));
+  const placed = driver.competencies.map((c) => {
+    const slot = SLOTS[c.slot];
+    return {
+      c,
+      slot,
+      disc: polar(slot.angle, RING.icon),
+      // The lead starts at the disc's outer edge, not its centre, so the whole
+      // dotted run is visible instead of half-hidden under the icon.
+      from: polar(slot.angle, RING.icon + RING.disc),
+      to: polar(slot.angle, RING.chip),
+    };
+  });
 
   const leads = placed
     .map(
       (p, i) =>
-        '<line x1="' + p.slot.icon[0] + '%" y1="' + p.slot.icon[1] + '%" ' +
-        'x2="' + p.slot.anchor[0] + '%" y2="' + p.slot.anchor[1] + '%" ' +
-        'style="animation-delay:' + (260 + i * 60) + 'ms"/>'
+        '<line x1="' + p.from.x + '%" y1="' + p.from.y + '%" x2="' + p.to.x + '%" y2="' + p.to.y + '%" ' +
+        'data-comp="' + p.c.id + '" style="animation-delay:' + (260 + i * 60) + 'ms"/>'
     )
     .join('');
 
@@ -400,7 +410,7 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<button class="orbit-node" style="' + compVars(p.c) +
-        ';left:' + p.slot.icon[0] + '%;top:' + p.slot.icon[1] + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
+        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
         'data-act="open-comp" data-comp="' + p.c.id + '" aria-label="' + esc(p.c.name) + '">' +
         icon(p.c.icon, 30) + '</button>'
     )
@@ -410,7 +420,7 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + compVars(p.c) +
-        ';left:' + p.slot.anchor[0] + '%;top:' + p.slot.anchor[1] + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
+        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
         'data-act="open-comp" data-comp="' + p.c.id + '">' +
         '<span class="chip-name">' + esc(p.c.name) + '</span>' +
         p.c.behaviours.map((b) => '<span class="chip-beh">' + esc(b.name) + '</span>').join('') +
@@ -437,7 +447,7 @@ function orbit(driver) {
 
   return (
     '<section class="driver-block" style="' + driverVars(driver) + '" aria-label="' + esc(driver.name) + '">' +
-    '<div class="orbit-wrap"><div class="orbit">' +
+    '<div class="orbit-wrap"><div class="orbit" data-focus="">' +
     '<svg class="orbit-leads" preserveAspectRatio="none" aria-hidden="true">' + leads + '</svg>' +
     core + nodes + chips +
     '</div>' +
@@ -1119,6 +1129,25 @@ document.addEventListener('click', (e) => {
   if (!el || el.disabled) return;
   const fn = ACTIONS[el.dataset.act];
   if (fn) fn(el);
+});
+
+/* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
+   Decorative only — the diagram is fully usable without it. */
+function focusOrbit(orbit, compId) {
+  orbit.setAttribute('data-focus', compId || '');
+  orbit.querySelectorAll('.orbit-node, .orbit-chip, .orbit-leads line').forEach((n) => {
+    n.classList.toggle('is-focus', !!compId && n.dataset.comp === compId);
+  });
+}
+
+document.addEventListener('pointerover', (e) => {
+  const orbit = e.target.closest ? e.target.closest('.orbit') : null;
+  if (!orbit) {
+    document.querySelectorAll('.orbit:not([data-focus=""])').forEach((o) => focusOrbit(o, null));
+    return;
+  }
+  const part = e.target.closest('[data-comp]');
+  focusOrbit(orbit, part ? part.dataset.comp : null);
 });
 
 document.addEventListener('input', (e) => {

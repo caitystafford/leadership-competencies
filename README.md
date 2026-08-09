@@ -135,6 +135,18 @@ Icons are hand-drawn inline SVG in `src/brand.js`, matching the artwork's
 single-weight stroke style. They inherit `currentColor`, so one set works on any
 coloured disc.
 
+### The orbit diagram
+
+All of its geometry is polar and lives in `BOX`, `CORE`, `RING` and `SLOTS` in
+`src/brand.js`: the five discs sit *on* the core's circumference, and each chip
+hangs off the same angle with a dotted lead and a pointer aimed back down the
+spoke. Hovering any part of a spoke quiets the other four.
+
+The layout is verified by measurement rather than by eye — no chip spills its
+box, collides with the core, another chip or another node; no disc covers the
+core's own text; and the core title fits its column — at every width down to
+1010px, below which the diagram becomes a stacked list.
+
 ## Browser support
 
 Any current Chrome, Edge, Safari or Firefox. Print-to-PDF is tested against
