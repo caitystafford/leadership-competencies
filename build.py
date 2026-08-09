@@ -68,7 +68,8 @@ def data_uri(path):
 
 def main():
     css = (SRC / "styles.css").read_text(encoding="utf-8")
-    js = (SRC / "app.js").read_text(encoding="utf-8")
+    # brand.js first — app.js reads its tokens, drivers and icons at load.
+    js = (SRC / "brand.js").read_text(encoding="utf-8") + "\n" + (SRC / "app.js").read_text(encoding="utf-8")
     data_path = SRC / "framework.json"
 
     for marker, rel in FONTS.items():
