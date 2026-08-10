@@ -99,17 +99,15 @@ const COMP_META = {
    angles are degrees anticlockwise from three o'clock, matching the artwork.
    ------------------------------------------------------------------------- */
 
-const BOX = { w: 1000, h: 585 };
+const BOX = { w: 1000, h: 520 };
 
-/* `y` is a percentage of the box height; `size` a percentage of its width.
-   The core sits low because the ring occupies the top two thirds of it and
-   the bottom of the circle is deliberately left open, as in the artwork. */
-const CORE = { y: 69.3, size: 31 };
+/* `y` is a percentage of the box height; `size` a percentage of its width. */
+const CORE = { y: 64, size: 33 };
 
 const RING = {
-  icon: 15.5, // = the core's radius, so each disc straddles its circumference
-  chip: 25.1, // where the chip's inner edge and its pointer sit
-  disc: 4.4, // radius of a satellite disc, for where the dotted lead starts
+  icon: 16.5, // = the core's radius, so each disc straddles its circumference
+  chip: 27.5, // where the chip's inner edge and its pointer sit
+  disc: 4.6, // radius of a satellite disc, for where the dotted lead starts
 };
 
 const SLOTS = {

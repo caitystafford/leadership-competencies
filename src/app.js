@@ -298,15 +298,14 @@ function zoomRail() {
     )
     .join('');
 
-  const lens = levelById(S.lens);
   const lensBtns = LEVELS.map(
     (l) =>
       '<button class="lens-btn" data-act="set-lens" data-level="' + l.id + '" ' +
-      'aria-pressed="' + (l.id === S.lens) + '">' + esc(l.name) + '</button>'
+      'style="--lens-dot:' + l.color + '" aria-pressed="' + (l.id === S.lens) + '">' + esc(l.name) + '</button>'
   ).join('');
 
   return (
-    '<div class="rail" style="--lens-color:' + lens.color + '"><div class="rail-inner">' +
+    '<div class="rail"><div class="rail-inner">' +
     '<nav class="crumbs" aria-label="Framework depth">' + crumbHtml + '</nav>' +
     '<div class="rail-right">' +
     '<div class="lens"><span class="rail-label">Level</span><div class="lens-set" role="group" aria-label="Leadership level">' +
@@ -319,9 +318,6 @@ function zoomRail() {
 const footer = (hint) =>
   '<footer class="footer"><div class="footer-inner">' + logoMark({ ink: 'rgba(255,255,255,0.75)' }) +
   '<span class="hintline">' + esc(hint || '') + '</span></div></footer>';
-
-const sectionHead = (title, accent) =>
-  '<div class="sec-head"><span class="bar" style="background:' + accent + '"></span><h3>' + esc(title) + '</h3></div>';
 
 const compVars = (c) =>
   '--fill:' + c.fill + ';--node-ink:' + c.ink + ';--chip-ink:' + c.ink + ';--halo:' + washOf(c.fill, 0.28) +
@@ -416,83 +412,85 @@ function orbit(driver) {
     )
     .join('');
 
+  // Chips carry the competency name only. The behaviours live in the list
+  // below the ring — putting all fifteen on the diagram made it unreadable.
   const chips = placed
     .map(
       (p, i) =>
         '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + compVars(p.c) +
         ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
         'data-act="open-comp" data-comp="' + p.c.id + '">' +
-        '<span class="chip-name">' + esc(p.c.name) + '</span>' +
-        p.c.behaviours.map((b) => '<span class="chip-beh">' + esc(b.name) + '</span>').join('') +
-        '</button>'
-    )
-    .join('');
-
-  const stack = driver.competencies
-    .map(
-      (c) =>
-        '<button class="stack-item" style="' + compVars(c) + '" data-act="open-comp" data-comp="' + c.id + '">' +
-        '<span class="si-icon">' + icon(c.icon, 30) + '</span><span>' +
-        '<span class="si-name">' + esc(c.name) + '</span>' +
-        '<span class="si-beh">' + c.behaviours.map((b) => esc(b.name)).join(' &middot; ') + '</span>' +
-        '</span></button>'
+        '<span class="chip-name">' + esc(p.c.name) + '</span></button>'
     )
     .join('');
 
   const core =
     '<div class="orbit-core" style="top:' + CORE.y + '%;width:' + CORE.size + '%"><span class="core-title">' +
     driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '<span class="core-kicker">' + esc(driver.kicker) + '</span>' +
-    '<span class="core-blurb">' + esc(driver.blurb) + '</span></div>';
+    '<span class="core-kicker">' + esc(driver.kicker) + '</span></div>';
 
   return (
-    '<section class="driver-block" style="' + driverVars(driver) + '" aria-label="' + esc(driver.name) + '">' +
-    '<div class="orbit-wrap"><div class="orbit" data-focus="">' +
+    '<div class="orbit-wrap" style="' + driverVars(driver) + '"><div class="orbit" data-focus="">' +
     '<svg class="orbit-leads" preserveAspectRatio="none" aria-hidden="true">' + leads + '</svg>' +
     core + nodes + chips +
-    '</div>' +
-    '<div class="orbit-foot"><span class="of-label">Five competencies &middot; fifteen behaviours</span>' +
-    '<button class="btn small accent" data-act="open-driver" data-driver="' + driver.id + '">' +
-    'Open ' + esc(driver.name) + '</button></div></div>' +
-    '<div class="driver-stack">' +
-    '<div class="stack-core"><h3>' + driver.lines.map((t) => esc(t)).join(' ') + '</h3>' +
-    '<p>' + esc(driver.kicker) + '</p></div>' +
-    '<div class="stack-list">' + stack + '</div>' +
-    '<div class="orbit-foot"><span class="of-label">Five competencies &middot; fifteen behaviours</span>' +
-    '<button class="btn small accent" data-act="open-driver" data-driver="' + driver.id + '">' +
-    'Open ' + esc(driver.name) + '</button></div>' +
-    '</div></section>'
+    '</div></div>'
   );
 }
 
-/* ---------- Zoom 0: framework --------------------------------------------- */
+/* ---------- Zoom 0: framework ---------------------------------------------
+   Two circles and nothing else. Everything below this screen is reached by
+   opening one of them, so the entry point stays legible.
+   ------------------------------------------------------------------------- */
+
+function driverDial(driver) {
+  // Five dots previewing the ring, on the dial's own circumference at the very
+  // angles the competencies expand into. The dial is square, so this is plain
+  // trigonometry rather than the aspect-corrected polar() the diagram needs.
+  const dots = driver.competencies
+    .map((c, i) => {
+      const a = (SLOTS[c.slot].angle * Math.PI) / 180;
+      return (
+        '<span class="dial-dot" style="background:' + c.fill +
+        ';left:' + (50 + 50 * Math.cos(a)) + '%;top:' + (50 - 50 * Math.sin(a)) +
+        '%;transition-delay:' + i * 40 + 'ms"></span>'
+      );
+    })
+    .join('');
+
+  return (
+    '<button class="dial" style="' + driverVars(driver) + '" data-act="open-driver" data-driver="' + driver.id + '">' +
+    '<span class="dial-ring">' + dots +
+    '<span class="dial-face">' +
+    '<span class="dial-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
+    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
+    '</span></span>' +
+    '<span class="dial-meta">' +
+    '<span class="dial-blurb">' + esc(driver.blurb) + '</span>' +
+    '<span class="dial-open">5 competencies &middot; 15 behaviours <b>Open &rarr;</b></span>' +
+    '</span></button>'
+  );
+}
 
 function viewFramework() {
   const lens = levelById(S.lens);
 
-  const levelCards = LEVELS.map(
+  const levelRow = LEVELS.map(
     (l) =>
-      '<button class="level-card" style="--accent:' + l.color + '" data-act="open-level" data-level="' + l.id + '">' +
-      '<span class="eyebrow">Level ' + (LEVELS.indexOf(l) + 1) + '</span>' +
-      '<h3>' + esc(l.name) + '</h3><p>' + esc(l.tagline) + '</p>' +
-      '<div class="scope">' + esc(l.who) + '</div></button>'
+      '<button class="level-row" data-act="open-level" data-level="' + l.id + '"' +
+      (l.id === S.lens ? ' data-current="true"' : '') + '>' +
+      '<span class="lr-dot" style="background:' + l.color + '"></span>' +
+      '<span class="lr-text"><b>' + esc(l.name) + '</b><span>' + esc(l.who) + '</span></span>' +
+      '<span class="lr-go" aria-hidden="true">&rarr;</span></button>'
   ).join('');
 
   const body = S.query.trim()
     ? '<div data-search-results>' + searchResults() + '</div>'
-    : '<section aria-label="The two drivers">' +
-      sectionHead('Two drivers', C.peach) +
-      '<p class="prose" style="margin-bottom:24px">Every competency belongs to one of two drivers. ' +
-      'Building Culture is the leadership skillset — how leaders shape behaviour and environment. ' +
-      'Drive Operations is the management skillset — how leaders create consistency and performance.</p>' +
-      DRIVERS.map(orbit).join('') +
-      '</section>' +
-      '<section aria-label="Leadership levels" style="margin-top:40px">' +
-      sectionHead('Three levels', lens.color) +
-      '<p class="prose" style="margin-bottom:22px">The same thirty behaviours run through every level. ' +
-      'What changes is scope. You are currently reading the framework at <b>' + esc(lens.name) +
-      '</b> — switch the level lens at any time, from any screen.</p>' +
-      '<div class="level-cards">' + levelCards + '</div></section>' +
+    : '<section class="dials" aria-label="The two drivers">' + DRIVERS.map(driverDial).join('') + '</section>' +
+      '<section class="levels" aria-label="Leadership levels">' +
+      '<div class="levels-head"><h2>Three levels</h2>' +
+      '<p>The same thirty behaviours run through every level — what changes is scope. ' +
+      'You are reading at <b>' + esc(lens.name) + '</b>.</p></div>' +
+      '<div class="level-list">' + levelRow + '</div></section>' +
       '<div data-search-results></div>';
 
   return (
@@ -500,14 +498,9 @@ function viewFramework() {
     '<div class="hero">' +
     '<span class="eyebrow">Cashies &middot; All For: 1</span>' +
     '<h1 class="headline">The leadership framework</h1>' +
-    '<p class="prose lede">Two drivers, ten competencies and thirty assessable behaviours, across three levels of ' +
-    'leadership. Zoom out for the whole picture, or zoom all the way in to what good looks like in a single behaviour.</p>' +
-    '<div class="stats">' +
-    '<div class="stat"><b>2</b><span>Drivers</span></div>' +
-    '<div class="stat"><b>10</b><span>Competencies</span></div>' +
-    '<div class="stat"><b>30</b><span>Behaviours</span></div>' +
-    '<div class="stat"><b>3</b><span>Levels</span></div>' +
-    '</div></div>' +
+    '<p class="prose lede">Two drivers hold the whole thing. Open one to see its five competencies, ' +
+    'then a competency to see the behaviours underneath it.</p>' +
+    '</div>' +
     searchBar('Search behaviours, definitions and expectations…') +
     body +
     '</div>'
@@ -516,21 +509,21 @@ function viewFramework() {
 
 /* ---------- Zoom 1: a driver or a level ----------------------------------- */
 
-function compRow(c, lens, showDriver) {
+function compRow(c, lens, n) {
   return (
     '<section class="comp-row" style="' + compVars(c) + '">' +
-    '<div class="cr-head"><button data-act="open-comp" data-comp="' + c.id + '">' +
-    '<span class="cr-badge">' + icon(c.icon, 24) + '</span>' +
-    '<h3>' + esc(c.name) + '</h3>' +
-    (showDriver ? '<div class="cr-driver">' + esc(c.driver.name) + '</div>' : '') + '</button></div>' +
+    '<button class="cr-head" data-act="open-comp" data-comp="' + c.id + '">' +
+    '<span class="cr-badge">' + icon(c.icon, 22) + '</span>' +
+    '<span class="cr-name">' + esc(c.name) + '</span>' +
+    '<span class="cr-go" aria-hidden="true">&rarr;</span></button>' +
     '<div class="cr-body">' +
     c.behaviours
       .map(
         (b) =>
           '<button class="exp-card" data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '" ' +
           'title="See what Needs Work, Great and Smashing It look like">' +
-          '<h4><span>' + esc(b.name) + '</span><span class="more" aria-hidden="true">&rarr;</span></h4>' +
-          '<p>' + esc(b.levels[lens].expectation) + '</p></button>'
+          '<span class="ec-name">' + esc(b.name) + '</span>' +
+          '<span class="ec-exp">' + esc(b.levels[lens].expectation) + '</span></button>'
       )
       .join('') +
     '</div></section>'
@@ -542,43 +535,36 @@ function viewSlice() {
   const lens = levelById(S.lens);
   const isDriver = slice.type === 'driver';
   const driver = isDriver ? driverById(slice.id) : null;
-  const comps = isDriver ? driver.competencies : COMPS;
 
   const hero = isDriver
-    ? '<div class="slice-hero" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Driver &middot; ' + esc(driver.kicker) + '</span>' +
-      '<h1 class="headline">' + esc(driver.name) + '</h1><p>' + esc(driver.blurb) + '</p>' +
-      '<div class="slice-meta">' +
-      '<div><span>Competencies</span><b>5</b></div>' +
-      '<div><span>Behaviours</span><b>15</b></div>' +
-      '<div><span>Reading at</span><b>' + esc(lens.name) + '</b></div>' +
-      '</div></div>'
-    : '<div class="slice-hero" style="--core:' + lens.color + ';--core-ink:' + C.navy +
-      ';--core-sub:rgba(21,7,33,0.74);--core-rule:rgba(21,7,33,0.2)">' +
+    ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
+      '<span class="eyebrow">Driver</span>' +
+      '<h1 class="headline">' + esc(driver.name) + '</h1>' +
+      '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
+      orbit(driver) +
+      '<p class="ring-note">Pick a competency from the ring, or read them below at ' +
+      '<b>' + esc(lens.name) + '</b> level.</p>'
+    : '<div class="slice-head">' +
       '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3</span>' +
-      '<h1 class="headline">' + esc(lens.name) + '</h1><p>' + esc(lens.tagline) + '</p>' +
+      '<h1 class="headline">' + esc(lens.name) + '</h1>' +
+      '<p class="prose">' + esc(lens.tagline) + '</p>' +
       '<div class="slice-meta">' +
       '<div><span>Scope</span><b>' + esc(lens.scope) + '</b></div>' +
       '<div><span>Typically</span><b>' + esc(lens.who) + '</b></div>' +
-      '<div><span>Behaviours</span><b>30 at this level</b></div>' +
       '</div></div>';
 
   let blocks;
   if (isDriver) {
-    // No driver sub-label here — the whole page is that driver.
-    blocks = comps.map((c) => compRow(c, lens.id, false)).join('');
+    blocks = '<div class="comp-list">' + driver.competencies.map((c) => compRow(c, lens.id)).join('') + '</div>';
   } else {
     blocks = DRIVERS.map(
       (d) =>
-        '<div style="' + driverVars(d) + '">' +
-        '<div class="driver-score" style="margin:34px 0 4px">' +
-        '<span>' + '<span class="ds-name">' + esc(d.name) + '</span>' +
-        '<span class="ds-sub">' + esc(d.kicker) + '</span></span>' +
-        '<button class="btn small" style="margin-left:auto;background:var(--core-ink);color:var(--core)" ' +
-        'data-act="open-driver" data-driver="' + d.id + '">Open driver</button>' +
-        '</div>' +
-        d.competencies.map((c) => compRow(c, lens.id, false)).join('') +
-        '</div>'
+        '<section class="driver-group" style="' + driverVars(d) + '">' +
+        '<button class="dg-head" data-act="open-driver" data-driver="' + d.id + '">' +
+        '<span class="dg-mark"></span><span class="dg-name">' + esc(d.name) + '</span>' +
+        '<span class="dg-go" aria-hidden="true">&rarr;</span></button>' +
+        '<div class="comp-list">' + d.competencies.map((c) => compRow(c, lens.id)).join('') + '</div>' +
+        '</section>'
     ).join('');
   }
 
@@ -587,7 +573,6 @@ function viewSlice() {
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
     hero +
-    '<div class="note"><span class="flag"></span><span>' + esc(STANDARD_NOTE) + '</span></div>' +
     searchBar('Search ' + esc(lens.name) + ' expectations…') +
     body +
     '</div>'
@@ -602,34 +587,33 @@ function viewCompetency() {
 
   const blocks = c.behaviours
     .map(
-      (b) =>
+      (b, i) =>
         '<section class="beh-block">' +
-        '<div class="bb-top"><h3>' + esc(b.name) + '</h3>' +
-        '<span class="micro" style="color:var(--ink-soft)">Behaviour ' + (b.index + 1) + ' of 3</span></div>' +
-        '<p class="bb-def">' + esc(b.definition) + '</p>' +
+        '<div class="bb-top"><span class="bb-num">' + pad2(i + 1) + '</span>' +
+        '<div><h3>' + esc(b.name) + '</h3><p class="bb-def">' + esc(b.definition) + '</p></div></div>' +
         '<div class="ladder">' +
         LEVELS.map(
           (l) =>
-            '<button class="rung" style="--accent:' + l.color + '" data-act="open-beh" data-comp="' + c.id + '" ' +
-            'data-beh="' + b.id + '" data-level="' + l.id + '" data-dim="' + (l.id !== lens.id) + '">' +
-            '<span class="rung-name" style="color:' + (l.id === lens.id ? C.navy : 'var(--ink-soft)') + '">' +
-            esc(l.name) + (l.id === lens.id ? ' &middot; current' : '') + '</span>' +
-            '<p>' + esc(b.levels[l.id].expectation) + '</p></button>'
+            '<button class="rung" data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '" ' +
+            'data-level="' + l.id + '" data-current="' + (l.id === lens.id) + '">' +
+            '<span class="rung-name"><span class="rung-dot" style="background:' + l.color + '"></span>' +
+            esc(l.name) + '</span>' +
+            '<span class="rung-exp">' + esc(b.levels[l.id].expectation) + '</span></button>'
         ).join('') +
         '</div></section>'
     )
     .join('');
 
   return (
-    '<div class="layer" data-motion="' + motionDir() + '" style="' + compVars(c) + '">' +
-    '<div class="comp-hero">' +
-    '<span class="ch-badge">' + icon(c.icon, 42) + '</span>' +
+    '<div class="layer" data-motion="' + motionDir() + '" style="' + compVars(c) + ';' + driverVars(c.driver) + '">' +
+    '<div class="comp-head">' +
+    '<span class="ch-badge">' + icon(c.icon, 38) + '</span>' +
     '<div class="ch-text">' +
-    '<button class="eyebrow" style="background:none;border:0;padding:0;cursor:pointer" ' +
-    'data-act="open-driver" data-driver="' + c.driver.id + '">' + esc(c.driver.name) + ' &rsaquo;</button>' +
+    '<button class="eyebrow ch-driver" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    esc(c.driver.name) + '</button>' +
     '<h1 class="headline">' + esc(c.name) + '</h1>' +
-    '<p class="prose" style="margin-top:14px">Three assessable behaviours. Read across to see how the same behaviour ' +
-    'changes shape as scope grows — ' + esc(lens.name) + ' is highlighted.</p>' +
+    '<p class="prose">Three behaviours. Read across to see how each one changes shape as scope grows — ' +
+    esc(lens.name) + ' is marked.</p>' +
     '</div></div>' + blocks + '</div>'
   );
 }
@@ -809,7 +793,31 @@ function viewAssessStep() {
   );
 }
 
-/* ---------- Assessment: report -------------------------------------------- */
+/* ---------- Assessment: report --------------------------------------------
+   Built from the same two circles as the framework, so the dashboard and the
+   thing it measures look like one system.
+   ------------------------------------------------------------------------- */
+
+/* A radial gauge. `score` is out of 3; the tick marks the standard, 2.0. */
+function gauge(score, opts) {
+  const o = opts || {};
+  const r = 42;
+  const circ = 2 * Math.PI * r;
+  const pct = score == null ? 0 : score / 3;
+  const band = bandFor(score);
+  return (
+    '<span class="gauge" style="--gauge-size:' + (o.size || 128) + 'px">' +
+    '<svg viewBox="0 0 100 100" aria-hidden="true">' +
+    '<circle class="g-track" cx="50" cy="50" r="' + r + '"/>' +
+    '<circle class="g-fill" cx="50" cy="50" r="' + r + '" stroke="' + (o.color || band.color) + '" ' +
+    'stroke-dasharray="' + circ + '" stroke-dashoffset="' + circ * (1 - pct) + '" ' +
+    'transform="rotate(-90 50 50)"/>' +
+    '<line class="g-tick" x1="50" y1="4" x2="50" y2="14" transform="rotate(240 50 50)"/>' +
+    '</svg>' +
+    '<span class="g-value">' + (score == null ? '—' : score.toFixed(1)) + '<small>/3</small></span>' +
+    '</span>'
+  );
+}
 
 function viewReport() {
   const a = S.a;
@@ -826,65 +834,58 @@ function viewReport() {
   const focus = ALL_BEHAVIOURS.filter((b) => a.ratings[b.key] === 'needs-work');
   const stretch = ranked.slice(-3).reverse();
 
-  const meterRow = (c, score) => {
+  const compBar = (c) => {
+    const score = compScore(c);
     const b = bandFor(score);
     return (
-      '<div class="rpt-row"><div class="rr-name">' +
-      '<span class="rr-dot" style="background:' + c.fill + '"></span>' + esc(c.name) + '</div>' +
-      '<div class="meter"><div class="mid" title="Great is the standard"></div>' +
-      '<div class="mfill" style="width:' + (score / 3) * 100 + '%;background:' + b.color + '"></div></div>' +
-      '<div class="rr-score">' + score.toFixed(1) + '<small>/3</small></div></div>'
+      '<div class="score-row"><span class="sr-name">' + esc(c.name) + '</span>' +
+      '<span class="sr-bar"><span class="sr-mark"></span>' +
+      '<span class="sr-fill" style="width:' + (score == null ? 0 : (score / 3) * 100) + '%;background:' + b.color + '"></span></span>' +
+      '<span class="sr-score">' + (score == null ? '—' : score.toFixed(1)) + '</span></div>'
     );
   };
 
-  const behaviourList = (list, numbered) =>
-    '<div class="pill-list">' +
-    list
-      .map(
-        (b, i) =>
-          '<div class="pill-item">' +
-          (numbered ? '<span class="n">' + (i + 1) + '</span>' : '<span class="d" style="background:' + b.comp.fill + '"></span>') +
-          '<div><b>' + esc(b.name) + '</b>' +
-          '<p>' + esc(b.comp.name) + ' — ' + esc(b.levels[l.id].ratings[a.ratings[b.key]]) + '</p></div></div>'
-      )
-      .join('') +
-    '</div>';
-
-  const profile = DRIVERS.map((d) => {
+  const driverPanels = DRIVERS.map((d) => {
     const ds = driverScore(d);
     return (
-      '<div style="' + driverVars(d) + '">' +
-      '<div class="driver-score">' +
-      '<span><span class="ds-name">' + esc(d.name) + '</span>' +
-      '<span class="ds-sub">' + esc(d.kicker) + '</span></span>' +
-      '<span class="ds-score">' + (ds == null ? '—' : ds.toFixed(1)) + '<small>/3</small></span></div>' +
-      d.competencies.map((c) => meterRow(c, compScore(c))).join('') +
-      '</div>'
+      '<section class="dpanel" style="' + driverVars(d) + '">' +
+      '<div class="dp-head">' + gauge(ds, { size: 116, color: d.core }) +
+      '<div><span class="eyebrow">Driver</span><h3>' + esc(d.name) + '</h3>' +
+      '<p>' + esc(d.kicker) + '</p></div></div>' +
+      '<div class="dp-scores">' + d.competencies.map(compBar).join('') + '</div>' +
+      '</section>'
     );
   }).join('');
 
+  const behaviourList = (list, numbered) =>
+    '<ol class="find-list">' +
+    list
+      .map(
+        (b, i) =>
+          '<li><span class="fl-n"' + (numbered ? '' : ' data-plain="true"') + '>' + (numbered ? i + 1 : '') + '</span>' +
+          '<div><b>' + esc(b.name) + '</b><span class="fl-comp">' + esc(b.comp.name) + '</span>' +
+          '<p>' + esc(b.levels[l.id].ratings[a.ratings[b.key]]) + '</p></div></li>'
+      )
+      .join('') +
+    '</ol>';
+
   const detail = DRIVERS.map(
     (d) =>
-      '<div style="' + driverVars(d) + '">' +
-      '<div class="driver-score" style="margin-top:22px">' +
-      '<span><span class="ds-name">' + esc(d.name) + '</span></span>' +
-      '<span class="ds-score">' + (driverScore(d) == null ? '—' : driverScore(d).toFixed(1)) + '<small>/3</small></span></div>' +
+      '<div class="det-driver" style="' + driverVars(d) + '">' +
+      '<h3 class="det-driver-name"><span class="dg-mark"></span>' + esc(d.name) + '</h3>' +
       d.competencies
         .map((c) => {
           const score = compScore(c);
           return (
             '<div class="detail-comp">' +
-            '<div class="sec-head" style="margin:16px 0 6px"><span class="bar" style="background:' + c.fill + '"></span>' +
-            '<h3 style="font-size:16px">' + esc(c.name) + '</h3>' +
-            '<span style="margin-left:auto;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums">' +
-            (score == null ? '—' : score.toFixed(1) + ' / 3') + '</span></div>' +
+            '<div class="dc-head"><span class="dc-name">' + esc(c.name) + '</span>' +
+            '<span class="dc-score">' + (score == null ? '—' : score.toFixed(1) + ' / 3') + '</span></div>' +
             c.behaviours
               .map((b) => {
                 const r = ratingById(a.ratings[b.key]);
                 return (
                   '<div class="detail-beh"><div class="db-top"><span class="db-name">' + esc(b.name) + '</span>' +
-                  '<span class="db-tag" style="background:' + (r ? r.color : C.mist) + ';color:' + (r ? r.ink : C.navy) + '">' +
-                  esc(r ? r.name : 'Not rated') + '</span></div>' +
+                  '<span class="db-tag" data-r="' + (r ? r.id : 'none') + '">' + esc(r ? r.name : 'Not rated') + '</span></div>' +
                   '<p>' + esc(r ? b.levels[l.id].ratings[r.id] : b.levels[l.id].expectation) + '</p></div>'
                 );
               })
@@ -900,58 +901,66 @@ function viewReport() {
   ).join('');
 
   return (
-    '<div class="layer narrow" data-motion="flat">' +
+    '<div class="layer narrow report" data-motion="flat">' +
     '<div class="rpt-actions print-hide">' +
-    '<button class="btn accent" data-act="print">Download as PDF</button>' +
+    '<button class="btn" data-act="print">Download as PDF</button>' +
     '<button class="btn ghost small" data-act="edit-answers">Edit answers</button>' +
     '<button class="btn ghost small" data-act="reset">Start a new assessment</button>' +
     '</div>' +
     '<div class="print-brand print-only"><span>Cashies &middot; All For: 1 Leadership Framework</span>' +
     '<span>' + esc(formatDate(a.date)) + '</span></div>' +
-    '<div class="rpt-head" style="--accent:' + l.color + '">' +
-    '<span class="eyebrow">' + esc(a.kind === 'self' ? 'Self assessment' : 'Team member assessment') + '</span>' +
+
+    '<header class="rpt-head">' +
+    '<div class="rh-text"><span class="eyebrow">' +
+    esc(a.kind === 'self' ? 'Self assessment' : 'Team member assessment') + ' &middot; ' + esc(l.name) + '</span>' +
     '<h1 class="headline">' + esc(a.subject || 'Unnamed') + '</h1>' +
-    '<div class="sub">' + esc(a.role || 'Role not recorded') + ' &middot; ' + esc(l.name) + ' level</div>' +
-    '<div class="rpt-meta">' +
-    '<div><span>Assessed against</span><b>' + esc(l.name) + '</b></div>' +
+    '<p class="rh-sub">' + esc(a.role || 'Role not recorded') + '</p>' +
+    '<div class="rh-meta">' +
     '<div><span>Assessor</span><b>' + esc(a.kind === 'self' ? a.subject || 'Self' : a.assessor || 'Not recorded') + '</b></div>' +
     '<div><span>Date</span><b>' + esc(formatDate(a.date)) + '</b></div>' +
-    '</div>' +
-    '<div class="tiles">' +
-    '<div class="tile"><span>Overall</span><b>' + (overall == null ? '—' : overall.toFixed(1)) + '</b><i>out of 3 &middot; ' + esc(band.label) + '</i></div>' +
-    '<div class="tile"><span>Needs Work</span><b>' + tally['needs-work'] + '</b><i>of 30 behaviours</i></div>' +
-    '<div class="tile"><span>Great</span><b>' + tally.great + '</b><i>of 30 behaviours</i></div>' +
-    '<div class="tile"><span>Smashing It</span><b>' + tally['smashing-it'] + '</b><i>of 30 behaviours</i></div>' +
     '</div></div>' +
-    '<div class="rpt-card">' + sectionHead('Profile by driver', C.peach) +
-    '<p style="font-size:14px;color:var(--ink-mid)">Each competency is the average of its three behaviours, and each driver ' +
-    'the average of its five competencies. The line marks the standard — Great across the board.</p>' +
-    profile + '</div>' +
-    '<div class="rpt-card">' + sectionHead('Strengths to keep using', C.lime) +
+    '<div class="rh-gauge">' + gauge(overall, { size: 150 }) +
+    '<span class="rh-band">' + esc(band.label) + '</span></div>' +
+    '</header>' +
+
+    '<div class="counts">' +
+    RATINGS.map(
+      (r) =>
+        '<div class="count"><span class="c-dot" style="background:' + r.color + '"></span>' +
+        '<b>' + tally[r.id] + '</b><span>' + esc(r.name) + '</span></div>'
+    ).join('') +
+    '<div class="count"><span class="c-dot" style="background:var(--rule)"></span><b>30</b><span>Behaviours rated</span></div>' +
+    '</div>' +
+
+    '<div class="dpanels">' + driverPanels + '</div>' +
+
+    '<div class="findings">' +
+    '<section class="find"><h2>Strengths to keep using</h2>' +
     (strengths.length
       ? behaviourList(strengths, false)
-      : '<p style="font-size:14px;color:var(--ink-mid)">Nothing was rated Smashing It this time. The strongest competencies are ' +
+      : '<p class="find-none">Nothing was rated Smashing It this time. The strongest competencies are ' +
         ranked.slice(0, 2).map((x) => '<b>' + esc(x.comp.name) + '</b>').join(' and ') + '.</p>') +
-    '</div>' +
-    '<div class="rpt-card">' + sectionHead(focus.length ? 'Where to focus next' : 'Next stretch', C.yellow) +
+    '</section>' +
+    '<section class="find"><h2>' + (focus.length ? 'Where to focus next' : 'Next stretch') + '</h2>' +
     (focus.length
-      ? '<p style="font-size:14px;color:var(--ink-mid);margin-bottom:16px">Behaviours rated Needs Work. Pick one or two — not all of them.</p>' +
-        behaviourList(focus, true)
-      : '<p style="font-size:14px;color:var(--ink-mid);margin-bottom:16px">Nothing sits below the standard. These are the lowest ' +
-        'scoring competencies and the natural place to stretch.</p><div class="pill-list">' +
+      ? '<p class="find-lede">Rated Needs Work. Pick one or two — not all of them.</p>' + behaviourList(focus, true)
+      : '<p class="find-lede">Nothing sits below the standard. These are the lowest scoring competencies.</p>' +
+        '<ol class="find-list">' +
         stretch
           .map(
             (x, i) =>
-              '<div class="pill-item"><span class="n">' + (i + 1) + '</span><div><b>' + esc(x.comp.name) + '</b>' +
-              '<p>Scoring ' + x.score.toFixed(1) + ' of 3 across its three behaviours.</p></div></div>'
+              '<li><span class="fl-n">' + (i + 1) + '</span><div><b>' + esc(x.comp.name) + '</b>' +
+              '<p>Scoring ' + x.score.toFixed(1) + ' of 3 across its three behaviours.</p></div></li>'
           )
-          .join('') + '</div>') +
-    '</div>' +
-    '<div class="rpt-card page-break">' + sectionHead('Every behaviour', C.purple) +
-    '<p style="font-size:14px;color:var(--ink-mid)">The full record — each behaviour, the rating given, and the descriptor ' +
-    'that rating matched at ' + esc(l.name) + ' level.</p>' + detail + '</div>' +
-    '<p class="print-note print-hide">Download opens your browser&rsquo;s print dialog — choose <b>Save as PDF</b> as the ' +
-    'destination. Nothing leaves this device.</p>' +
+          .join('') + '</ol>') +
+    '</section></div>' +
+
+    '<section class="det page-break"><h2>Every behaviour</h2>' +
+    '<p class="find-lede">The full record — each behaviour, the rating given, and the descriptor that rating ' +
+    'matched at ' + esc(l.name) + ' level.</p>' + detail + '</section>' +
+
+    '<p class="print-note print-hide">Download opens your browser&rsquo;s print dialog — choose <b>Save as PDF</b> ' +
+    'as the destination. Nothing leaves this device.</p>' +
     '</div>'
   );
 }

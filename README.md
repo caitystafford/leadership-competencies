@@ -26,10 +26,14 @@ control, or the `Esc` key.
 
 | Zoom | Shows |
 |---|---|
-| Framework | Both drivers as the orbit diagram, plus the three levels |
-| Driver or level | One driver's five competencies, or all ten grouped by driver |
+| Framework | Two circles, and nothing else |
+| Driver or level | One driver expanded into its ring of five competencies, or all ten grouped by driver |
 | Competency | Its three behaviours, with all three levels side by side |
 | Behaviour | One behaviour at one level, with the Needs Work / Great / Smashing It descriptors |
+
+The framework page deliberately holds back: two circles, a hover that previews
+the five competencies as dots on the circumference, and a click that expands
+them into the ring. Showing all twenty competency chips at once was unreadable.
 
 **Level is a lens, not a destination.** The Foundations / Momentum / Enterprise
 control sits in the rail on every screen and re-reads whatever you are looking
@@ -105,10 +109,13 @@ source/                  the original workbook
 ## Design
 
 Light-first, built around the competency artwork rather than the dark app
-shell: white cards on a warm off-white ground, a navy rail top and bottom, and
-the ten competency colours doing the work. The framework page leads with the
-orbit diagram from the artwork — driver at the centre, five competencies around
-it, dotted leads out to their behaviours.
+shell: white cards on a warm off-white ground, a navy rail top and bottom.
+
+**Colour is rationed.** The page itself is paper, ink and one warm neutral.
+Navy and peach carry the two drivers and nothing else. The ten competency
+colours from the artwork appear only once you are inside a driver — five at a
+time, never twenty — and levels and ratings are reduced to dots and pills
+rather than filled cards.
 
 Typography is Archivo throughout, per the All For: 1 app brand standard. The
 artwork sets its two driver names in a rounded geometric face that is not
@@ -134,6 +141,14 @@ holds up on either a light or a dark host background.
 Icons are hand-drawn inline SVG in `src/brand.js`, matching the artwork's
 single-weight stroke style. They inherit `currentColor`, so one set works on any
 coloured disc.
+
+### The report
+
+Built from the same two circles as the framework, so the dashboard and the
+thing it measures read as one system: a radial gauge for the whole assessment,
+one per driver in its driver colour, then the five competencies under each as
+plain bars. A tick on every gauge and a line on every bar marks the standard —
+Great across the board, 2.0 of 3.
 
 ### The orbit diagram
 
