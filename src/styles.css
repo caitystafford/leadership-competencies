@@ -246,7 +246,7 @@ svg.icon { display: block; }
 
 /* ---------- Layers -------------------------------------------------------- */
 
-.layer { max-width: var(--wide); margin: 0 auto; padding: 52px var(--pad) 90px; }
+.layer { max-width: var(--wide); margin: 0 auto; padding: 38px var(--pad) 90px; }
 .layer.narrow { max-width: var(--narrow); }
 
 .layer[data-motion='in'] { animation: zoomIn 320ms var(--ease-out) both; }
@@ -293,15 +293,26 @@ svg.icon { display: block; }
 
 /* ---------- Hero ---------------------------------------------------------- */
 
-.hero { margin-bottom: 56px; max-width: 62ch; }
-.hero h1 { font-size: clamp(38px, 5.6vw, 58px); margin: 14px 0 0; }
+/* The framework diagram is the point of the page, so the hero is laid out to
+   cost as little height as possible — the title and the how-to-read-it note
+   sit side by side, and the first ring starts inside the opening screen. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(270px, 0.95fr);
+  gap: 20px 46px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+.hero-text { max-width: 62ch; }
+.hero h1 { font-size: clamp(30px, 3.5vw, 42px); margin: 10px 0 0; }
 .lede-strong {
-  margin-top: 22px;
-  font-size: clamp(19px, 2.2vw, 24px);
+  margin-top: 16px;
+  font-size: clamp(17px, 1.75vw, 20px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.34;
-  max-width: 26ch;
+  line-height: 1.4;
+  max-width: 30ch;
+  color: var(--ink-mid);
 }
 .hero .prose { margin-top: 16px; }
 
@@ -322,59 +333,90 @@ svg.icon { display: block; }
 .sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
 .sec-foot b { color: var(--ink); }
 
-/* ---------- Zoom 0: the two domains --------------------------------------- */
+/* ---------- Screen 1: the framework ---------------------------------------
+   Each domain gets the full width of the layer, so the ring is big enough to
+   read the five competency names off it without clicking anything.
+   ------------------------------------------------------------------------- */
 
-.domains { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+/* One line per step, so the whole orientation costs about a hundred pixels and
+   the first ring stays inside the opening screen. */
+.steps { display: flex; flex-direction: column; }
+.step {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  padding: 9px 0;
+}
+.step:last-child { border-bottom: 1px solid var(--rule); }
+.step .st-n {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.step b { font-size: 15px; font-weight: 900; letter-spacing: -0.025em; }
+.step span { font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
 
-.domain {
+.fw-domain {
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 24px;
-  padding: 30px 26px 26px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  border-radius: 26px;
+  padding: 34px 34px 30px;
+  margin-bottom: 20px;
+  scroll-margin-top: 140px;
 }
 
-.domain-dial {
-  position: relative;
-  width: min(100%, 226px);
-  aspect-ratio: 1;
-  border: 0;
-  padding: 0;
-  background: none;
-  cursor: pointer;
-  border-radius: 999px;
-}
-.dd-face {
-  position: absolute;
-  inset: 0;
+.fwd-head { display: flex; align-items: flex-start; gap: 20px; }
+.fwd-num {
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   background: var(--core);
   color: var(--core-ink);
   display: grid;
   place-items: center;
-  padding: 12%;
-  transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
 }
-.dd-title {
+.fwd-text { flex: 1; min-width: 0; }
+.fwd-text h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
-  font-size: clamp(21px, 2.2vw, 30px);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  margin-top: 6px;
 }
-@media (hover: hover) and (pointer: fine) {
-  .domain-dial:hover .dd-face, .domain-dial:focus-visible .dd-face { transform: scale(1.035); box-shadow: var(--shadow-md); }
+.fwd-text p { margin-top: 9px; font-size: 16px; color: var(--ink-mid); line-height: 1.5; max-width: 46ch; }
+.fwd-count {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  text-align: right;
+  flex-shrink: 0;
 }
-.domain-dial:active .dd-face { transform: scale(0.99); }
 
-.domain-head { margin: 22px 0 20px; }
-.domain-blurb { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.5; max-width: 34ch; }
+.ring-note {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
 
-.domain-list { display: flex; flex-direction: column; gap: 7px; width: 100%; margin-bottom: 20px; }
-.domain-cta { margin-top: auto; }
+/* One representation at a time: the ring where there is room for it, the list
+   where there is not. The responsive block swaps them. Written against
+   .comp-list so it outranks that rule further down the sheet. */
+.comp-list.page-list { display: none; }
 
 /* ---------- Competency card ----------------------------------------------- */
 
@@ -407,19 +449,19 @@ svg.icon { display: block; }
 .cc-beh { display: block; margin-top: 3px; font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
 .cc-cta {
   flex-shrink: 0;
-  padding: 7px 14px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   background: var(--wash-deep);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--ink-mid);
-  transition: background-color 160ms ease, color 160ms ease;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .comp-card:hover { border-color: rgba(21, 7, 33, 0.3); background: var(--wash); }
-  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; }
+  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; transform: translateX(2px); }
 }
 
 .comp-list { display: flex; flex-direction: column; gap: 9px; }
@@ -462,78 +504,32 @@ svg.icon { display: block; }
   text-underline-offset: 3px;
 }
 
-/* ---------- Expanded competency ------------------------------------------- */
+/* ---------- Screen 2: one competency -------------------------------------- */
 
-.expand-backdrop { position: fixed; inset: 0; background: rgba(21, 7, 33, 0.44); z-index: 90; }
-.expand-wrap {
-  position: fixed;
-  inset: 0;
-  z-index: 91;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-.expand-card {
-  position: relative;
-  width: 100%;
-  max-width: 720px;
-  max-height: min(86vh, 900px);
-  display: flex;
-  flex-direction: column;
-  background: var(--paper);
-  border-radius: 26px;
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-}
-/* The behaviours scroll inside the card, so fade the bottom edge rather than
-   ending on a hard cut that reads as the end of the content. */
-.expand-card::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 46px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--paper));
-  pointer-events: none;
-}
-.expand-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 0;
-  background: var(--wash-deep);
-  color: var(--ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-}
-.expand-close:hover { background: var(--navy); color: #fff; }
-
-.xc-head { display: flex; align-items: center; gap: 15px; padding: 28px 30px 0; }
-.xc-badge {
-  width: 58px;
-  height: 58px;
+.comp-hero { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 4px; }
+.ch-badge {
+  width: 62px;
+  height: 62px;
   border-radius: 999px;
   background: var(--fill);
   color: var(--node-ink);
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  margin-top: 4px;
 }
-.xc-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
-.xc-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
-.xc-domain:hover { color: var(--ink); }
-.xc-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; margin-top: 5px; }
-.xc-lede { padding: 14px 30px 0; font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
-.xc-lede b { color: var(--ink); }
+.ch-text { flex: 1; min-width: 0; }
+.ch-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.ch-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
+.ch-domain:hover { color: var(--ink); }
+.comp-hero h1 { font-size: clamp(34px, 5vw, 52px); margin: 10px 0 0; }
+.comp-hero .prose { margin-top: 12px; }
 
-.xc-body { overflow-y: auto; padding: 6px 30px 30px; margin-top: 14px; }
-.xb { border-top: 1px solid var(--rule); padding: 20px 0 4px; }
+.xbs { margin-top: 4px; }
+.more { margin-top: 46px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.more .sec-head { margin-top: 24px; }
+
+.xb { border-top: 1px solid var(--rule); padding: 24px 0 6px; }
 .xb-top { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 14px; }
 .xb-num { font-size: 11px; font-weight: 800; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 5px; flex-shrink: 0; }
 .xb h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.03em; }
@@ -544,20 +540,7 @@ svg.icon { display: block; }
 
 .search-sec .searchbar { margin-bottom: 18px; }
 
-/* ---------- Zoom 1: heading ----------------------------------------------- */
-
-.slice-head { margin-bottom: 30px; max-width: 60ch; }
-.slice-head h1 { font-size: clamp(36px, 5.4vw, 54px); margin: 12px 0 16px; }
-.slice-meta { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
-.slice-meta div span {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.slice-meta div b { font-size: 15px; font-weight: 800; }
+/* ---------- Level banner --------------------------------------------------- */
 
 .level-banner {
   display: flex;
@@ -630,8 +613,9 @@ svg.icon { display: block; }
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.xc-body .orbit-wrap { margin: 4px 0 18px; }
-.xc-body .orbit-core .core-title { text-transform: uppercase; font-size: clamp(13px, 2.4cqw, 26px); }
+/* A competency core carries an icon above its name, so it needs a little less
+   type than a domain core, which is only words. */
+.comp-ring .orbit-core .core-title { font-size: clamp(13px, 2.4cqw, 26px); }
 
 .orbit-core .core-title {
   font-weight: 900;
@@ -721,26 +705,184 @@ svg.icon { display: block; }
   .orbit-node:hover { box-shadow: 0 0 0 0.32cqw var(--paper), 0 0 0 1.7cqw var(--halo); }
 }
 
-/* ---------- Zoom 1: the competency list ----------------------------------- */
+/* ---------- The menu -------------------------------------------------------
+   A drawer rather than a page, so opening it never costs you your place; and
+   it lists all thirty behaviours' worth of structure, so nobody has to
+   navigate backwards through the diagram to change subject.
+   ------------------------------------------------------------------------- */
 
-.domain-group { margin-bottom: 40px; }
-.dg-head {
+.menu-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 16px 9px 13px;
+  margin-right: 16px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color 160ms ease;
+}
+.menu-btn:hover { background: rgba(255, 255, 255, 0.17); }
+.mb-bars { display: flex; flex-direction: column; gap: 3.5px; width: 16px; }
+.mb-bars i { display: block; height: 2px; border-radius: 2px; background: currentColor; transition: transform 220ms var(--ease-out), opacity 160ms ease; }
+.mb-bars i:nth-child(2) { width: 68%; }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.dw-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(21, 7, 33, 0.44);
+  animation: fadeIn 200ms ease both;
+}
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes slideIn { from { transform: translateX(-100%); } }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 91;
+  width: min(370px, 88vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  color: #fff;
+  animation: slideIn 300ms var(--ease-out) both;
+}
+.drawer :focus-visible { outline-color: var(--peach); }
+
+.dw-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+.dw-title { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); }
+.dw-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.dw-close:hover { background: #fff; color: var(--navy); }
+
+.dw-scroll { flex: 1; overflow-y: auto; padding: 16px 14px 34px; }
+
+.dw-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 12px;
+  color: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.dw-link:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-link[aria-current='true'] { color: var(--peach); }
+
+.dw-group { margin-top: 18px; }
+.dw-domain {
+  display: flex;
+  align-items: center;
+  gap: 11px;
   width: 100%;
   background: none;
   border: 0;
-  border-bottom: 1px solid var(--rule);
-  padding: 0 0 12px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0 12px 10px;
+  margin-bottom: 6px;
   cursor: pointer;
   text-align: left;
+  color: #fff;
 }
-.dg-mark { width: 14px; height: 14px; border-radius: 999px; background: var(--core); flex-shrink: 0; }
-.dg-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
-.dg-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) { .dg-head:hover .dg-go { transform: translateX(3px); } }
+/* Build Culture's core is navy, which is the drawer's own background, so the
+   dot carries a hairline ring to keep both domains visible here. */
+.dw-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: var(--core);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+.dw-domain-name { font-size: 13px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+.dw-n { margin-left: auto; font-size: 11px; font-weight: 800; color: rgba(255, 255, 255, 0.4); font-variant-numeric: tabular-nums; }
+.dw-domain:hover .dw-domain-name { color: var(--peach); }
+
+.dw-comps { display: flex; flex-direction: column; gap: 1px; }
+.dw-comp {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  background: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.84);
+}
+.dw-badge {
+  width: 27px;
+  height: 27px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.dw-comp-name { font-size: 14.5px; font-weight: 700; letter-spacing: -0.015em; }
+.dw-comp:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-comp[aria-current='true'] { background: rgba(255, 255, 255, 0.13); color: #fff; }
+
+.dw-sec { margin-top: 26px; padding: 0 12px; }
+.dw-label { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.42); }
+.dw-note { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.55); }
+.dw-sec .dw-link { margin: 8px -12px 0; width: calc(100% + 24px); }
+
+.dw-lenses { display: flex; flex-direction: column; gap: 5px; margin: 11px -12px 0; }
+.dw-lens {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: none;
+  border: 0;
+  border-left: 3px solid var(--lens-dot);
+  border-radius: 0 12px 12px 0;
+  padding: 9px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.8);
+}
+.dw-lens:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-lens[aria-pressed='true'] { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.dw-lens-name { font-size: 14.5px; font-weight: 800; letter-spacing: -0.015em; }
+.dw-lens-sub { font-size: 11.5px; color: rgba(255, 255, 255, 0.55); }
+.dw-lens[aria-pressed='true'] .dw-lens-sub { color: rgba(255, 255, 255, 0.72); }
 
 /* ---------- Search -------------------------------------------------------- */
 
@@ -1152,6 +1294,7 @@ svg.icon { display: block; }
   padding-bottom: 10px;
   border-bottom: 1px solid var(--rule);
 }
+.det-driver-name .dg-mark { width: 14px; height: 14px; border-radius: 999px; background: var(--core); flex-shrink: 0; }
 .detail-comp { margin-top: 18px; }
 .dc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 4px; }
 .dc-name { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
@@ -1221,13 +1364,15 @@ svg.icon { display: block; }
 /* ---------- Responsive ---------------------------------------------------- */
 
 @media (max-width: 1000px) {
-  .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
-  /* The page ring needs width to read. Every competency it shows is also in
-     the list below it, so below this breakpoint the list is the whole story.
-     The dialog's ring is sized by the dialog, so it stays. */
-  .page-ring { display: none; }
-  .ring-note { display: none; }
+  /* The five-point ring needs width to read. Below this breakpoint the list of
+     competency cards is the whole story instead — same five, same order, same
+     colours. The three-point competency ring still fits, so it stays. */
+  .page-ring, .ring-note { display: none; }
+  .comp-list.page-list { display: flex; }
+  .fw-domain { padding: 26px 22px 24px; }
+  .fwd-count { display: none; }
+  .hero { grid-template-columns: 1fr; align-items: start; }
 }
 
 @media (max-width: 900px) {
@@ -1238,10 +1383,16 @@ svg.icon { display: block; }
 @media (max-width: 620px) {
   .layer { padding: 32px 18px 64px; }
   .topbar-inner, .rail-inner, .footer-inner { padding-left: 18px; padding-right: 18px; }
+  /* The word "Menu" is what tips the top bar over a phone's width; the bars
+     are the universal affordance and carry it alone. */
+  .mb-word { display: none; }
+  .menu-btn { padding: 10px; margin-right: 12px; }
+  .brandline .app-name { display: none; }
+  .brandline .divider { display: none; }
   .modes { width: 100%; margin-left: 0; }
   .mode { flex: 1; text-align: center; padding: 9px 8px; }
-  /* The three level pills plus the zoom stops do not fit on one phone-width
-     row, so the rail stacks and the pills share the width evenly. */
+  /* The three level pills do not fit alongside the breadcrumb on a phone, so
+     the rail stacks and the pills share the width evenly. */
   .rail-right { margin-left: 0; width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
   .lens { justify-content: space-between; }
   .lens-set { flex: 1; min-width: 0; }
@@ -1250,10 +1401,10 @@ svg.icon { display: block; }
   .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
   .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
-  .expand-wrap { padding: 0; }
-  .expand-card { max-width: none; max-height: 100%; height: 100%; border-radius: 0; }
-  .xc-head, .xc-lede { padding-left: 20px; padding-right: 20px; }
-  .xc-body { padding: 6px 20px 26px; }
+  .fw-domain { padding: 22px 16px 20px; border-radius: 20px; }
+  .fwd-head { gap: 14px; }
+  .comp-hero { gap: 14px; }
+  .ch-badge { width: 50px; height: 50px; }
   .comp-card { gap: 11px; padding: 11px 12px; }
   .cc-cta { display: none; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }
@@ -1262,6 +1413,7 @@ svg.icon { display: block; }
 @media (prefers-reduced-motion: reduce) {
   .layer[data-motion], .rating-card, .q-block, .orbit-node, .orbit-chip, .orbit-core { animation: none !important; }
   .orbit-leads line, .gauge .g-fill, .sr-fill { animation: none !important; }
+  .drawer, .dw-backdrop { animation: none !important; }
   * { transition-duration: 1ms !important; }
 }
 

@@ -81,7 +81,6 @@ const ALL_BEHAVIOURS = COMPS.flatMap((c) => c.behaviours);
 const levelById = (id) => LEVELS.find((l) => l.id === id) || LEVELS[0];
 const ratingById = (id) => RATINGS.find((r) => r.id === id) || null;
 const compById = (id) => BY_ID[id] || null;
-const driverById = (id) => DRIVERS.find((d) => d.id === id) || null;
 const behById = (compId, behId) => {
   const c = compById(compId);
   return c ? c.behaviours.find((b) => b.id === behId) || null : null;
@@ -104,14 +103,16 @@ const blankAssessment = () => ({
   notes: {},
 });
 
+/* Three screens, not four: the framework, one competency, one behaviour.
+   Everything else — jumping between domains, competencies and levels — is the
+   menu's job, so the pages themselves stay about the content. */
 let S = {
   mode: 'explore',
   zoom: 0,
   lens: 'foundations',
-  // Zoom 1 shows one slice of the framework — a driver or a level.
-  slice: null,
   comp: null,
   beh: null,
+  menu: false,
   query: '',
   a: blankAssessment(),
 };
@@ -188,29 +189,15 @@ function go(patch, opts) {
   render(opts);
 }
 
-/* Zoom 1 needs a slice. If the user jumps out from a competency, fall back to
-   the driver that competency belongs to. */
-function currentSlice() {
-  if (S.slice) return S.slice;
-  const c = S.comp ? compById(S.comp) : null;
-  return c ? { type: 'driver', id: c.driver.id } : { type: 'level', id: S.lens };
-}
-
-/* A level slice *is* the lens, so the two must never drift apart — otherwise
-   the breadcrumb names one level while the page shows another. Every change of
-   level goes through here. */
 function setLens(id) {
   S.lens = id;
-  if (S.slice && S.slice.type === 'level') S.slice = { type: 'level', id: id };
   save();
 }
 
 function goZoom(zoom) {
-  const patch = { zoom, mode: 'explore' };
-  if (zoom === 1) patch.slice = currentSlice();
-  if (zoom < 3) patch.beh = null;
-  if (zoom < 2) patch.comp = null;
-  if (zoom < 1) patch.slice = null;
+  const patch = { zoom, mode: 'explore', menu: false };
+  if (zoom < 2) patch.beh = null;
+  if (zoom < 1) patch.comp = null;
   go(patch);
 }
 
@@ -257,6 +244,9 @@ function topbar() {
     '<button class="mode" data-act="mode" data-mode="' + id + '" aria-current="' + (S.mode === id) + '">' + label + '</button>';
   return (
     '<header class="topbar"><div class="topbar-inner">' +
+    '<button class="menu-btn" data-act="toggle-menu" aria-expanded="' + (S.menu ? 'true' : 'false') + '">' +
+    '<span class="mb-bars" aria-hidden="true"><i></i><i></i><i></i></span>' +
+    '<span class="mb-word">Menu</span></button>' +
     '<button class="brandline" data-act="home">' + logoMark() +
     '<span class="divider" aria-hidden="true"></span>' +
     '<span class="app-name">Leadership<br>Framework</span></button>' +
@@ -265,17 +255,58 @@ function topbar() {
   );
 }
 
+/* ---------- The menu -------------------------------------------------------
+   Every one of the thirty behaviours is reachable from here in two clicks, so
+   nobody has to retrace their steps through the diagram to change subject.
+   ------------------------------------------------------------------------- */
+
+function drawer() {
+  const compRow = (c) =>
+    '<button class="dw-comp" style="' + compVars(c) + '" data-act="open-comp" data-comp="' + c.id + '"' +
+    (S.comp === c.id ? ' aria-current="true"' : '') + '>' +
+    '<span class="dw-badge">' + icon(c.icon, 16) + '</span>' +
+    '<span class="dw-comp-name">' + esc(c.name) + '</span></button>';
+
+  const group = (d, i) =>
+    '<div class="dw-group" style="' + driverVars(d) + '">' +
+    '<button class="dw-domain" data-act="open-driver" data-driver="' + d.id + '">' +
+    '<span class="dw-dot" aria-hidden="true"></span>' +
+    '<span class="dw-domain-name">' + esc(d.name) + '</span>' +
+    '<span class="dw-n">' + pad2(i + 1) + '</span></button>' +
+    '<div class="dw-comps">' + d.competencies.map(compRow).join('') + '</div></div>';
+
+  const lensRow = LEVELS.map(
+    (l) =>
+      '<button class="dw-lens" data-act="set-lens" data-level="' + l.id + '" ' +
+      'aria-pressed="' + (l.id === S.lens) + '" style="--lens-dot:' + l.color + '">' +
+      '<span class="dw-lens-name">' + esc(l.name) + '</span>' +
+      '<span class="dw-lens-sub">' + esc(l.identity) + '</span></button>'
+  ).join('');
+
+  return (
+    '<div class="dw-backdrop" data-act="close-menu"></div>' +
+    '<aside class="drawer" role="dialog" aria-modal="true" aria-label="Framework menu">' +
+    '<div class="dw-top"><span class="dw-title">Go anywhere</span>' +
+    '<button class="dw-close" data-act="close-menu" aria-label="Close menu">' +
+    '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+    'stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>' +
+    '<div class="dw-scroll">' +
+    '<button class="dw-link" data-act="zoom" data-zoom="0"' + (S.zoom === 0 ? ' aria-current="true"' : '') +
+    '>The whole framework</button>' +
+    DRIVERS.map(group).join('') +
+    '<div class="dw-sec"><span class="dw-label">Viewing level</span>' +
+    '<p class="dw-note">A lens on the same ten competencies — it changes what good looks like, not what is measured.</p>' +
+    '<div class="dw-lenses">' + lensRow + '</div></div>' +
+    '<div class="dw-sec"><span class="dw-label">Assessment</span>' +
+    '<button class="dw-link" data-act="mode" data-mode="assess">Rate yourself or a team member</button></div>' +
+    '</div></aside>'
+  );
+}
+
 function zoomRail() {
-  const slice = S.zoom >= 1 ? currentSlice() : null;
   const crumbs = [{ label: 'Framework', zoom: 0 }];
-  if (slice) {
-    crumbs.push({
-      label: slice.type === 'driver' ? driverById(slice.id).name : levelById(slice.id).name,
-      zoom: 1,
-    });
-  }
-  if (S.comp) crumbs.push({ label: compById(S.comp).name, zoom: 2 });
-  if (S.beh) crumbs.push({ label: behById(S.comp, S.beh).name, zoom: 3 });
+  if (S.comp) crumbs.push({ label: compById(S.comp).name, zoom: 1 });
+  if (S.beh) crumbs.push({ label: behById(S.comp, S.beh).name, zoom: 2 });
 
   const crumbHtml = crumbs
     .map((c, i) => {
@@ -448,6 +479,7 @@ function domainRing(driver) {
 function competencyRing(c) {
   return ring({
     geo: RINGS.competency,
+    cls: 'comp-ring',
     vars:
       '--core:' + c.fill + ';--core-ink:' + c.ink +
       ';--core-sub:' + (c.ink === '#ffffff' ? 'rgba(255,255,255,0.8)' : 'rgba(21,7,33,0.7)'),
@@ -469,9 +501,8 @@ function competencyRing(c) {
 }
 
 /* ---------- Competency card ------------------------------------------------
-   The unit that carries a competency everywhere it is listed. Clicking one
-   expands it in place rather than navigating, so you never lose your footing
-   in the domain you were reading.
+   The unit that carries a competency wherever it is listed. It is also the
+   whole story on a narrow screen, where the ring is too wide to read.
    ------------------------------------------------------------------------- */
 
 function compCard(c, opts) {
@@ -484,36 +515,49 @@ function compCard(c, opts) {
       ? ''
       : '<span class="cc-beh">' + c.behaviours.map((b) => esc(b.name)).join(' &middot; ') + '</span>') +
     '</span>' +
-    '<span class="cc-cta">Expand</span></button>'
+    '<span class="cc-cta" aria-hidden="true">&rarr;</span></button>'
   );
 }
 
-/* ---------- Zoom 0: framework ---------------------------------------------
-   Leads with the framework itself — two domains, with the competencies inside
-   each one visible without a click. Level comes afterwards and explains
-   itself, because it is a lens on the framework rather than the way in.
+/* ---------- Screen 1: the framework ----------------------------------------
+   The diagram *is* the interface. Both domains are drawn full width, one under
+   the other, and clicking any competency in either ring opens it. Nothing
+   stands between the reader and the framework — the menu carries the rest.
    ------------------------------------------------------------------------- */
 
-function domainPanel(driver) {
+function domainSection(driver, i) {
   return (
-    '<section class="domain" style="' + driverVars(driver) + '">' +
-    '<button class="domain-dial" data-act="open-driver" data-driver="' + driver.id + '" ' +
-    'aria-label="Explore ' + esc(driver.name) + '">' +
-    '<span class="dd-face"><span class="dd-title">' +
-    driver.lines.map((t) => esc(t)).join('<br>') + '</span></span></button>' +
-    '<div class="domain-head">' +
+    '<section class="fw-domain" id="domain-' + driver.id + '" style="' + driverVars(driver) + '" ' +
+    'aria-labelledby="dh-' + driver.id + '">' +
+    '<div class="fwd-head">' +
+    '<span class="fwd-num" aria-hidden="true">' + pad2(i + 1) + '</span>' +
+    '<div class="fwd-text">' +
     '<span class="eyebrow">' + esc(driver.kicker) + '</span>' +
-    '<p class="domain-blurb">' + esc(driver.blurb) + '</p>' +
+    '<h2 id="dh-' + driver.id + '">' + esc(driver.name) + '</h2>' +
+    '<p>' + esc(driver.blurb) + '</p></div>' +
+    '<span class="fwd-count">5 competencies<br>15 behaviours</span>' +
     '</div>' +
-    '<div class="domain-list">' + driver.competencies.map((c) => compCard(c, { compact: true })).join('') + '</div>' +
-    '<button class="btn small domain-cta" data-act="open-driver" data-driver="' + driver.id + '">' +
-    'Explore ' + esc(driver.name) + ' &rarr;</button>' +
+    domainRing(driver) +
+    '<p class="ring-note">Click a competency to open its three behaviours.</p>' +
+    '<div class="comp-list page-list">' + driver.competencies.map((c) => compCard(c)).join('') + '</div>' +
     '</section>'
   );
 }
 
 function viewFramework() {
   const lens = levelById(S.lens);
+
+  const steps = [
+    ['Two domains', 'how leaders build culture, and how they drive operations'],
+    ['Ten competencies', 'five around each domain — click one to open it'],
+    ['Thirty behaviours', 'three inside every competency, and the thing you rate'],
+  ]
+    .map(
+      (s, i) =>
+        '<li class="step"><span class="st-n">' + pad2(i + 1) + '</span>' +
+        '<b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'
+    )
+    .join('');
 
   const levelRows = LEVELS.map(
     (l) =>
@@ -528,32 +572,28 @@ function viewFramework() {
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
     '<div class="hero">' +
+    '<div class="hero-text">' +
     '<span class="eyebrow">Cashies</span>' +
     '<h1 class="headline">All For: 1 Leadership Framework</h1>' +
     '<p class="lede-strong">A shared standard for what good leadership looks like at Cashies.</p>' +
-    '<p class="prose">The framework brings together two domains of leadership, ten competencies and thirty ' +
-    'observable behaviours. Explore a domain below to see what good looks like, and how expectations grow ' +
-    'from Foundations through to Enterprise.</p>' +
+    '</div>' +
+    '<ol class="steps">' + steps + '</ol>' +
     '</div>' +
 
-    '<section data-hideable aria-labelledby="s-explore">' +
-    '<div class="sec-head"><h2 id="s-explore">Explore the framework</h2></div>' +
-    '<div class="domains">' + DRIVERS.map(domainPanel).join('') + '</div>' +
-    '</section>' +
+    '<div data-hideable>' + DRIVERS.map(domainSection).join('') + '</div>' +
 
     '<section data-hideable class="grow" aria-labelledby="s-grow">' +
     '<div class="sec-head"><h2 id="s-grow">How leadership grows</h2>' +
-    '<p>The same competencies and behaviours apply right across the framework. What changes is the scope of ' +
-    'leadership expected.</p></div>' +
+    '<p>The same ten competencies and thirty behaviours apply right across the framework. What changes is ' +
+    'the scope of leadership expected — so the level is a lens you read through, not a place you go.</p></div>' +
     '<ul class="grow-list">' + levelRows + '</ul>' +
-    '<p class="sec-foot">Use the level control at the top of the page to change the expectations you are ' +
-    'viewing. <button class="linkish" data-act="open-level" data-level="' + lens.id + '">' +
-    'See all ten competencies at ' + esc(lens.name) + ' &rarr;</button></p>' +
+    '<p class="sec-foot">You are reading <b>' + esc(lens.name) + '</b> &mdash; ' + esc(lens.who) +
+    ' Change it in the rail above, or in the menu.</p>' +
     '</section>' +
 
     '<section class="search-sec" aria-labelledby="s-search">' +
-    '<div class="sec-head"><h2 id="s-search">Search the framework</h2>' +
-    '<p>Find a behaviour by name, definition or expectation.</p></div>' +
+    '<div class="sec-head"><h2 id="s-search">Or search for something</h2>' +
+    '<p>Across all thirty behaviours — names, definitions, expectations and rating descriptors.</p></div>' +
     searchBar('Search behaviours, definitions and expectations…') +
     '<div data-search-results>' + searchResults() + '</div>' +
     '</section>' +
@@ -561,68 +601,22 @@ function viewFramework() {
   );
 }
 
-/* ---------- Zoom 1: a domain or a level ----------------------------------- */
-
-function viewSlice() {
-  const slice = currentSlice();
-  const lens = levelById(S.lens);
-  const isDriver = slice.type === 'driver';
-  const driver = isDriver ? driverById(slice.id) : null;
-
-  const hero = isDriver
-    ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Domain</span>' +
-      '<h1 class="headline">' + esc(driver.name) + '</h1>' +
-      '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
-      domainRing(driver)
-    : '<div class="slice-head">' +
-      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
-      '<h1 class="headline">' + esc(lens.name) + '</h1>' +
-      '<p class="prose">' + esc(lens.who) + '</p>' +
-      '<div class="slice-meta"><div><span>Focus</span><b>' + esc(lens.focus) + '</b></div></div></div>';
-
-  const banner =
-    '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
-    '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency to see its behaviours, or ' +
-    'change level to compare what good looks like at ' +
-    esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>';
-
-  const blocks = isDriver
-    ? '<div class="comp-list">' + driver.competencies.map((c) => compCard(c)).join('') + '</div>'
-    : DRIVERS.map(
-        (d) =>
-          '<section class="domain-group" style="' + driverVars(d) + '">' +
-          '<button class="dg-head" data-act="open-driver" data-driver="' + d.id + '">' +
-          '<span class="dg-mark"></span><span class="dg-name">' + esc(d.name) + '</span>' +
-          '<span class="dg-go" aria-hidden="true">&rarr;</span></button>' +
-          '<div class="comp-list">' + d.competencies.map((c) => compCard(c)).join('') + '</div>' +
-          '</section>'
-      ).join('');
-
-  const body = S.query.trim() ? '<div data-search-results>' + searchResults() + '</div>' : blocks + '<div data-search-results></div>';
-
-  return (
-    '<div class="layer" data-motion="' + motionDir() + '">' +
-    hero + banner +
-    searchBar('Search ' + esc(lens.name) + ' expectations…') +
-    body +
-    '</div>'
-  );
-}
-
-/* ---------- Zoom 2: the competency, expanded in place ----------------------
-   A dialog over whatever you were reading, rather than another full page, so
-   opening a competency never costs you your place in the domain.
+/* ---------- Screen 2: one competency ---------------------------------------
+   The same ring one level down: the competency at the centre, its three
+   behaviours around it, then each behaviour written out at all three levels so
+   the growth is visible without navigating anywhere.
    ------------------------------------------------------------------------- */
 
-function compExpand() {
+function viewCompetency() {
   const c = compById(S.comp);
   const lens = levelById(S.lens);
+  const pos = c.driver.competencies.indexOf(c);
+  const siblings = c.driver.competencies.filter((x) => x.id !== c.id);
 
   const blocks = c.behaviours
     .map(
       (b, i) =>
-        '<div class="xb">' +
+        '<div class="xb" id="beh-' + b.id + '">' +
         '<div class="xb-top"><span class="xb-num">' + pad2(i + 1) + '</span>' +
         '<div><h3>' + esc(b.name) + '</h3><p>' + esc(b.definition) + '</p></div></div>' +
         '<div class="xb-rungs">' +
@@ -639,26 +633,33 @@ function compExpand() {
     .join('');
 
   return (
-    '<div class="expand-backdrop" data-act="close-expand"></div>' +
-    '<div class="expand-wrap" data-act="close-expand">' +
-    '<div class="expand-card" style="' + compVars(c) + ';' + driverVars(c.driver) + '" role="dialog" ' +
-    'aria-modal="true" aria-label="' + esc(c.name) + '">' +
-    '<button class="expand-close" data-act="close-expand" aria-label="Close">' +
-    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-    'stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
-    '<div class="xc-head">' +
-    '<span class="xc-badge">' + icon(c.icon, 32) + '</span>' +
-    '<div><button class="eyebrow xc-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    '<div class="layer" data-motion="' + motionDir() + '" style="' + compVars(c) + ';' + driverVars(c.driver) + '">' +
+    '<div class="comp-hero">' +
+    '<span class="ch-badge">' + icon(c.icon, 30) + '</span>' +
+    '<div class="ch-text">' +
+    '<button class="eyebrow ch-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
-    '<h2>' + esc(c.name) + '</h2></div></div>' +
-    '<p class="xc-lede">Three observable behaviours. Pick one from the ring, or read how each expectation ' +
-    'grows from Foundations to Enterprise below — your level, <b>' + esc(lens.name) + '</b>, is marked.</p>' +
-    '<div class="xc-body">' + competencyRing(c) + blocks + '</div>' +
-    '</div></div>'
+    '<h1 class="headline">' + esc(c.name) + '</h1>' +
+    '<p class="prose">Competency ' + (pos + 1) + ' of 5 in ' + esc(c.driver.name) +
+    '. Three observable behaviours sit inside it.</p></div></div>' +
+
+    competencyRing(c) +
+
+    '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
+    '<span><b>Reading at ' + esc(lens.name) + '.</b> Every behaviour below is written out at all three ' +
+    'levels so you can see how the expectation grows — the level you are viewing is marked.</span></div>' +
+
+    '<div class="xbs">' + blocks + '</div>' +
+
+    '<section class="more"><div class="sec-head"><h2>More in ' + esc(c.driver.name) + '</h2></div>' +
+    '<div class="comp-list">' + siblings.map((x) => compCard(x, { compact: true })).join('') + '</div>' +
+    '<p class="sec-foot"><button class="linkish" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    'Back to the framework diagram &rarr;</button></p></section>' +
+    '</div>'
   );
 }
 
-/* ---------- Zoom 3: behaviour --------------------------------------------- */
+/* ---------- Screen 3: one behaviour --------------------------------------- */
 
 function viewBehaviour() {
   const c = compById(S.comp);
@@ -1019,14 +1020,10 @@ function currentView() {
     if (S.a.stage === 'rate') return { html: viewAssessStep(), hint: 'Draft saves as you go' };
     return { html: viewAssessSetup(), hint: 'Nothing is sent anywhere' };
   }
-  if (S.zoom === 3 && S.beh) return { html: viewBehaviour(), hint: 'Esc to go back' };
-  if (S.zoom === 2 && S.comp) {
-    // Whatever you opened the competency from stays behind it.
-    return { html: (S.slice ? viewSlice() : viewFramework()) + compExpand(), hint: 'Esc to close' };
-  }
-  if (S.zoom === 1) return { html: viewSlice(), hint: 'Esc to go back' };
+  if (S.zoom === 2 && S.beh) return { html: viewBehaviour(), hint: 'Esc to go back' };
+  if (S.zoom === 1 && S.comp) return { html: viewCompetency(), hint: 'Esc to go back' };
   S.zoom = 0;
-  return { html: viewFramework(), hint: 'Press / to search' };
+  return { html: viewFramework(), hint: 'Menu jumps anywhere · press / to search' };
 }
 
 function render(opts) {
@@ -1038,10 +1035,14 @@ function render(opts) {
     (S.mode === 'explore' ? zoomRail() : '') +
     '<main>' + view.html + '</main>' +
     footer(view.hint) +
-    '</div>';
+    '</div>' +
+    (S.menu ? drawer() : '');
 
-  const expanded = S.mode === 'explore' && S.zoom === 2;
-  document.body.style.overflow = expanded ? 'hidden' : '';
+  document.body.style.overflow = S.menu ? 'hidden' : '';
+  if (S.menu) {
+    const first = document.querySelector('.dw-close');
+    if (first) first.focus();
+  }
 
   lastZoom = S.zoom;
   if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: 'auto' });
@@ -1050,11 +1051,15 @@ function render(opts) {
 /* ---------- Events -------------------------------------------------------- */
 
 const ACTIONS = {
-  home: () => go({ mode: 'explore', zoom: 0, slice: null, comp: null, beh: null, query: '' }),
+  home: () => go({ mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' }),
 
-  mode: (el) => go({ mode: el.dataset.mode }),
+  mode: (el) => go({ mode: el.dataset.mode, menu: false }),
 
   zoom: (el) => goZoom(Number(el.dataset.zoom)),
+
+  'toggle-menu': () => go({ menu: !S.menu }, { keepScroll: true }),
+
+  'close-menu': () => go({ menu: false }, { keepScroll: true }),
 
   'set-lens': (el) => {
     setLens(el.dataset.level);
@@ -1062,30 +1067,21 @@ const ACTIONS = {
     render({ keepScroll: true });
   },
 
-  'open-driver': (el) =>
-    go({ mode: 'explore', zoom: 1, slice: { type: 'driver', id: el.dataset.driver }, comp: null, beh: null, query: '' }),
-
-  'open-level': (el) => {
-    setLens(el.dataset.level);
-    go({ mode: 'explore', zoom: 1, slice: { type: 'level', id: el.dataset.level }, comp: null, beh: null, query: '' });
+  // A domain is not a screen of its own any more; it is a place on the
+  // framework diagram, so this scrolls the reader to its ring.
+  'open-driver': (el) => {
+    const id = el.dataset.driver;
+    go({ mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' });
+    const target = document.getElementById('domain-' + id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   },
 
-  'open-comp': (el) => {
-    const from = el.getBoundingClientRect();
-    go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: null }, { keepScroll: true });
-    growDialog(from);
-  },
-
-  // Closing returns to whatever was behind — the domain, or the framework.
-  'close-expand': (el, e) => {
-    if (el.classList.contains('expand-wrap') && e && e.target !== el) return;
-    go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
-  },
+  'open-comp': (el) => go({ mode: 'explore', zoom: 1, comp: el.dataset.comp, beh: null, menu: false }),
 
   'open-beh': (el) => {
     // Opening a specific level's rung switches the lens to that level.
     if (el.dataset.level) setLens(el.dataset.level);
-    go({ mode: 'explore', zoom: 3, comp: el.dataset.comp, beh: el.dataset.beh });
+    go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: el.dataset.beh, menu: false });
   },
 
   'clear-search': () => go({ query: '' }),
@@ -1196,27 +1192,6 @@ document.addEventListener('click', (e) => {
   if (fn) fn(el, e);
 });
 
-function growDialog(from) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const card = document.querySelector('.expand-card');
-  const backdrop = document.querySelector('.expand-backdrop');
-  if (!card) return;
-  const to = card.getBoundingClientRect();
-  if (!to.width || !from.width) return;
-  const scale = Math.min(from.width / to.width, 1);
-  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
-  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
-  const ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
-  card.animate(
-    [
-      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')', opacity: 0 },
-      { transform: 'none', opacity: 1 },
-    ],
-    { duration: 340, easing: ease }
-  );
-  if (backdrop) backdrop.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
-}
-
 /* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
    Decorative only — the diagram is fully usable without it. */
 function focusOrbit(orbit, key) {
@@ -1271,17 +1246,17 @@ document.addEventListener('keydown', (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
 
   if (e.key === 'Escape') {
+    if (S.menu) {
+      go({ menu: false }, { keepScroll: true });
+      return;
+    }
     if (typing) return;
     if (S.mode !== 'explore') return;
-    if (S.zoom === 2) {
-      go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
-    } else if (S.zoom > 0) {
-      goZoom(S.zoom - 1);
-    }
+    if (S.zoom > 0) goZoom(S.zoom - 1);
     return;
   }
 
-  if (e.key === '/' && !typing && S.mode === 'explore' && S.zoom < 2) {
+  if (e.key === '/' && !typing && S.mode === 'explore' && S.zoom === 0) {
     const q = document.getElementById('q');
     if (q) {
       e.preventDefault();

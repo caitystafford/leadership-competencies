@@ -252,7 +252,7 @@ svg.icon { display: block; }
 
 /* ---------- Layers -------------------------------------------------------- */
 
-.layer { max-width: var(--wide); margin: 0 auto; padding: 52px var(--pad) 90px; }
+.layer { max-width: var(--wide); margin: 0 auto; padding: 38px var(--pad) 90px; }
 .layer.narrow { max-width: var(--narrow); }
 
 .layer[data-motion='in'] { animation: zoomIn 320ms var(--ease-out) both; }
@@ -299,15 +299,26 @@ svg.icon { display: block; }
 
 /* ---------- Hero ---------------------------------------------------------- */
 
-.hero { margin-bottom: 56px; max-width: 62ch; }
-.hero h1 { font-size: clamp(38px, 5.6vw, 58px); margin: 14px 0 0; }
+/* The framework diagram is the point of the page, so the hero is laid out to
+   cost as little height as possible — the title and the how-to-read-it note
+   sit side by side, and the first ring starts inside the opening screen. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(270px, 0.95fr);
+  gap: 20px 46px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+.hero-text { max-width: 62ch; }
+.hero h1 { font-size: clamp(30px, 3.5vw, 42px); margin: 10px 0 0; }
 .lede-strong {
-  margin-top: 22px;
-  font-size: clamp(19px, 2.2vw, 24px);
+  margin-top: 16px;
+  font-size: clamp(17px, 1.75vw, 20px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.34;
-  max-width: 26ch;
+  line-height: 1.4;
+  max-width: 30ch;
+  color: var(--ink-mid);
 }
 .hero .prose { margin-top: 16px; }
 
@@ -328,59 +339,90 @@ svg.icon { display: block; }
 .sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
 .sec-foot b { color: var(--ink); }
 
-/* ---------- Zoom 0: the two domains --------------------------------------- */
+/* ---------- Screen 1: the framework ---------------------------------------
+   Each domain gets the full width of the layer, so the ring is big enough to
+   read the five competency names off it without clicking anything.
+   ------------------------------------------------------------------------- */
 
-.domains { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+/* One line per step, so the whole orientation costs about a hundred pixels and
+   the first ring stays inside the opening screen. */
+.steps { display: flex; flex-direction: column; }
+.step {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  padding: 9px 0;
+}
+.step:last-child { border-bottom: 1px solid var(--rule); }
+.step .st-n {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.step b { font-size: 15px; font-weight: 900; letter-spacing: -0.025em; }
+.step span { font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
 
-.domain {
+.fw-domain {
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 24px;
-  padding: 30px 26px 26px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  border-radius: 26px;
+  padding: 34px 34px 30px;
+  margin-bottom: 20px;
+  scroll-margin-top: 140px;
 }
 
-.domain-dial {
-  position: relative;
-  width: min(100%, 226px);
-  aspect-ratio: 1;
-  border: 0;
-  padding: 0;
-  background: none;
-  cursor: pointer;
-  border-radius: 999px;
-}
-.dd-face {
-  position: absolute;
-  inset: 0;
+.fwd-head { display: flex; align-items: flex-start; gap: 20px; }
+.fwd-num {
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   background: var(--core);
   color: var(--core-ink);
   display: grid;
   place-items: center;
-  padding: 12%;
-  transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
 }
-.dd-title {
+.fwd-text { flex: 1; min-width: 0; }
+.fwd-text h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.045em;
-  line-height: 0.92;
-  font-size: clamp(21px, 2.2vw, 30px);
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  margin-top: 6px;
 }
-@media (hover: hover) and (pointer: fine) {
-  .domain-dial:hover .dd-face, .domain-dial:focus-visible .dd-face { transform: scale(1.035); box-shadow: var(--shadow-md); }
+.fwd-text p { margin-top: 9px; font-size: 16px; color: var(--ink-mid); line-height: 1.5; max-width: 46ch; }
+.fwd-count {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  text-align: right;
+  flex-shrink: 0;
 }
-.domain-dial:active .dd-face { transform: scale(0.99); }
 
-.domain-head { margin: 22px 0 20px; }
-.domain-blurb { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.5; max-width: 34ch; }
+.ring-note {
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
 
-.domain-list { display: flex; flex-direction: column; gap: 7px; width: 100%; margin-bottom: 20px; }
-.domain-cta { margin-top: auto; }
+/* One representation at a time: the ring where there is room for it, the list
+   where there is not. The responsive block swaps them. Written against
+   .comp-list so it outranks that rule further down the sheet. */
+.comp-list.page-list { display: none; }
 
 /* ---------- Competency card ----------------------------------------------- */
 
@@ -413,19 +455,19 @@ svg.icon { display: block; }
 .cc-beh { display: block; margin-top: 3px; font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
 .cc-cta {
   flex-shrink: 0;
-  padding: 7px 14px;
+  width: 30px;
+  height: 30px;
   border-radius: 999px;
   background: var(--wash-deep);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--ink-mid);
-  transition: background-color 160ms ease, color 160ms ease;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .comp-card:hover { border-color: rgba(21, 7, 33, 0.3); background: var(--wash); }
-  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; }
+  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; transform: translateX(2px); }
 }
 
 .comp-list { display: flex; flex-direction: column; gap: 9px; }
@@ -468,78 +510,32 @@ svg.icon { display: block; }
   text-underline-offset: 3px;
 }
 
-/* ---------- Expanded competency ------------------------------------------- */
+/* ---------- Screen 2: one competency -------------------------------------- */
 
-.expand-backdrop { position: fixed; inset: 0; background: rgba(21, 7, 33, 0.44); z-index: 90; }
-.expand-wrap {
-  position: fixed;
-  inset: 0;
-  z-index: 91;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-.expand-card {
-  position: relative;
-  width: 100%;
-  max-width: 720px;
-  max-height: min(86vh, 900px);
-  display: flex;
-  flex-direction: column;
-  background: var(--paper);
-  border-radius: 26px;
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-}
-/* The behaviours scroll inside the card, so fade the bottom edge rather than
-   ending on a hard cut that reads as the end of the content. */
-.expand-card::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 46px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--paper));
-  pointer-events: none;
-}
-.expand-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 0;
-  background: var(--wash-deep);
-  color: var(--ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-}
-.expand-close:hover { background: var(--navy); color: #fff; }
-
-.xc-head { display: flex; align-items: center; gap: 15px; padding: 28px 30px 0; }
-.xc-badge {
-  width: 58px;
-  height: 58px;
+.comp-hero { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 4px; }
+.ch-badge {
+  width: 62px;
+  height: 62px;
   border-radius: 999px;
   background: var(--fill);
   color: var(--node-ink);
   display: grid;
   place-items: center;
   flex-shrink: 0;
+  margin-top: 4px;
 }
-.xc-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
-.xc-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
-.xc-domain:hover { color: var(--ink); }
-.xc-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; margin-top: 5px; }
-.xc-lede { padding: 14px 30px 0; font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
-.xc-lede b { color: var(--ink); }
+.ch-text { flex: 1; min-width: 0; }
+.ch-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.ch-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
+.ch-domain:hover { color: var(--ink); }
+.comp-hero h1 { font-size: clamp(34px, 5vw, 52px); margin: 10px 0 0; }
+.comp-hero .prose { margin-top: 12px; }
 
-.xc-body { overflow-y: auto; padding: 6px 30px 30px; margin-top: 14px; }
-.xb { border-top: 1px solid var(--rule); padding: 20px 0 4px; }
+.xbs { margin-top: 4px; }
+.more { margin-top: 46px; padding-top: 8px; border-top: 1px solid var(--rule); }
+.more .sec-head { margin-top: 24px; }
+
+.xb { border-top: 1px solid var(--rule); padding: 24px 0 6px; }
 .xb-top { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 14px; }
 .xb-num { font-size: 11px; font-weight: 800; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 5px; flex-shrink: 0; }
 .xb h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.03em; }
@@ -550,20 +546,7 @@ svg.icon { display: block; }
 
 .search-sec .searchbar { margin-bottom: 18px; }
 
-/* ---------- Zoom 1: heading ----------------------------------------------- */
-
-.slice-head { margin-bottom: 30px; max-width: 60ch; }
-.slice-head h1 { font-size: clamp(36px, 5.4vw, 54px); margin: 12px 0 16px; }
-.slice-meta { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
-.slice-meta div span {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.slice-meta div b { font-size: 15px; font-weight: 800; }
+/* ---------- Level banner --------------------------------------------------- */
 
 .level-banner {
   display: flex;
@@ -636,8 +619,9 @@ svg.icon { display: block; }
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.xc-body .orbit-wrap { margin: 4px 0 18px; }
-.xc-body .orbit-core .core-title { text-transform: uppercase; font-size: clamp(13px, 2.4cqw, 26px); }
+/* A competency core carries an icon above its name, so it needs a little less
+   type than a domain core, which is only words. */
+.comp-ring .orbit-core .core-title { font-size: clamp(13px, 2.4cqw, 26px); }
 
 .orbit-core .core-title {
   font-weight: 900;
@@ -727,26 +711,184 @@ svg.icon { display: block; }
   .orbit-node:hover { box-shadow: 0 0 0 0.32cqw var(--paper), 0 0 0 1.7cqw var(--halo); }
 }
 
-/* ---------- Zoom 1: the competency list ----------------------------------- */
+/* ---------- The menu -------------------------------------------------------
+   A drawer rather than a page, so opening it never costs you your place; and
+   it lists all thirty behaviours' worth of structure, so nobody has to
+   navigate backwards through the diagram to change subject.
+   ------------------------------------------------------------------------- */
 
-.domain-group { margin-bottom: 40px; }
-.dg-head {
+.menu-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 16px 9px 13px;
+  margin-right: 16px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color 160ms ease;
+}
+.menu-btn:hover { background: rgba(255, 255, 255, 0.17); }
+.mb-bars { display: flex; flex-direction: column; gap: 3.5px; width: 16px; }
+.mb-bars i { display: block; height: 2px; border-radius: 2px; background: currentColor; transition: transform 220ms var(--ease-out), opacity 160ms ease; }
+.mb-bars i:nth-child(2) { width: 68%; }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded='true'] .mb-bars i:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.dw-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(21, 7, 33, 0.44);
+  animation: fadeIn 200ms ease both;
+}
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes slideIn { from { transform: translateX(-100%); } }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 91;
+  width: min(370px, 88vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  color: #fff;
+  animation: slideIn 300ms var(--ease-out) both;
+}
+.drawer :focus-visible { outline-color: var(--peach); }
+
+.dw-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+.dw-title { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); }
+.dw-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.dw-close:hover { background: #fff; color: var(--navy); }
+
+.dw-scroll { flex: 1; overflow-y: auto; padding: 16px 14px 34px; }
+
+.dw-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 12px;
+  color: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.dw-link:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-link[aria-current='true'] { color: var(--peach); }
+
+.dw-group { margin-top: 18px; }
+.dw-domain {
+  display: flex;
+  align-items: center;
+  gap: 11px;
   width: 100%;
   background: none;
   border: 0;
-  border-bottom: 1px solid var(--rule);
-  padding: 0 0 12px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0 12px 10px;
+  margin-bottom: 6px;
   cursor: pointer;
   text-align: left;
+  color: #fff;
 }
-.dg-mark { width: 14px; height: 14px; border-radius: 999px; background: var(--core); flex-shrink: 0; }
-.dg-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
-.dg-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) { .dg-head:hover .dg-go { transform: translateX(3px); } }
+/* Build Culture's core is navy, which is the drawer's own background, so the
+   dot carries a hairline ring to keep both domains visible here. */
+.dw-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: var(--core);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+.dw-domain-name { font-size: 13px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+.dw-n { margin-left: auto; font-size: 11px; font-weight: 800; color: rgba(255, 255, 255, 0.4); font-variant-numeric: tabular-nums; }
+.dw-domain:hover .dw-domain-name { color: var(--peach); }
+
+.dw-comps { display: flex; flex-direction: column; gap: 1px; }
+.dw-comp {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  background: none;
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.84);
+}
+.dw-badge {
+  width: 27px;
+  height: 27px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.dw-comp-name { font-size: 14.5px; font-weight: 700; letter-spacing: -0.015em; }
+.dw-comp:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-comp[aria-current='true'] { background: rgba(255, 255, 255, 0.13); color: #fff; }
+
+.dw-sec { margin-top: 26px; padding: 0 12px; }
+.dw-label { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.42); }
+.dw-note { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.55); }
+.dw-sec .dw-link { margin: 8px -12px 0; width: calc(100% + 24px); }
+
+.dw-lenses { display: flex; flex-direction: column; gap: 5px; margin: 11px -12px 0; }
+.dw-lens {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: none;
+  border: 0;
+  border-left: 3px solid var(--lens-dot);
+  border-radius: 0 12px 12px 0;
+  padding: 9px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.8);
+}
+.dw-lens:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.dw-lens[aria-pressed='true'] { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.dw-lens-name { font-size: 14.5px; font-weight: 800; letter-spacing: -0.015em; }
+.dw-lens-sub { font-size: 11.5px; color: rgba(255, 255, 255, 0.55); }
+.dw-lens[aria-pressed='true'] .dw-lens-sub { color: rgba(255, 255, 255, 0.72); }
 
 /* ---------- Search -------------------------------------------------------- */
 
@@ -1158,6 +1300,7 @@ svg.icon { display: block; }
   padding-bottom: 10px;
   border-bottom: 1px solid var(--rule);
 }
+.det-driver-name .dg-mark { width: 14px; height: 14px; border-radius: 999px; background: var(--core); flex-shrink: 0; }
 .detail-comp { margin-top: 18px; }
 .dc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 4px; }
 .dc-name { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
@@ -1227,13 +1370,15 @@ svg.icon { display: block; }
 /* ---------- Responsive ---------------------------------------------------- */
 
 @media (max-width: 1000px) {
-  .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
-  /* The page ring needs width to read. Every competency it shows is also in
-     the list below it, so below this breakpoint the list is the whole story.
-     The dialog's ring is sized by the dialog, so it stays. */
-  .page-ring { display: none; }
-  .ring-note { display: none; }
+  /* The five-point ring needs width to read. Below this breakpoint the list of
+     competency cards is the whole story instead — same five, same order, same
+     colours. The three-point competency ring still fits, so it stays. */
+  .page-ring, .ring-note { display: none; }
+  .comp-list.page-list { display: flex; }
+  .fw-domain { padding: 26px 22px 24px; }
+  .fwd-count { display: none; }
+  .hero { grid-template-columns: 1fr; align-items: start; }
 }
 
 @media (max-width: 900px) {
@@ -1244,10 +1389,16 @@ svg.icon { display: block; }
 @media (max-width: 620px) {
   .layer { padding: 32px 18px 64px; }
   .topbar-inner, .rail-inner, .footer-inner { padding-left: 18px; padding-right: 18px; }
+  /* The word "Menu" is what tips the top bar over a phone's width; the bars
+     are the universal affordance and carry it alone. */
+  .mb-word { display: none; }
+  .menu-btn { padding: 10px; margin-right: 12px; }
+  .brandline .app-name { display: none; }
+  .brandline .divider { display: none; }
   .modes { width: 100%; margin-left: 0; }
   .mode { flex: 1; text-align: center; padding: 9px 8px; }
-  /* The three level pills plus the zoom stops do not fit on one phone-width
-     row, so the rail stacks and the pills share the width evenly. */
+  /* The three level pills do not fit alongside the breadcrumb on a phone, so
+     the rail stacks and the pills share the width evenly. */
   .rail-right { margin-left: 0; width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
   .lens { justify-content: space-between; }
   .lens-set { flex: 1; min-width: 0; }
@@ -1256,10 +1407,10 @@ svg.icon { display: block; }
   .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
   .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
-  .expand-wrap { padding: 0; }
-  .expand-card { max-width: none; max-height: 100%; height: 100%; border-radius: 0; }
-  .xc-head, .xc-lede { padding-left: 20px; padding-right: 20px; }
-  .xc-body { padding: 6px 20px 26px; }
+  .fw-domain { padding: 22px 16px 20px; border-radius: 20px; }
+  .fwd-head { gap: 14px; }
+  .comp-hero { gap: 14px; }
+  .ch-badge { width: 50px; height: 50px; }
   .comp-card { gap: 11px; padding: 11px 12px; }
   .cc-cta { display: none; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }
@@ -1268,6 +1419,7 @@ svg.icon { display: block; }
 @media (prefers-reduced-motion: reduce) {
   .layer[data-motion], .rating-card, .q-block, .orbit-node, .orbit-chip, .orbit-core { animation: none !important; }
   .orbit-leads line, .gauge .g-fill, .sr-fill { animation: none !important; }
+  .drawer, .dw-backdrop { animation: none !important; }
   * { transition-duration: 1ms !important; }
 }
 
@@ -1618,7 +1770,6 @@ const ALL_BEHAVIOURS = COMPS.flatMap((c) => c.behaviours);
 const levelById = (id) => LEVELS.find((l) => l.id === id) || LEVELS[0];
 const ratingById = (id) => RATINGS.find((r) => r.id === id) || null;
 const compById = (id) => BY_ID[id] || null;
-const driverById = (id) => DRIVERS.find((d) => d.id === id) || null;
 const behById = (compId, behId) => {
   const c = compById(compId);
   return c ? c.behaviours.find((b) => b.id === behId) || null : null;
@@ -1641,14 +1792,16 @@ const blankAssessment = () => ({
   notes: {},
 });
 
+/* Three screens, not four: the framework, one competency, one behaviour.
+   Everything else — jumping between domains, competencies and levels — is the
+   menu's job, so the pages themselves stay about the content. */
 let S = {
   mode: 'explore',
   zoom: 0,
   lens: 'foundations',
-  // Zoom 1 shows one slice of the framework — a driver or a level.
-  slice: null,
   comp: null,
   beh: null,
+  menu: false,
   query: '',
   a: blankAssessment(),
 };
@@ -1725,29 +1878,15 @@ function go(patch, opts) {
   render(opts);
 }
 
-/* Zoom 1 needs a slice. If the user jumps out from a competency, fall back to
-   the driver that competency belongs to. */
-function currentSlice() {
-  if (S.slice) return S.slice;
-  const c = S.comp ? compById(S.comp) : null;
-  return c ? { type: 'driver', id: c.driver.id } : { type: 'level', id: S.lens };
-}
-
-/* A level slice *is* the lens, so the two must never drift apart — otherwise
-   the breadcrumb names one level while the page shows another. Every change of
-   level goes through here. */
 function setLens(id) {
   S.lens = id;
-  if (S.slice && S.slice.type === 'level') S.slice = { type: 'level', id: id };
   save();
 }
 
 function goZoom(zoom) {
-  const patch = { zoom, mode: 'explore' };
-  if (zoom === 1) patch.slice = currentSlice();
-  if (zoom < 3) patch.beh = null;
-  if (zoom < 2) patch.comp = null;
-  if (zoom < 1) patch.slice = null;
+  const patch = { zoom, mode: 'explore', menu: false };
+  if (zoom < 2) patch.beh = null;
+  if (zoom < 1) patch.comp = null;
   go(patch);
 }
 
@@ -1794,6 +1933,9 @@ function topbar() {
     '<button class="mode" data-act="mode" data-mode="' + id + '" aria-current="' + (S.mode === id) + '">' + label + '</button>';
   return (
     '<header class="topbar"><div class="topbar-inner">' +
+    '<button class="menu-btn" data-act="toggle-menu" aria-expanded="' + (S.menu ? 'true' : 'false') + '">' +
+    '<span class="mb-bars" aria-hidden="true"><i></i><i></i><i></i></span>' +
+    '<span class="mb-word">Menu</span></button>' +
     '<button class="brandline" data-act="home">' + logoMark() +
     '<span class="divider" aria-hidden="true"></span>' +
     '<span class="app-name">Leadership<br>Framework</span></button>' +
@@ -1802,17 +1944,58 @@ function topbar() {
   );
 }
 
+/* ---------- The menu -------------------------------------------------------
+   Every one of the thirty behaviours is reachable from here in two clicks, so
+   nobody has to retrace their steps through the diagram to change subject.
+   ------------------------------------------------------------------------- */
+
+function drawer() {
+  const compRow = (c) =>
+    '<button class="dw-comp" style="' + compVars(c) + '" data-act="open-comp" data-comp="' + c.id + '"' +
+    (S.comp === c.id ? ' aria-current="true"' : '') + '>' +
+    '<span class="dw-badge">' + icon(c.icon, 16) + '</span>' +
+    '<span class="dw-comp-name">' + esc(c.name) + '</span></button>';
+
+  const group = (d, i) =>
+    '<div class="dw-group" style="' + driverVars(d) + '">' +
+    '<button class="dw-domain" data-act="open-driver" data-driver="' + d.id + '">' +
+    '<span class="dw-dot" aria-hidden="true"></span>' +
+    '<span class="dw-domain-name">' + esc(d.name) + '</span>' +
+    '<span class="dw-n">' + pad2(i + 1) + '</span></button>' +
+    '<div class="dw-comps">' + d.competencies.map(compRow).join('') + '</div></div>';
+
+  const lensRow = LEVELS.map(
+    (l) =>
+      '<button class="dw-lens" data-act="set-lens" data-level="' + l.id + '" ' +
+      'aria-pressed="' + (l.id === S.lens) + '" style="--lens-dot:' + l.color + '">' +
+      '<span class="dw-lens-name">' + esc(l.name) + '</span>' +
+      '<span class="dw-lens-sub">' + esc(l.identity) + '</span></button>'
+  ).join('');
+
+  return (
+    '<div class="dw-backdrop" data-act="close-menu"></div>' +
+    '<aside class="drawer" role="dialog" aria-modal="true" aria-label="Framework menu">' +
+    '<div class="dw-top"><span class="dw-title">Go anywhere</span>' +
+    '<button class="dw-close" data-act="close-menu" aria-label="Close menu">' +
+    '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+    'stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>' +
+    '<div class="dw-scroll">' +
+    '<button class="dw-link" data-act="zoom" data-zoom="0"' + (S.zoom === 0 ? ' aria-current="true"' : '') +
+    '>The whole framework</button>' +
+    DRIVERS.map(group).join('') +
+    '<div class="dw-sec"><span class="dw-label">Viewing level</span>' +
+    '<p class="dw-note">A lens on the same ten competencies — it changes what good looks like, not what is measured.</p>' +
+    '<div class="dw-lenses">' + lensRow + '</div></div>' +
+    '<div class="dw-sec"><span class="dw-label">Assessment</span>' +
+    '<button class="dw-link" data-act="mode" data-mode="assess">Rate yourself or a team member</button></div>' +
+    '</div></aside>'
+  );
+}
+
 function zoomRail() {
-  const slice = S.zoom >= 1 ? currentSlice() : null;
   const crumbs = [{ label: 'Framework', zoom: 0 }];
-  if (slice) {
-    crumbs.push({
-      label: slice.type === 'driver' ? driverById(slice.id).name : levelById(slice.id).name,
-      zoom: 1,
-    });
-  }
-  if (S.comp) crumbs.push({ label: compById(S.comp).name, zoom: 2 });
-  if (S.beh) crumbs.push({ label: behById(S.comp, S.beh).name, zoom: 3 });
+  if (S.comp) crumbs.push({ label: compById(S.comp).name, zoom: 1 });
+  if (S.beh) crumbs.push({ label: behById(S.comp, S.beh).name, zoom: 2 });
 
   const crumbHtml = crumbs
     .map((c, i) => {
@@ -1985,6 +2168,7 @@ function domainRing(driver) {
 function competencyRing(c) {
   return ring({
     geo: RINGS.competency,
+    cls: 'comp-ring',
     vars:
       '--core:' + c.fill + ';--core-ink:' + c.ink +
       ';--core-sub:' + (c.ink === '#ffffff' ? 'rgba(255,255,255,0.8)' : 'rgba(21,7,33,0.7)'),
@@ -2006,9 +2190,8 @@ function competencyRing(c) {
 }
 
 /* ---------- Competency card ------------------------------------------------
-   The unit that carries a competency everywhere it is listed. Clicking one
-   expands it in place rather than navigating, so you never lose your footing
-   in the domain you were reading.
+   The unit that carries a competency wherever it is listed. It is also the
+   whole story on a narrow screen, where the ring is too wide to read.
    ------------------------------------------------------------------------- */
 
 function compCard(c, opts) {
@@ -2021,36 +2204,49 @@ function compCard(c, opts) {
       ? ''
       : '<span class="cc-beh">' + c.behaviours.map((b) => esc(b.name)).join(' &middot; ') + '</span>') +
     '</span>' +
-    '<span class="cc-cta">Expand</span></button>'
+    '<span class="cc-cta" aria-hidden="true">&rarr;</span></button>'
   );
 }
 
-/* ---------- Zoom 0: framework ---------------------------------------------
-   Leads with the framework itself — two domains, with the competencies inside
-   each one visible without a click. Level comes afterwards and explains
-   itself, because it is a lens on the framework rather than the way in.
+/* ---------- Screen 1: the framework ----------------------------------------
+   The diagram *is* the interface. Both domains are drawn full width, one under
+   the other, and clicking any competency in either ring opens it. Nothing
+   stands between the reader and the framework — the menu carries the rest.
    ------------------------------------------------------------------------- */
 
-function domainPanel(driver) {
+function domainSection(driver, i) {
   return (
-    '<section class="domain" style="' + driverVars(driver) + '">' +
-    '<button class="domain-dial" data-act="open-driver" data-driver="' + driver.id + '" ' +
-    'aria-label="Explore ' + esc(driver.name) + '">' +
-    '<span class="dd-face"><span class="dd-title">' +
-    driver.lines.map((t) => esc(t)).join('<br>') + '</span></span></button>' +
-    '<div class="domain-head">' +
+    '<section class="fw-domain" id="domain-' + driver.id + '" style="' + driverVars(driver) + '" ' +
+    'aria-labelledby="dh-' + driver.id + '">' +
+    '<div class="fwd-head">' +
+    '<span class="fwd-num" aria-hidden="true">' + pad2(i + 1) + '</span>' +
+    '<div class="fwd-text">' +
     '<span class="eyebrow">' + esc(driver.kicker) + '</span>' +
-    '<p class="domain-blurb">' + esc(driver.blurb) + '</p>' +
+    '<h2 id="dh-' + driver.id + '">' + esc(driver.name) + '</h2>' +
+    '<p>' + esc(driver.blurb) + '</p></div>' +
+    '<span class="fwd-count">5 competencies<br>15 behaviours</span>' +
     '</div>' +
-    '<div class="domain-list">' + driver.competencies.map((c) => compCard(c, { compact: true })).join('') + '</div>' +
-    '<button class="btn small domain-cta" data-act="open-driver" data-driver="' + driver.id + '">' +
-    'Explore ' + esc(driver.name) + ' &rarr;</button>' +
+    domainRing(driver) +
+    '<p class="ring-note">Click a competency to open its three behaviours.</p>' +
+    '<div class="comp-list page-list">' + driver.competencies.map((c) => compCard(c)).join('') + '</div>' +
     '</section>'
   );
 }
 
 function viewFramework() {
   const lens = levelById(S.lens);
+
+  const steps = [
+    ['Two domains', 'how leaders build culture, and how they drive operations'],
+    ['Ten competencies', 'five around each domain — click one to open it'],
+    ['Thirty behaviours', 'three inside every competency, and the thing you rate'],
+  ]
+    .map(
+      (s, i) =>
+        '<li class="step"><span class="st-n">' + pad2(i + 1) + '</span>' +
+        '<b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'
+    )
+    .join('');
 
   const levelRows = LEVELS.map(
     (l) =>
@@ -2065,32 +2261,28 @@ function viewFramework() {
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
     '<div class="hero">' +
+    '<div class="hero-text">' +
     '<span class="eyebrow">Cashies</span>' +
     '<h1 class="headline">All For: 1 Leadership Framework</h1>' +
     '<p class="lede-strong">A shared standard for what good leadership looks like at Cashies.</p>' +
-    '<p class="prose">The framework brings together two domains of leadership, ten competencies and thirty ' +
-    'observable behaviours. Explore a domain below to see what good looks like, and how expectations grow ' +
-    'from Foundations through to Enterprise.</p>' +
+    '</div>' +
+    '<ol class="steps">' + steps + '</ol>' +
     '</div>' +
 
-    '<section data-hideable aria-labelledby="s-explore">' +
-    '<div class="sec-head"><h2 id="s-explore">Explore the framework</h2></div>' +
-    '<div class="domains">' + DRIVERS.map(domainPanel).join('') + '</div>' +
-    '</section>' +
+    '<div data-hideable>' + DRIVERS.map(domainSection).join('') + '</div>' +
 
     '<section data-hideable class="grow" aria-labelledby="s-grow">' +
     '<div class="sec-head"><h2 id="s-grow">How leadership grows</h2>' +
-    '<p>The same competencies and behaviours apply right across the framework. What changes is the scope of ' +
-    'leadership expected.</p></div>' +
+    '<p>The same ten competencies and thirty behaviours apply right across the framework. What changes is ' +
+    'the scope of leadership expected — so the level is a lens you read through, not a place you go.</p></div>' +
     '<ul class="grow-list">' + levelRows + '</ul>' +
-    '<p class="sec-foot">Use the level control at the top of the page to change the expectations you are ' +
-    'viewing. <button class="linkish" data-act="open-level" data-level="' + lens.id + '">' +
-    'See all ten competencies at ' + esc(lens.name) + ' &rarr;</button></p>' +
+    '<p class="sec-foot">You are reading <b>' + esc(lens.name) + '</b> &mdash; ' + esc(lens.who) +
+    ' Change it in the rail above, or in the menu.</p>' +
     '</section>' +
 
     '<section class="search-sec" aria-labelledby="s-search">' +
-    '<div class="sec-head"><h2 id="s-search">Search the framework</h2>' +
-    '<p>Find a behaviour by name, definition or expectation.</p></div>' +
+    '<div class="sec-head"><h2 id="s-search">Or search for something</h2>' +
+    '<p>Across all thirty behaviours — names, definitions, expectations and rating descriptors.</p></div>' +
     searchBar('Search behaviours, definitions and expectations…') +
     '<div data-search-results>' + searchResults() + '</div>' +
     '</section>' +
@@ -2098,68 +2290,22 @@ function viewFramework() {
   );
 }
 
-/* ---------- Zoom 1: a domain or a level ----------------------------------- */
-
-function viewSlice() {
-  const slice = currentSlice();
-  const lens = levelById(S.lens);
-  const isDriver = slice.type === 'driver';
-  const driver = isDriver ? driverById(slice.id) : null;
-
-  const hero = isDriver
-    ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Domain</span>' +
-      '<h1 class="headline">' + esc(driver.name) + '</h1>' +
-      '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
-      domainRing(driver)
-    : '<div class="slice-head">' +
-      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
-      '<h1 class="headline">' + esc(lens.name) + '</h1>' +
-      '<p class="prose">' + esc(lens.who) + '</p>' +
-      '<div class="slice-meta"><div><span>Focus</span><b>' + esc(lens.focus) + '</b></div></div></div>';
-
-  const banner =
-    '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
-    '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency to see its behaviours, or ' +
-    'change level to compare what good looks like at ' +
-    esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>';
-
-  const blocks = isDriver
-    ? '<div class="comp-list">' + driver.competencies.map((c) => compCard(c)).join('') + '</div>'
-    : DRIVERS.map(
-        (d) =>
-          '<section class="domain-group" style="' + driverVars(d) + '">' +
-          '<button class="dg-head" data-act="open-driver" data-driver="' + d.id + '">' +
-          '<span class="dg-mark"></span><span class="dg-name">' + esc(d.name) + '</span>' +
-          '<span class="dg-go" aria-hidden="true">&rarr;</span></button>' +
-          '<div class="comp-list">' + d.competencies.map((c) => compCard(c)).join('') + '</div>' +
-          '</section>'
-      ).join('');
-
-  const body = S.query.trim() ? '<div data-search-results>' + searchResults() + '</div>' : blocks + '<div data-search-results></div>';
-
-  return (
-    '<div class="layer" data-motion="' + motionDir() + '">' +
-    hero + banner +
-    searchBar('Search ' + esc(lens.name) + ' expectations…') +
-    body +
-    '</div>'
-  );
-}
-
-/* ---------- Zoom 2: the competency, expanded in place ----------------------
-   A dialog over whatever you were reading, rather than another full page, so
-   opening a competency never costs you your place in the domain.
+/* ---------- Screen 2: one competency ---------------------------------------
+   The same ring one level down: the competency at the centre, its three
+   behaviours around it, then each behaviour written out at all three levels so
+   the growth is visible without navigating anywhere.
    ------------------------------------------------------------------------- */
 
-function compExpand() {
+function viewCompetency() {
   const c = compById(S.comp);
   const lens = levelById(S.lens);
+  const pos = c.driver.competencies.indexOf(c);
+  const siblings = c.driver.competencies.filter((x) => x.id !== c.id);
 
   const blocks = c.behaviours
     .map(
       (b, i) =>
-        '<div class="xb">' +
+        '<div class="xb" id="beh-' + b.id + '">' +
         '<div class="xb-top"><span class="xb-num">' + pad2(i + 1) + '</span>' +
         '<div><h3>' + esc(b.name) + '</h3><p>' + esc(b.definition) + '</p></div></div>' +
         '<div class="xb-rungs">' +
@@ -2176,26 +2322,33 @@ function compExpand() {
     .join('');
 
   return (
-    '<div class="expand-backdrop" data-act="close-expand"></div>' +
-    '<div class="expand-wrap" data-act="close-expand">' +
-    '<div class="expand-card" style="' + compVars(c) + ';' + driverVars(c.driver) + '" role="dialog" ' +
-    'aria-modal="true" aria-label="' + esc(c.name) + '">' +
-    '<button class="expand-close" data-act="close-expand" aria-label="Close">' +
-    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" ' +
-    'stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
-    '<div class="xc-head">' +
-    '<span class="xc-badge">' + icon(c.icon, 32) + '</span>' +
-    '<div><button class="eyebrow xc-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    '<div class="layer" data-motion="' + motionDir() + '" style="' + compVars(c) + ';' + driverVars(c.driver) + '">' +
+    '<div class="comp-hero">' +
+    '<span class="ch-badge">' + icon(c.icon, 30) + '</span>' +
+    '<div class="ch-text">' +
+    '<button class="eyebrow ch-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
-    '<h2>' + esc(c.name) + '</h2></div></div>' +
-    '<p class="xc-lede">Three observable behaviours. Pick one from the ring, or read how each expectation ' +
-    'grows from Foundations to Enterprise below — your level, <b>' + esc(lens.name) + '</b>, is marked.</p>' +
-    '<div class="xc-body">' + competencyRing(c) + blocks + '</div>' +
-    '</div></div>'
+    '<h1 class="headline">' + esc(c.name) + '</h1>' +
+    '<p class="prose">Competency ' + (pos + 1) + ' of 5 in ' + esc(c.driver.name) +
+    '. Three observable behaviours sit inside it.</p></div></div>' +
+
+    competencyRing(c) +
+
+    '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
+    '<span><b>Reading at ' + esc(lens.name) + '.</b> Every behaviour below is written out at all three ' +
+    'levels so you can see how the expectation grows — the level you are viewing is marked.</span></div>' +
+
+    '<div class="xbs">' + blocks + '</div>' +
+
+    '<section class="more"><div class="sec-head"><h2>More in ' + esc(c.driver.name) + '</h2></div>' +
+    '<div class="comp-list">' + siblings.map((x) => compCard(x, { compact: true })).join('') + '</div>' +
+    '<p class="sec-foot"><button class="linkish" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    'Back to the framework diagram &rarr;</button></p></section>' +
+    '</div>'
   );
 }
 
-/* ---------- Zoom 3: behaviour --------------------------------------------- */
+/* ---------- Screen 3: one behaviour --------------------------------------- */
 
 function viewBehaviour() {
   const c = compById(S.comp);
@@ -2556,14 +2709,10 @@ function currentView() {
     if (S.a.stage === 'rate') return { html: viewAssessStep(), hint: 'Draft saves as you go' };
     return { html: viewAssessSetup(), hint: 'Nothing is sent anywhere' };
   }
-  if (S.zoom === 3 && S.beh) return { html: viewBehaviour(), hint: 'Esc to go back' };
-  if (S.zoom === 2 && S.comp) {
-    // Whatever you opened the competency from stays behind it.
-    return { html: (S.slice ? viewSlice() : viewFramework()) + compExpand(), hint: 'Esc to close' };
-  }
-  if (S.zoom === 1) return { html: viewSlice(), hint: 'Esc to go back' };
+  if (S.zoom === 2 && S.beh) return { html: viewBehaviour(), hint: 'Esc to go back' };
+  if (S.zoom === 1 && S.comp) return { html: viewCompetency(), hint: 'Esc to go back' };
   S.zoom = 0;
-  return { html: viewFramework(), hint: 'Press / to search' };
+  return { html: viewFramework(), hint: 'Menu jumps anywhere · press / to search' };
 }
 
 function render(opts) {
@@ -2575,10 +2724,14 @@ function render(opts) {
     (S.mode === 'explore' ? zoomRail() : '') +
     '<main>' + view.html + '</main>' +
     footer(view.hint) +
-    '</div>';
+    '</div>' +
+    (S.menu ? drawer() : '');
 
-  const expanded = S.mode === 'explore' && S.zoom === 2;
-  document.body.style.overflow = expanded ? 'hidden' : '';
+  document.body.style.overflow = S.menu ? 'hidden' : '';
+  if (S.menu) {
+    const first = document.querySelector('.dw-close');
+    if (first) first.focus();
+  }
 
   lastZoom = S.zoom;
   if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: 'auto' });
@@ -2587,11 +2740,15 @@ function render(opts) {
 /* ---------- Events -------------------------------------------------------- */
 
 const ACTIONS = {
-  home: () => go({ mode: 'explore', zoom: 0, slice: null, comp: null, beh: null, query: '' }),
+  home: () => go({ mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' }),
 
-  mode: (el) => go({ mode: el.dataset.mode }),
+  mode: (el) => go({ mode: el.dataset.mode, menu: false }),
 
   zoom: (el) => goZoom(Number(el.dataset.zoom)),
+
+  'toggle-menu': () => go({ menu: !S.menu }, { keepScroll: true }),
+
+  'close-menu': () => go({ menu: false }, { keepScroll: true }),
 
   'set-lens': (el) => {
     setLens(el.dataset.level);
@@ -2599,30 +2756,21 @@ const ACTIONS = {
     render({ keepScroll: true });
   },
 
-  'open-driver': (el) =>
-    go({ mode: 'explore', zoom: 1, slice: { type: 'driver', id: el.dataset.driver }, comp: null, beh: null, query: '' }),
-
-  'open-level': (el) => {
-    setLens(el.dataset.level);
-    go({ mode: 'explore', zoom: 1, slice: { type: 'level', id: el.dataset.level }, comp: null, beh: null, query: '' });
+  // A domain is not a screen of its own any more; it is a place on the
+  // framework diagram, so this scrolls the reader to its ring.
+  'open-driver': (el) => {
+    const id = el.dataset.driver;
+    go({ mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' });
+    const target = document.getElementById('domain-' + id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   },
 
-  'open-comp': (el) => {
-    const from = el.getBoundingClientRect();
-    go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: null }, { keepScroll: true });
-    growDialog(from);
-  },
-
-  // Closing returns to whatever was behind — the domain, or the framework.
-  'close-expand': (el, e) => {
-    if (el.classList.contains('expand-wrap') && e && e.target !== el) return;
-    go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
-  },
+  'open-comp': (el) => go({ mode: 'explore', zoom: 1, comp: el.dataset.comp, beh: null, menu: false }),
 
   'open-beh': (el) => {
     // Opening a specific level's rung switches the lens to that level.
     if (el.dataset.level) setLens(el.dataset.level);
-    go({ mode: 'explore', zoom: 3, comp: el.dataset.comp, beh: el.dataset.beh });
+    go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: el.dataset.beh, menu: false });
   },
 
   'clear-search': () => go({ query: '' }),
@@ -2733,27 +2881,6 @@ document.addEventListener('click', (e) => {
   if (fn) fn(el, e);
 });
 
-function growDialog(from) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const card = document.querySelector('.expand-card');
-  const backdrop = document.querySelector('.expand-backdrop');
-  if (!card) return;
-  const to = card.getBoundingClientRect();
-  if (!to.width || !from.width) return;
-  const scale = Math.min(from.width / to.width, 1);
-  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
-  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
-  const ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
-  card.animate(
-    [
-      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')', opacity: 0 },
-      { transform: 'none', opacity: 1 },
-    ],
-    { duration: 340, easing: ease }
-  );
-  if (backdrop) backdrop.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
-}
-
 /* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
    Decorative only — the diagram is fully usable without it. */
 function focusOrbit(orbit, key) {
@@ -2808,17 +2935,17 @@ document.addEventListener('keydown', (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
 
   if (e.key === 'Escape') {
+    if (S.menu) {
+      go({ menu: false }, { keepScroll: true });
+      return;
+    }
     if (typing) return;
     if (S.mode !== 'explore') return;
-    if (S.zoom === 2) {
-      go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
-    } else if (S.zoom > 0) {
-      goZoom(S.zoom - 1);
-    }
+    if (S.zoom > 0) goZoom(S.zoom - 1);
     return;
   }
 
-  if (e.key === '/' && !typing && S.mode === 'explore' && S.zoom < 2) {
+  if (e.key === '/' && !typing && S.mode === 'explore' && S.zoom === 0) {
     const q = document.getElementById('q');
     if (q) {
       e.preventDefault();

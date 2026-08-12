@@ -31,34 +31,36 @@ uses and a first-time reader does not have to be taught it.
 
 ## Using it
 
-**The first screen is the framework itself.** Two domains, with the five
-competencies inside each one visible immediately — nobody should have to click
-Build Culture to discover what Build Culture contains. Level comes *after* the
-framework and explains itself, because it is a lens on what you are reading
-rather than the way in.
+**The diagram is the interface.** The first screen is both domains drawn full
+width as radial diagrams, one under the other — no card to click through first,
+no level to choose before you have seen anything. All ten competency names are
+readable off the two rings, and clicking any one of them opens it.
 
-**Explore** goes four screens deep, moved through with the breadcrumb or `Esc`:
+Explore is three screens, moved through with the breadcrumb or `Esc`:
 
 | Screen | Shows |
 |---|---|
-| Framework | Both domains, with all ten competencies visible without a click |
-| Domain or level | One domain as its ring of five competencies, or all ten grouped by domain |
-| Competency | Expands in place over what you were reading — three behaviours, three levels each |
+| Framework | Both domains as rings, with all ten competencies named on them |
+| Competency | The same ring one level down — three behaviours around the competency — then each behaviour written out at all three levels |
 | Behaviour | One behaviour at one level, with the Needs Work / Great / Smashing It descriptors |
 
-**A competency expands rather than navigates.** Clicking one opens it as a
-dialog over the domain you were reading, growing out of the card you clicked,
-so you never lose your place. `Esc`, the close button or a click outside
-returns you exactly where you were.
+A three-sentence note at the top says what the three screens are before you
+touch anything: two domains, ten competencies, thirty behaviours.
 
-There is no "zoom" control. The hierarchy is real, but naming it after the
-design metaphor made people learn the interface architecture; the breadcrumb
-already says where you are.
+**The menu is how you move sideways.** Every domain, all ten competencies, the
+three levels and the assessment are one click away in the drawer, so changing
+subject never means retracing your steps back up the diagram. It opens from the
+top left and closes on `Esc`, the close button or a click outside.
+
+There is no "zoom" control and no separate domain page. The hierarchy is real,
+but a domain is a *place on the diagram* rather than a screen of its own —
+clicking a domain name anywhere scrolls you to its ring.
 
 **Level is a lens, not a classification.** The rail says *Viewing level*, not
 *Your level* — a Store Manager may well switch to Enterprise to see what growth
-looks like. It sits on every screen and re-reads whatever you are looking at,
-and every screen states which level you are reading in plain words.
+looks like. It sits on every screen and re-reads whatever you are looking at.
+The competency screen sidesteps the question entirely by printing every
+behaviour at all three levels at once, with the one you are viewing marked.
 
 Press `/` to search across behaviour names, definitions, expectations and rating
 descriptors.
@@ -194,8 +196,12 @@ the circle behind them.
 
 The layout is verified by measurement rather than by eye — no chip spills its
 box, collides with the core, another chip or another node; no disc covers the
-core's own text; and the core title fits its column — at every width down to
-1010px, below which the diagram becomes a stacked list.
+core's own text; and the core title fits its column.
+
+**One representation at a time.** Below 1010px the five-point ring is replaced
+by a list of the same five competency cards, in the same order and colours,
+rather than being squeezed. The three-point competency ring is narrow enough to
+survive down to a phone, so it stays.
 
 ## Browser support
 
