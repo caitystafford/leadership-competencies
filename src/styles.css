@@ -746,6 +746,36 @@ svg.icon { display: block; }
 @keyframes fadeIn { from { opacity: 0; } }
 @keyframes slideIn { from { transform: translateX(-100%); } }
 
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(21, 7, 33, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 150ms ease both;
+}
+.confirm-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px 30px 22px;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+.confirm-box p {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #1c1332;
+}
+.confirm-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 .drawer {
   position: fixed;
   top: 0;
@@ -1423,7 +1453,7 @@ svg.icon { display: block; }
   @page { size: A4 portrait; margin: 12mm; }
 
   body { background: #fff !important; font-size: 10.5pt; }
-  .spectrum, .topbar, .rail, .footer, .rpt-actions, .toast, .print-hide { display: none !important; }
+  .spectrum, .topbar, .rail, .footer, .rpt-actions, .toast, .print-hide, .confirm-backdrop { display: none !important; }
 
   .layer { max-width: none; padding: 0; animation: none !important; }
 

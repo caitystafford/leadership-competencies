@@ -118,6 +118,7 @@ let S = {
 };
 
 let lastZoom = 0;
+let pendingConfirm = null;
 
 function save() {
   try {
@@ -1026,6 +1027,18 @@ function currentView() {
   return { html: viewFramework(), hint: 'Menu jumps anywhere · press / to search' };
 }
 
+function confirmDialog() {
+  return (
+    '<div class="confirm-backdrop">' +
+    '<div class="confirm-box">' +
+    '<p>' + esc(pendingConfirm.message) + '</p>' +
+    '<div class="confirm-btns">' +
+    '<button class="btn small" data-act="confirm-yes">' + esc(pendingConfirm.ok || 'OK') + '</button>' +
+    '<button class="btn ghost small" data-act="confirm-no">Cancel</button>' +
+    '</div></div></div>'
+  );
+}
+
 function render(opts) {
   const view = currentView();
   document.getElementById('app').innerHTML =
@@ -1036,9 +1049,10 @@ function render(opts) {
     '<main>' + view.html + '</main>' +
     footer(view.hint) +
     '</div>' +
-    (S.menu ? drawer() : '');
+    (S.menu ? drawer() : '') +
+    (pendingConfirm ? confirmDialog() : '');
 
-  document.body.style.overflow = S.menu ? 'hidden' : '';
+  document.body.style.overflow = (S.menu || pendingConfirm) ? 'hidden' : '';
   if (S.menu) {
     const first = document.querySelector('.dw-close');
     if (first) first.focus();
@@ -1095,20 +1109,23 @@ const ACTIONS = {
   'set-alevel': (el) => {
     const next = el.dataset.level;
     const rated = ratedCount();
-    // Each rating was judged against one level's descriptors. Switching level
-    // silently reinterprets them, so make that the assessor's call.
     if (rated > 0 && S.a.level && S.a.level !== next) {
       const from = levelById(S.a.level).name;
       const to = levelById(next).name;
-      const clear = confirm(
-        rated + ' behaviour' + (rated === 1 ? ' was' : 's were') + ' rated against ' + from + '. ' + to +
-          ' describes the same behaviours at a different scope, so those ratings may no longer hold.\n\n' +
-          'OK to clear them and rate again against ' + to + '. Cancel to keep them.'
-      );
-      if (clear) {
-        S.a.ratings = {};
-        S.a.step = 0;
-      }
+      pendingConfirm = {
+        message: rated + ' behaviour' + (rated === 1 ? ' was' : 's were') + ' rated against ' + from + '. ' + to +
+          ' describes the same behaviours at a different scope, so those ratings may no longer hold. Clear them and rate again against ' + to + '?',
+        ok: 'Clear ratings',
+        onConfirm: () => {
+          S.a.ratings = {};
+          S.a.step = 0;
+          S.a.level = next;
+          save();
+          render({ keepScroll: true });
+        },
+      };
+      render({ keepScroll: true });
+      return;
     }
     S.a.level = next;
     save();
@@ -1177,15 +1194,37 @@ const ACTIONS = {
   print: () => window.print(),
 
   reset: () => {
-    if (!confirm('Clear this assessment and start again? This cannot be undone.')) return;
-    S.a = blankAssessment();
-    save();
-    go({ mode: 'assess' });
-    toast('Assessment cleared');
+    pendingConfirm = {
+      message: 'Clear this assessment and start again? This cannot be undone.',
+      ok: 'Clear',
+      onConfirm: () => {
+        S.a = blankAssessment();
+        save();
+        go({ mode: 'assess' });
+        toast('Assessment cleared');
+      },
+    };
+    render({ keepScroll: true });
+  },
+
+  'confirm-yes': () => {
+    const fn = pendingConfirm && pendingConfirm.onConfirm;
+    pendingConfirm = null;
+    if (fn) fn();
+  },
+
+  'confirm-no': () => {
+    pendingConfirm = null;
+    render({ keepScroll: true });
   },
 };
 
 document.addEventListener('click', (e) => {
+  if (pendingConfirm && e.target.classList.contains('confirm-backdrop')) {
+    pendingConfirm = null;
+    render({ keepScroll: true });
+    return;
+  }
   const el = e.target.closest('[data-act]');
   if (!el || el.disabled) return;
   const fn = ACTIONS[el.dataset.act];
