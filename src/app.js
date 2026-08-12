@@ -7,8 +7,8 @@
 const FRAMEWORK = /*__FRAMEWORK__*/ null;
 
 /* ---------- Framework meta ------------------------------------------------
-   Level names and all behaviour copy come from the workbook. The tagline,
-   scope and "typically" lines are programme copy written for the app — edit
+   Behaviour copy comes from the workbook. The level identities, audiences and
+   focus lines are the programme's own language for the three stages — edit
    them here rather than in the spreadsheet.
    ------------------------------------------------------------------------- */
 
@@ -16,26 +16,26 @@ const LEVELS = [
   {
     id: 'foundations',
     name: 'Foundations',
+    identity: 'Leaders in Future',
     color: C.blueGreen,
-    tagline: 'Leading yourself. Doing what you say you will do, learning quickly, and lifting the people around you.',
-    scope: 'Own work and immediate team',
-    who: 'Team members and emerging leaders',
+    who: 'Emerging leaders, ASMs, MTs and high performers preparing for leadership.',
+    focus: 'Self, task and immediate influence.',
   },
   {
     id: 'momentum',
     name: 'Momentum',
+    identity: 'Leaders in Action',
     color: C.yellow,
-    tagline: 'Leading a team. Setting the standard, coaching people, and delivering results through others.',
-    scope: 'A team, store or function',
-    who: 'Store and team leaders',
+    who: 'Store Managers and functional leaders responsible for delivering through a team.',
+    focus: 'Team, consistency and performance through others.',
   },
   {
     id: 'enterprise',
     name: 'Enterprise',
+    identity: 'Leaders at Scale',
     color: C.purple,
-    tagline: 'Leading the business. Designing the systems, culture and trade offs that hold up at scale.',
-    scope: 'Multiple teams, functions or markets',
-    who: 'Senior and executive leaders',
+    who: 'Regional and senior leaders with broader business responsibility.',
+    focus: 'Systems, strategy and long term impact.',
   },
 ];
 
@@ -287,30 +287,19 @@ function zoomRail() {
     })
     .join('');
 
-  const labels = ['Whole framework', 'Driver or level', 'Competency', 'Behaviour'];
-  const enabled = [true, S.zoom >= 1 || !!S.comp, !!S.comp, !!S.beh];
-  const stops = labels
-    .map(
-      (label, i) =>
-        '<button class="stop" data-act="zoom" data-zoom="' + i + '" title="' + esc(label) + '" ' +
-        'aria-label="Zoom to ' + esc(label.toLowerCase()) + '" aria-current="' + (S.zoom === i) + '"' +
-        (enabled[i] ? '' : ' disabled') + '><span></span></button>'
-    )
-    .join('');
-
   const lensBtns = LEVELS.map(
     (l) =>
       '<button class="lens-btn" data-act="set-lens" data-level="' + l.id + '" ' +
-      'style="--lens-dot:' + l.color + '" aria-pressed="' + (l.id === S.lens) + '">' + esc(l.name) + '</button>'
+      'style="--lens-dot:' + l.color + '" aria-pressed="' + (l.id === S.lens) + '" ' +
+      'title="' + esc(l.identity) + '">' + esc(l.name) + '</button>'
   ).join('');
 
   return (
     '<div class="rail"><div class="rail-inner">' +
-    '<nav class="crumbs" aria-label="Framework depth">' + crumbHtml + '</nav>' +
+    '<nav class="crumbs" aria-label="Where you are">' + crumbHtml + '</nav>' +
     '<div class="rail-right">' +
-    '<div class="lens"><span class="rail-label">Level</span><div class="lens-set" role="group" aria-label="Leadership level">' +
-    lensBtns + '</div></div>' +
-    '<div class="lens"><span class="rail-label">Zoom</span><div class="stops">' + stops + '</div></div>' +
+    '<div class="lens"><span class="rail-label">Your level</span>' +
+    '<div class="lens-set" role="group" aria-label="Leadership level">' + lensBtns + '</div></div>' +
     '</div></div></div>'
   );
 }
@@ -438,8 +427,9 @@ function orbit(driver) {
 }
 
 /* ---------- Zoom 0: framework ---------------------------------------------
-   Two circles and nothing else. Everything below this screen is reached by
-   opening one of them, so the entry point stays legible.
+   The entry point has to orient someone who has never seen All For: 1: what
+   this is, how it is organised, which level applies to them, and what they
+   can do here — in that order, before anything asks them to explore.
    ------------------------------------------------------------------------- */
 
 function driverDial(driver) {
@@ -462,11 +452,12 @@ function driverDial(driver) {
     '<span class="dial-ring">' + dots +
     '<span class="dial-face">' +
     '<span class="dial-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
     '</span></span>' +
     '<span class="dial-meta">' +
+    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
     '<span class="dial-blurb">' + esc(driver.blurb) + '</span>' +
-    '<span class="dial-open">5 competencies &middot; 15 behaviours <b>Open &rarr;</b></span>' +
+    '<span class="dial-open"><span>5 competencies &middot; 15 behaviours</span>' +
+    '<b>Open &rarr;</b></span>' +
     '</span></button>'
   );
 }
@@ -474,35 +465,52 @@ function driverDial(driver) {
 function viewFramework() {
   const lens = levelById(S.lens);
 
-  const levelRow = LEVELS.map(
+  const levelCards = LEVELS.map(
     (l) =>
-      '<button class="level-row" data-act="open-level" data-level="' + l.id + '"' +
+      '<button class="level-card" data-act="open-level" data-level="' + l.id + '"' +
       (l.id === S.lens ? ' data-current="true"' : '') + '>' +
-      '<span class="lr-dot" style="background:' + l.color + '"></span>' +
-      '<span class="lr-text"><b>' + esc(l.name) + '</b><span>' + esc(l.who) + '</span></span>' +
-      '<span class="lr-go" aria-hidden="true">&rarr;</span></button>'
+      '<span class="lc-top"><span class="lc-dot" style="background:' + l.color + '"></span>' +
+      '<span class="lc-identity">' + esc(l.identity) + '</span></span>' +
+      '<span class="lc-name">' + esc(l.name) + '</span>' +
+      '<span class="lc-who">' + esc(l.who) + '</span>' +
+      '<span class="lc-focus"><b>Focus</b>' + esc(l.focus) + '</span>' +
+      '<span class="lc-state">' + (l.id === S.lens ? 'Your level' : 'Choose this level') + '</span>' +
+      '</button>'
   ).join('');
-
-  const body = S.query.trim()
-    ? '<div data-search-results>' + searchResults() + '</div>'
-    : '<section class="dials" aria-label="The two drivers">' + DRIVERS.map(driverDial).join('') + '</section>' +
-      '<section class="levels" aria-label="Leadership levels">' +
-      '<div class="levels-head"><h2>Three levels</h2>' +
-      '<p>The same thirty behaviours run through every level — what changes is scope. ' +
-      'You are reading at <b>' + esc(lens.name) + '</b>.</p></div>' +
-      '<div class="level-list">' + levelRow + '</div></section>' +
-      '<div data-search-results></div>';
 
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
     '<div class="hero">' +
-    '<span class="eyebrow">Cashies &middot; All For: 1</span>' +
-    '<h1 class="headline">The leadership framework</h1>' +
-    '<p class="prose lede">Two drivers hold the whole thing. Open one to see its five competencies, ' +
-    'then a competency to see the behaviours underneath it.</p>' +
+    '<span class="eyebrow">Cashies</span>' +
+    '<h1 class="headline">All For: 1 Leadership Framework</h1>' +
+    '<p class="lede-strong">A shared standard for what good leadership looks like at Cashies.</p>' +
+    '<p class="prose">The framework shows the behaviours we expect from our leaders, how those expectations ' +
+    'change as leadership scope grows, and what Needs Work, Great and Smashing It look like in practice. ' +
+    'It brings together two sides of leadership: how we build culture and how we drive operations.</p>' +
     '</div>' +
+
+    '<section data-hideable aria-labelledby="s-level">' +
+    '<div class="sec-head"><h2 id="s-level">Start with your leadership level</h2>' +
+    '<p>Choose the level that best reflects the scope you lead at today. You can change levels at any time ' +
+    'to compare how the expectations grow.</p></div>' +
+    '<div class="level-list">' + levelCards + '</div>' +
+    '<p class="sec-foot">Your level changes the expectations you see throughout the framework. ' +
+    'You are currently viewing <b>' + esc(lens.name) + '</b>.</p>' +
+    '</section>' +
+
+    '<section data-hideable aria-labelledby="s-areas">' +
+    '<div class="sec-head"><h2 id="s-areas">Explore the two sides of leadership</h2>' +
+    '<p>Every competency sits in one of two leadership areas.</p></div>' +
+    '<div class="dials">' + DRIVERS.map(driverDial).join('') + '</div>' +
+    '<p class="sec-foot">Open an area to explore its competencies and behaviours.</p>' +
+    '</section>' +
+
+    '<section class="search-sec" aria-labelledby="s-search">' +
+    '<div class="sec-head"><h2 id="s-search">Search the framework</h2>' +
+    '<p>Find a behaviour by name, definition or expectation.</p></div>' +
     searchBar('Search behaviours, definitions and expectations…') +
-    body +
+    '<div data-search-results>' + searchResults() + '</div>' +
+    '</section>' +
     '</div>'
   );
 }
@@ -538,19 +546,20 @@ function viewSlice() {
 
   const hero = isDriver
     ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Driver</span>' +
+      '<span class="eyebrow">Leadership area</span>' +
       '<h1 class="headline">' + esc(driver.name) + '</h1>' +
       '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
       orbit(driver) +
-      '<p class="ring-note">Pick a competency from the ring, or read them below at ' +
-      '<b>' + esc(lens.name) + '</b> level.</p>'
+      '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
+      '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency below, or change level to ' +
+      'compare what good looks like at ' +
+      esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>'
     : '<div class="slice-head">' +
-      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3</span>' +
+      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
       '<h1 class="headline">' + esc(lens.name) + '</h1>' +
-      '<p class="prose">' + esc(lens.tagline) + '</p>' +
+      '<p class="prose">' + esc(lens.who) + '</p>' +
       '<div class="slice-meta">' +
-      '<div><span>Scope</span><b>' + esc(lens.scope) + '</b></div>' +
-      '<div><span>Typically</span><b>' + esc(lens.who) + '</b></div>' +
+      '<div><span>Focus</span><b>' + esc(lens.focus) + '</b></div>' +
       '</div></div>';
 
   let blocks;
@@ -612,8 +621,8 @@ function viewCompetency() {
     '<button class="eyebrow ch-driver" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
     '<h1 class="headline">' + esc(c.name) + '</h1>' +
-    '<p class="prose">Three behaviours. Read across to see how each one changes shape as scope grows — ' +
-    esc(lens.name) + ' is marked.</p>' +
+    '<p class="prose">This competency has three observable behaviours. Compare how the expectation grows from ' +
+    'Foundations to Momentum to Enterprise. Your selected level, <b>' + esc(lens.name) + '</b>, is highlighted.</p>' +
     '</div></div>' + blocks + '</div>'
   );
 }
@@ -674,7 +683,7 @@ function viewAssessSetup() {
   const levelChoice = (l) =>
     '<button class="choice" style="--accent:' + l.color + ';--accent-wash:' + washOf(l.color, 0.18) + '" ' +
     'data-act="set-alevel" data-level="' + l.id + '" aria-pressed="' + (a.level === l.id) + '">' +
-    '<b>' + esc(l.name) + '</b><span>' + esc(l.who) + ' &middot; ' + esc(l.scope) + '</span></button>';
+    '<b>' + esc(l.name) + '</b><span>' + esc(l.identity) + ' &middot; ' + esc(l.focus) + '</span></button>';
 
   return (
     '<div class="layer narrow" data-motion="flat">' +
@@ -850,7 +859,7 @@ function viewReport() {
     return (
       '<section class="dpanel" style="' + driverVars(d) + '">' +
       '<div class="dp-head">' + gauge(ds, { size: 116, color: d.core }) +
-      '<div><span class="eyebrow">Driver</span><h3>' + esc(d.name) + '</h3>' +
+      '<div><span class="eyebrow">Leadership area</span><h3>' + esc(d.name) + '</h3>' +
       '<p>' + esc(d.kicker) + '</p></div></div>' +
       '<div class="dp-scores">' + d.competencies.map(compBar).join('') + '</div>' +
       '</section>'
@@ -1168,7 +1177,7 @@ document.addEventListener('input', (e) => {
     const host = document.querySelector('[data-search-results]');
     if (host) host.innerHTML = searchResults();
     const searching = !!S.query.trim();
-    document.querySelectorAll('.layer > section').forEach((n) => {
+    document.querySelectorAll('[data-hideable]').forEach((n) => {
       n.hidden = searching;
     });
     const clear = document.querySelector('[data-act="clear-search"]');

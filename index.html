@@ -253,28 +253,6 @@ svg.icon { display: block; }
 .lens-btn[aria-pressed='true'] { background: var(--paper); color: var(--ink); box-shadow: var(--shadow-sm); }
 .lens-btn[aria-pressed='true']::before { opacity: 1; }
 
-.stops { display: flex; gap: 2px; background: var(--wash-deep); border-radius: 999px; padding: 3px; }
-.stop {
-  background: none;
-  border: 0;
-  cursor: pointer;
-  width: 28px;
-  height: 25px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  transition: background-color 140ms ease, opacity 140ms ease;
-}
-.stop span { display: block; border-radius: 2px; background: rgba(21, 7, 33, 0.4); transition: background-color 140ms ease; }
-.stop:nth-child(1) span { width: 15px; height: 9px; }
-.stop:nth-child(2) span { width: 12px; height: 9px; }
-.stop:nth-child(3) span { width: 9px; height: 9px; }
-.stop:nth-child(4) span { width: 6px; height: 9px; }
-.stop:hover:not(:disabled) { background: rgba(21, 7, 33, 0.06); }
-.stop:disabled { opacity: 0.26; cursor: not-allowed; }
-.stop[aria-current='true'] { background: var(--navy); }
-.stop[aria-current='true'] span { background: #fff; }
-
 /* ---------- Layers -------------------------------------------------------- */
 
 .layer { max-width: var(--wide); margin: 0 auto; padding: 52px var(--pad) 90px; }
@@ -324,18 +302,99 @@ svg.icon { display: block; }
 
 /* ---------- Hero ---------------------------------------------------------- */
 
-.hero { margin-bottom: 46px; max-width: 46ch; }
-.hero h1 { font-size: clamp(40px, 6.2vw, 62px); margin: 14px 0 0; }
-.hero .lede { margin-top: 20px; }
-
-/* ---------- Zoom 0: the two dials ----------------------------------------- */
-
-.dials {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 64px;
+.hero { margin-bottom: 56px; max-width: 62ch; }
+.hero h1 { font-size: clamp(38px, 5.6vw, 58px); margin: 14px 0 0; }
+.lede-strong {
+  margin-top: 22px;
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.34;
+  max-width: 26ch;
 }
+.hero .prose { margin-top: 16px; }
+
+/* ---------- Sections ------------------------------------------------------ */
+
+.layer > section { margin-bottom: 60px; }
+.layer > section:last-child { margin-bottom: 0; }
+
+.sec-head { margin-bottom: 22px; max-width: 62ch; }
+.sec-head h2 {
+  font-size: clamp(21px, 2.4vw, 26px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.sec-head p { margin-top: 9px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.55; }
+.sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
+.sec-foot b { color: var(--ink); }
+
+/* ---------- Level cards --------------------------------------------------- */
+
+.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+.level-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 22px 22px 18px;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.level-card:active { transform: scale(0.99); }
+.lc-top { display: flex; align-items: center; gap: 9px; }
+.lc-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
+.lc-identity { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+.lc-name {
+  font-size: 27px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  margin: 10px 0 8px;
+}
+.lc-who { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
+.lc-focus {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.lc-focus b {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+}
+.lc-state {
+  margin-top: 16px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.level-card[data-current='true'] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.level-card[data-current='true'] .lc-state { color: var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+  .level-card:hover { border-color: rgba(21, 7, 33, 0.32); box-shadow: var(--shadow-sm); }
+}
+
+/* ---------- The two leadership areas -------------------------------------- */
+
+.dials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; }
 
 .dial {
   position: relative;
@@ -350,7 +409,7 @@ svg.icon { display: block; }
   text-align: center;
 }
 
-.dial-ring { position: relative; display: block; width: min(100%, 400px); aspect-ratio: 1; }
+.dial-ring { position: relative; display: block; width: min(100%, 340px); aspect-ratio: 1; }
 .dial-dot {
   position: absolute;
   width: 13%;
@@ -368,11 +427,8 @@ svg.icon { display: block; }
   border-radius: 999px;
   background: var(--core);
   color: var(--core-ink);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7em;
+  display: grid;
+  place-items: center;
   padding: 12%;
   transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
 }
@@ -381,28 +437,33 @@ svg.icon { display: block; }
   text-transform: uppercase;
   letter-spacing: -0.045em;
   line-height: 0.9;
-  font-size: clamp(26px, 3.4vw, 44px);
-}
-.dial-kicker {
-  font-size: clamp(11px, 1.15vw, 14px);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--core-sub);
-  max-width: 18ch;
+  font-size: clamp(26px, 3.2vw, 42px);
 }
 
 .dial-meta { display: block; max-width: 34ch; }
-.dial-blurb { display: block; font-size: 15px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
-.dial-open {
+.dial-kicker {
   display: block;
-  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.dial-blurb { display: block; font-size: 15.5px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
+.dial-open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
-.dial-open b { color: var(--ink); margin-left: 6px; white-space: nowrap; }
+.dial-open b { color: var(--ink); white-space: nowrap; }
 
 @media (hover: hover) and (pointer: fine) {
   .dial:hover .dial-face, .dial:focus-visible .dial-face { transform: scale(0.93); box-shadow: var(--shadow-md); }
@@ -410,38 +471,9 @@ svg.icon { display: block; }
 }
 .dial:active .dial-face { transform: scale(0.9); }
 
-/* ---------- Zoom 0: levels ------------------------------------------------ */
+/* ---------- Search section ------------------------------------------------ */
 
-.levels { border-top: 1px solid var(--rule); padding-top: 34px; }
-.levels-head { margin-bottom: 22px; }
-.levels-head h2 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
-.levels-head p { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); max-width: 60ch; }
-
-.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-.level-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  text-align: left;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out);
-}
-.level-row:active { transform: scale(0.99); }
-.level-row[data-current='true'] { border-color: var(--ink); }
-.lr-dot { width: 12px; height: 12px; border-radius: 999px; flex-shrink: 0; }
-.lr-text { flex: 1; min-width: 0; }
-.lr-text b { display: block; font-size: 16px; font-weight: 800; letter-spacing: -0.015em; }
-.lr-text span { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 1px; }
-.lr-go { color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) {
-  .level-row:hover { border-color: rgba(21, 7, 33, 0.3); }
-  .level-row:hover .lr-go { transform: translateX(3px); }
-}
+.search-sec .searchbar { margin-bottom: 18px; }
 
 /* ---------- Zoom 1: heading ----------------------------------------------- */
 
@@ -458,8 +490,21 @@ svg.icon { display: block; }
 }
 .slice-meta div b { font-size: 15px; font-weight: 800; }
 
-.ring-note { text-align: center; font-size: 14px; color: var(--ink-soft); margin: 14px 0 40px; }
-.ring-note b { color: var(--ink); }
+.level-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 15px 18px;
+  margin: 18px 0 34px;
+  font-size: 14.5px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+.level-banner b { color: var(--ink); }
+.lb-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; margin-top: 6px; }
 
 /* ---------- The ring ------------------------------------------------------ */
 
@@ -1212,7 +1257,10 @@ svg.icon { display: block; }
   .rail-right { margin-left: 0; width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
   .lens { justify-content: space-between; }
   .lens-set { flex: 1; min-width: 0; }
-  .lens-btn { flex: 1; justify-content: center; padding: 8px 4px; font-size: 10px; letter-spacing: 0.04em; }
+  /* The colour dot and its gap are what tip three pills over a phone's width.
+     The active pill still reads by its white fill. */
+  .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
+  .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
   .comp-head .ch-badge { width: 60px; height: 60px; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }
@@ -1320,29 +1368,26 @@ const LOGO_SRC = null;
 function logoMark(opts) {
   const o = opts || {};
   const ink = o.ink || '#ffffff';
-  const accent = o.accent || C.peach;
   if (LOGO_SRC) {
     return '<img class="logo-img" src="' + LOGO_SRC + '" alt="All For: 1" />';
   }
   return (
-    '<span class="logo" role="img" aria-label="All For: 1">' +
-    '<span style="color:' + ink + '">All For</span>' +
-    '<span class="logo-colon" style="color:' + accent + '">:</span>' +
-    '<span class="logo-one" style="color:' + accent + '">1</span>' +
-    '</span>'
+    '<span class="logo" role="img" aria-label="All For: 1" style="color:' + ink + '">' +
+    'All For<span class="logo-colon">:</span><span class="logo-one">1</span></span>'
   );
 }
 
-/* ---------- Drivers -------------------------------------------------------
-   The two halves of the framework. Copy taken from the All For: 1 competency
-   artwork.
+/* ---------- Leadership areas ----------------------------------------------
+   The two halves of the framework. Called "drivers" in the methodology; the
+   interface says "leadership area", which is what a first-time reader needs.
+   The code keeps the shorter internal name.
    ------------------------------------------------------------------------- */
 
 const DRIVERS = [
   {
-    id: 'building-culture',
-    name: 'Building Culture',
-    lines: ['Building', 'Culture.'],
+    id: 'build-culture',
+    name: 'Build Culture',
+    lines: ['Build', 'Culture.'],
     kicker: 'Values-focused, leadership skillset',
     blurb: 'How leaders shape behaviour, mindset, and environment.',
     core: C.navy,
@@ -1492,8 +1537,8 @@ function icon(name, size) {
 const FRAMEWORK = {"source":"All_For_1_Competency_Matrix_KF_Aligned.xlsx","competencies":[{"id":"responsibility","name":"Responsibility","behaviours":[{"id":"shows-up-consistently","name":"Shows up consistently","definition":"Delivers reliably and models commitment, especially when it counts.","levels":{"foundations":{"expectation":"Does what’s asked, shows dependability, and follows through.","ratings":{"needs-work":"Commitments are missed or completed inconsistently. Requires reminders, communicates late, or becomes unreliable when pressure increases.","great":"Does what’s asked, shows dependability, and follows through. Communicates early when a commitment is at risk.","smashing-it":"Anticipates commitments, plans ahead, and follows through without prompting. Helps others deliver reliably and strengthens confidence in the team."}},"momentum":{"expectation":"Leads by example and keeps standards high, even under pressure.","ratings":{"needs-work":"Personal standards fluctuate and the team sees inconsistent follow through. Pressure leads to lowered expectations, avoidable delays, or unhelpful shortcuts.","great":"Leads by example and keeps standards high, even under pressure. Reinforces reliable delivery across the team.","smashing-it":"Creates practical routines that improve team reliability, addresses slippage early, and maintains high standards without creating unnecessary pressure or dependency."}},"enterprise":{"expectation":"Designs systems, rhythms, and expectations that create consistent performance and reliability at scale.","ratings":{"needs-work":"Reliability depends on individual effort or heroics. Expectations and operating rhythms vary across teams, creating inconsistent outcomes.","great":"Designs systems, rhythms, and expectations that create consistent performance and reliability at scale.","smashing-it":"Uses data and feedback to strengthen reliability across the business, removes recurring points of failure, and reduces variation without creating excessive bureaucracy."}}}},{"id":"owns-the-outcome","name":"Owns the outcome","definition":"Takes responsibility for results and stays accountable through consequences.","levels":{"foundations":{"expectation":"Steps up to own results and fix what isn’t working.","ratings":{"needs-work":"Waits for others to solve problems, focuses on blame, or stops once their immediate task is complete. Issues remain unresolved.","great":"Steps up to own results and fix what isn’t working. Follows the issue through to a clear outcome.","smashing-it":"Takes ownership early, identifies the underlying cause, fixes the issue, and shares the learning so the same problem is less likely to recur."}},"momentum":{"expectation":"Holds self and others to commitments and sees things through.","ratings":{"needs-work":"Accountability is inconsistent. Avoids difficult follow up, accepts incomplete delivery, or does not address missed commitments within the team.","great":"Holds self and others to commitments and sees things through. Makes ownership and follow up clear.","smashing-it":"Creates strong accountability without blame, removes barriers to delivery, and uses missed commitments to improve expectations, capability, and team systems."}},"enterprise":{"expectation":"Owns complex, long term outcomes and makes deliberate trade offs that protect customer trust and business integrity.","ratings":{"needs-work":"Focuses on local or short term results while avoiding difficult enterprise trade offs. Consequences for customers, risk, or integrity are addressed too late.","great":"Owns complex, long term outcomes and makes deliberate trade offs that protect customer trust and business integrity.","smashing-it":"Anticipates second order consequences, communicates trade offs transparently, and embeds learning into strategy, governance, and future decisions."}}}},{"id":"sets-shared-expectations","name":"Sets shared expectations","definition":"Connects purpose, priorities, roles, and standards so people understand what good looks like and how to deliver it.","levels":{"foundations":{"expectation":"Asks thoughtful questions and checks for shared understanding before moving forward.","ratings":{"needs-work":"Assumes others understand, leaves roles or outcomes unclear, or begins work without confirming expectations. Rework and confusion result.","great":"Asks thoughtful questions and checks for shared understanding before moving forward.","smashing-it":"Clarifies outcomes, roles, timeframes, and constraints, then checks understanding and adjusts the approach before confusion becomes a problem."}},"momentum":{"expectation":"Defines what success looks like and aligns the team around clear priorities and standards.","ratings":{"needs-work":"Priorities or standards are vague, conflicting, or frequently changed without explanation. Team members interpret success differently.","great":"Defines what success looks like and aligns the team around clear priorities and standards.","smashing-it":"Translates priorities into practical measures, ownership, and operating rhythms, and resolves ambiguity or competing expectations early."}},"enterprise":{"expectation":"Connects purpose and strategy to clear, non negotiable expectations, systems, and leadership behaviour so people understand the direction and act consistently.","ratings":{"needs-work":"Purpose and strategy are not translated into consistent expectations. Standards vary across functions, messages conflict, or people cannot see how their work connects to direction.","great":"Connects purpose and strategy to clear, non negotiable expectations, systems, and leadership behaviour so people understand the direction and act consistently.","smashing-it":"Builds a compelling line of sight from purpose and strategy to measures, governance, systems, and leadership practice, tests understanding, and corrects drift early."}}}}]},{"id":"community","name":"Community","behaviours":[{"id":"communicates-with-clarity","name":"Communicates with clarity","definition":"Shares information clearly and appropriately so people stay aligned, informed, and able to act.","levels":{"foundations":{"expectation":"Explains ideas clearly and checks understanding in everyday interactions.","ratings":{"needs-work":"Information is unclear, incomplete, late, or overly complicated. Does not check whether others understand what is required.","great":"Explains ideas clearly and checks understanding in everyday interactions.","smashing-it":"Communicates concisely, confirms actions and ownership, and adapts the level of detail so others can act confidently."}},"momentum":{"expectation":"Adjusts message and style to suit the audience, keeping teams aligned and informed.","ratings":{"needs-work":"Uses the same message for every audience or communicates in a way that creates unnecessary confusion, overload, or misalignment.","great":"Adjusts message and style to suit the audience, keeping teams aligned and informed.","smashing-it":"Anticipates information needs, makes complex issues easy to understand, and uses the right channel and timing to maintain alignment."}},"enterprise":{"expectation":"Shapes communication across teams and functions, creating a clear and consistent narrative that supports strategic alignment and action.","ratings":{"needs-work":"Communication is fragmented or overly tactical. Different groups receive competing messages, trade offs are obscured, or people cannot translate the message into coordinated action.","great":"Shapes communication across teams and functions, creating a clear and consistent narrative that supports strategic alignment and action.","smashing-it":"Creates a coherent organisational narrative, surfaces trade offs clearly, equips leaders to carry the message consistently, and establishes communication rhythms that support fast, aligned decisions."}}}},{"id":"resolves-conflict","name":"Resolves conflict","definition":"Addresses tension constructively to maintain trust, progress, and productive working relationships.","levels":{"foundations":{"expectation":"Listens with empathy, raises issues early, and seeks support to resolve them.","ratings":{"needs-work":"Avoids tension, lets issues build, reacts emotionally, or discusses the problem with others rather than addressing it appropriately.","great":"Listens with empathy, raises issues early, and seeks support to resolve them.","smashing-it":"Raises concerns respectfully, listens for the underlying issue, contributes to a fair resolution, and follows up to confirm the relationship and work are back on track."}},"momentum":{"expectation":"Addresses conflict directly and fairly, balancing honesty with respect to keep teams aligned and productive.","ratings":{"needs-work":"Delays difficult conversations, takes sides, or handles similar conflicts inconsistently. The issue continues to affect performance or trust.","great":"Addresses conflict directly and fairly, balancing honesty with respect to keep teams aligned and productive.","smashing-it":"Facilitates productive challenge, addresses root causes rather than symptoms, and restores clarity, accountability, and trust after conflict."}},"enterprise":{"expectation":"Creates conditions where healthy challenge is expected, conflict is addressed early, and trust is maintained across teams or functions.","ratings":{"needs-work":"Cross functional tension is tolerated, politicised, or repeatedly escalated without resolution. Structural causes are left unchanged.","great":"Creates conditions where healthy challenge is expected, conflict is addressed early, and trust is maintained across teams or functions.","smashing-it":"Builds organisational capability and mechanisms for constructive disagreement, identifies recurring conflict patterns, and changes systems that create avoidable friction."}}}},{"id":"strengthens-team-culture","name":"Strengthens team culture","definition":"Builds relationships and environments where people feel connected, supported, and able to do their best work.","levels":{"foundations":{"expectation":"Contributes positively to team relationships and ways of working.","ratings":{"needs-work":"Is passive or negative about team culture, excludes others, or behaves in ways that reduce trust, cooperation, or psychological safety.","great":"Contributes positively to team relationships and ways of working.","smashing-it":"Models inclusion, supports colleagues, reinforces useful team norms, and helps create an environment where people can contribute confidently."}},"momentum":{"expectation":"Builds trust within the team and addresses behaviours that undermine performance or inclusion.","ratings":{"needs-work":"Ignores behaviours that damage trust or inclusion, relies on informal goodwill, or allows standards to vary across the team.","great":"Builds trust within the team and addresses behaviours that undermine performance or inclusion.","smashing-it":"Deliberately shapes team rituals, standards, and feedback, and builds shared ownership for a healthy, accountable culture."}},"enterprise":{"expectation":"Builds relationships and uses organisational influence across functions to align stakeholders, resolve barriers, and deliberately shape a collaborative, high performing culture at scale.","ratings":{"needs-work":"Culture is treated as messaging, relationships are narrow, stakeholder dynamics are ignored, and cross functional barriers or political friction repeatedly undermine outcomes.","great":"Builds relationships and uses organisational influence across functions to align stakeholders, resolve barriers, and deliberately shape a collaborative, high performing culture at scale.","smashing-it":"Builds influential networks, aligns incentives and leadership systems, measures culture drivers, and mobilises stakeholders across boundaries around shared outcomes."}}}}]},{"id":"perseverance","name":"Perseverance","behaviours":[{"id":"keeps-going","name":"Keeps going","definition":"Pushes through challenges and keeps things moving, even when the next step isn’t obvious.","levels":{"foundations":{"expectation":"Pushes through setbacks and follows things through to the end.","ratings":{"needs-work":"Gives up too quickly, loses focus after setbacks, or leaves work unfinished when the path becomes difficult or unclear.","great":"Pushes through setbacks and follows things through to the end.","smashing-it":"Stays steady, adjusts the plan when needed, seeks help early, and closes the loop even when the work becomes difficult."}},"momentum":{"expectation":"Balances focus with flexibility when priorities shift.","ratings":{"needs-work":"Becomes rigid or reactive when priorities change. The team experiences confusion, unnecessary churn, or loss of momentum.","great":"Balances focus with flexibility when priorities shift.","smashing-it":"Helps the team reprioritise calmly, protects essential outcomes, and adapts the plan without losing accountability or creating avoidable disruption."}},"enterprise":{"expectation":"Sustains momentum through prolonged complexity or uncertainty and prevents disruption to performance at scale.","ratings":{"needs-work":"Prolonged complexity creates strategic drift, reactive decisions, or sustained overload. Performance depends on repeated crisis responses.","great":"Sustains momentum through prolonged complexity or uncertainty and prevents disruption to performance at scale.","smashing-it":"Anticipates pressure points, sequences decisions deliberately, protects organisational capacity, and preserves strategic focus through extended uncertainty."}}}},{"id":"lifts-others","name":"Lifts others","definition":"Provides steadiness and confidence to others, especially during pressure or uncertainty.","levels":{"foundations":{"expectation":"Stays positive and encourages teammates.","ratings":{"needs-work":"Passes stress to others, focuses mainly on what is going wrong, or withdraws support when pressure increases.","great":"Stays positive and encourages teammates.","smashing-it":"Notices when others are struggling, offers practical support, and recognises progress without minimising genuine challenges."}},"momentum":{"expectation":"Builds belief in others and celebrates progress.","ratings":{"needs-work":"Motivation is inconsistent or relies on generic encouragement. Pressure reduces confidence, ownership, or energy across the team.","great":"Builds belief in others and celebrates progress.","smashing-it":"Builds confidence through clear context, coaching, recognition, and meaningful ownership, especially when results are difficult."}},"enterprise":{"expectation":"Creates stability and focus through visible leadership during sustained pressure or change.","ratings":{"needs-work":"Leadership is invisible or inconsistent during major change. Messages lack credibility or fail to create confidence and focus.","great":"Creates stability and focus through visible leadership during sustained pressure or change.","smashing-it":"Sustains confidence across the business through transparent communication, visible decisions, practical support systems, and consistent leadership behaviour."}}}},{"id":"finds-a-way","name":"Finds a way","definition":"Removes obstacles and adapts approaches to keep progress moving.","levels":{"foundations":{"expectation":"Looks for ways around small roadblocks.","ratings":{"needs-work":"Waits for someone else to solve routine obstacles, repeats an approach that is not working, or stops without escalating appropriately.","great":"Looks for ways around small roadblocks.","smashing-it":"Tests practical alternatives, uses available resources, escalates with useful context, and shares solutions that may help others."}},"momentum":{"expectation":"Removes obstacles so the team can keep moving.","ratings":{"needs-work":"Accepts barriers as fixed, removes only immediate symptoms, or allows recurring obstacles to consume team time and energy.","great":"Removes obstacles so the team can keep moving.","smashing-it":"Coordinates resources, addresses root causes, and improves processes so the same barrier is less likely to recur."}},"enterprise":{"expectation":"Anticipates systemic barriers and reshapes conditions so progress can continue across teams, functions, or markets.","ratings":{"needs-work":"Systemic barriers remain in place while teams rely on local workarounds. Constraints are shifted between functions rather than resolved.","great":"Anticipates systemic barriers and reshapes conditions so progress can continue across teams, functions, or markets.","smashing-it":"Redesigns structures, policies, or investment decisions to remove systemic constraints and tracks whether progress improves without creating new barriers elsewhere."}}}}]},{"id":"potential","name":"Potential","behaviours":[{"id":"asks-and-explores","name":"Asks and explores","definition":"Uses curiosity, questions, insight, and external perspective to understand the bigger picture and explore what is possible.","levels":{"foundations":{"expectation":"Seeks to understand by asking questions and testing ideas.","ratings":{"needs-work":"Makes assumptions, asks only surface questions, or accepts the first answer without testing whether it is accurate or useful.","great":"Seeks to understand by asking questions and testing ideas.","smashing-it":"Asks thoughtful questions, runs small tests, and connects learning to customer, team, or business impact."}},"momentum":{"expectation":"Shares insights and connects dots to improve work.","ratings":{"needs-work":"Works within a narrow view, shares observations without turning them into action, or overlooks useful links between information and operational issues.","great":"Shares insights and connects dots to improve work.","smashing-it":"Synthesises data, experience, and stakeholder input to identify patterns and convert insight into practical improvements."}},"enterprise":{"expectation":"Scans customer, market, regulatory, technology, and emerging business trends to identify future risks and opportunities and inform strategic choices.","ratings":{"needs-work":"Focuses mainly on internal historical information. Customer, market, regulatory, technology, or competitor shifts are noticed too late.","great":"Scans customer, market, regulatory, technology, and emerging business trends to identify future risks and opportunities and inform strategic choices.","smashing-it":"Creates systematic horizon scanning and experimentation, challenges strategic assumptions, and converts weak signals into clear choices, scenarios, and investment decisions."}}}},{"id":"challenges-the-norm","name":"Challenges the norm","definition":"Questions assumptions and existing practices to find better ways forward.","levels":{"foundations":{"expectation":"Brings fresh thinking and voices ideas that could make things better.","ratings":{"needs-work":"Accepts inefficient practices without question, or raises complaints without offering a constructive idea or evidence.","great":"Brings fresh thinking and voices ideas that could make things better.","smashing-it":"Offers evidence based improvements, tests ideas safely, and uses feedback to refine the approach rather than defending the first solution."}},"momentum":{"expectation":"Tests assumptions and takes smart risks to spark progress.","ratings":{"needs-work":"Challenges inconsistently, takes unnecessary risks, or introduces change without a clear hypothesis, stakeholder support, or learning plan.","great":"Tests assumptions and takes smart risks to spark progress.","smashing-it":"Frames clear hypotheses, builds support, runs controlled tests, and scales or stops ideas based on evidence."}},"enterprise":{"expectation":"Challenges entrenched thinking and redirects effort or investment to improve future outcomes at scale.","ratings":{"needs-work":"Protects the status quo despite evidence, or drives large change without sufficient analysis of value, risk, and organisational capacity.","great":"Challenges entrenched thinking and redirects effort or investment to improve future outcomes at scale.","smashing-it":"Builds a disciplined portfolio of change, stops low value work, reallocates resources decisively, and measures whether strategic outcomes improve."}}}},{"id":"learns-and-adapts","name":"Learns and adapts","definition":"Uses feedback, reflection, experimentation, and learning to understand their impact and adapt how they work.","levels":{"foundations":{"expectation":"Seeks feedback, recognises strengths and development gaps, and applies learning to improve.","ratings":{"needs-work":"Avoids or dismisses feedback, has limited awareness of their impact, or repeats the same approach despite evidence it is not working.","great":"Seeks feedback, recognises strengths and development gaps, and applies learning to improve. Reflects on outcomes and adjusts behaviour.","smashing-it":"Actively seeks varied feedback, tests new approaches, tracks their impact, and shares learning that helps peers adapt."}},"momentum":{"expectation":"Reflects on their impact, adapts their leadership approach, and models continuous learning for the team.","ratings":{"needs-work":"Defends their usual approach, reacts poorly to feedback, or expects the team to adapt while their own behaviour remains unchanged.","great":"Reflects on their impact, adapts their leadership approach, and models continuous learning for the team.","smashing-it":"Creates regular reflection and feedback loops, adapts style to people and context, and normalises experimentation and learning from mistakes."}},"enterprise":{"expectation":"Builds an adaptive learning culture, tests strategic assumptions, and evolves leadership practices as conditions change.","ratings":{"needs-work":"Leadership practices remain fixed despite changing conditions, feedback is filtered, or failed assumptions are defended rather than examined.","great":"Builds an adaptive learning culture, tests strategic assumptions, and evolves leadership practices as conditions change.","smashing-it":"Builds enterprise feedback and learning loops, changes course early when evidence shifts, and models visible unlearning that increases organisational adaptability."}}}}]},{"id":"equity","name":"Equity","behaviours":[{"id":"values-differences","name":"Values differences","definition":"Respects diverse backgrounds, experiences, and perspectives to create inclusive teams where everyone can contribute.","levels":{"foundations":{"expectation":"Is respectful of others’ views, even when different from their own.","ratings":{"needs-work":"Dismisses, interrupts, or excludes different perspectives, or becomes defensive when others challenge their view.","great":"Is respectful of others’ views, even when different from their own.","smashing-it":"Actively seeks different perspectives, changes their view when evidence supports it, and helps others contribute safely and confidently."}},"momentum":{"expectation":"Invites different perspectives to broaden thinking and decisions.","ratings":{"needs-work":"Consults the same voices, treats inclusion as a formality, or gathers input without allowing it to influence the decision.","great":"Invites different perspectives to broaden thinking and decisions.","smashing-it":"Designs inclusive decision processes, addresses bias or unequal participation, and shows how diverse input improved the outcome."}},"enterprise":{"expectation":"Builds environments where diverse perspectives are actively used to improve decision quality and reduce bias at scale.","ratings":{"needs-work":"Diversity is treated symbolically rather than embedded in governance, talent, strategy, or decision processes.","great":"Builds environments where diverse perspectives are actively used to improve decision quality and reduce bias at scale.","smashing-it":"Embeds diverse input into governance, data, workforce, and strategic decisions, and measures whether decision quality and equity outcomes improve."}}}},{"id":"makes-ethical-decisions","name":"Makes ethical decisions","definition":"Uses integrity and sound judgement to do what is right, even when choices are complex or uncomfortable.","levels":{"foundations":{"expectation":"Acts with integrity and checks decisions align with our standards.","ratings":{"needs-work":"Ignores standards, hides concerns, takes convenient shortcuts, or proceeds despite uncertainty without checking what is right.","great":"Acts with integrity and checks decisions align with our standards.","smashing-it":"Identifies conflicts early, seeks appropriate advice, documents the rationale, and speaks up when a decision may not meet the organisation’s standards."}},"momentum":{"expectation":"Navigates grey areas using judgement, facts, and values.","ratings":{"needs-work":"Applies values inconsistently in grey areas or allows delivery pressure, relationships, or personal preference to override sound judgement.","great":"Navigates grey areas using judgement, facts, and values.","smashing-it":"Creates a transparent decision process, balances evidence and values, and helps others make principled decisions without avoiding accountability."}},"enterprise":{"expectation":"Sets ethical boundaries for the business and supports leaders to make principled decisions under pressure and uncertainty.","ratings":{"needs-work":"Ethical boundaries and escalation paths are unclear, or exceptions are normalised when pressure increases.","great":"Sets ethical boundaries for the business and supports leaders to make principled decisions under pressure and uncertainty.","smashing-it":"Embeds ethical governance, tests the broader consequences of decisions, learns from near misses, and maintains integrity when the commercial pressure is highest."}}}},{"id":"shows-empathy","name":"Shows empathy","definition":"Considers the human impact of decisions and leads with care and respect.","levels":{"foundations":{"expectation":"Shows empathy, listens without judgement, and includes others in daily interactions.","ratings":{"needs-work":"Interrupts, judges, overlooks personal impact, or responds in a way that makes others less willing to speak openly.","great":"Shows empathy, listens without judgement, and includes others in daily interactions.","smashing-it":"Listens for what is said and unsaid, adapts support to the person, and checks whether the interaction led to a respectful and useful outcome."}},"momentum":{"expectation":"Adapts behaviour to meet people where they are, ensuring diverse perspectives shape team decisions.","ratings":{"needs-work":"Uses a one size fits all approach, or shows empathy without maintaining clear standards, accountability, and fair treatment.","great":"Adapts behaviour to meet people where they are, ensuring diverse perspectives shape team decisions.","smashing-it":"Balances care, clarity, and accountability, and ensures team decisions reflect the genuine needs and perspectives of affected people."}},"enterprise":{"expectation":"Balances empathy with accountability, ensuring decisions are fair, humane, and sustainable across teams or communities.","ratings":{"needs-work":"Major decisions are detached from human impact or produce uneven consequences that are identified only after implementation.","great":"Balances empathy with accountability, ensuring decisions are fair, humane, and sustainable across teams or communities.","smashing-it":"Uses impact assessment and stakeholder feedback to design humane, sustainable decisions, and acts early where outcomes are unfair or disproportionately harmful."}}}}]},{"id":"people","name":"People","behaviours":[{"id":"leads-the-employee-lifecycle","name":"Leads the employee lifecycle","definition":"Brings people into the business, supports them to succeed, and manages transitions well.","levels":{"foundations":{"expectation":"Understands the stages of the lifecycle and supports basic processes where directed.","ratings":{"needs-work":"Has limited awareness of lifecycle requirements, misses process steps, or provides poor handovers during onboarding, development, or transition activities.","great":"Understands the stages of the lifecycle and supports basic processes where directed.","smashing-it":"Prepares well, completes lifecycle tasks accurately and on time, and helps people understand what to expect during key transitions."}},"momentum":{"expectation":"Manages hiring, onboarding, development, and exits to maintain team stability and capability.","ratings":{"needs-work":"Hiring, onboarding, development, or exit practices are inconsistent and create avoidable capability, experience, or compliance gaps.","great":"Manages hiring, onboarding, development, and exits to maintain team stability and capability.","smashing-it":"Uses feedback and people data to improve lifecycle quality, addresses recurring experience or capability gaps, and plans transitions before they become disruptive."}},"enterprise":{"expectation":"Designs and improves people practices and workforce planning to support sustainable capability across the business.","ratings":{"needs-work":"Workforce planning is reactive and people practices are fragmented across the business. Future capability needs are not translated into action.","great":"Designs and improves people practices and workforce planning to support sustainable capability across the business.","smashing-it":"Anticipates future skills and workforce shifts, integrates talent and workforce planning, and measures whether people practices improve capability, mobility, and sustainability."}}}},{"id":"builds-capability","name":"Builds capability","definition":"Develops the skills and confidence people need to perform now and into the future.","levels":{"foundations":{"expectation":"Shares knowledge, gives useful feedback, and supports others to build confidence in core skills.","ratings":{"needs-work":"Holds knowledge, gives vague or unhelpful feedback, or takes over tasks rather than supporting others to learn.","great":"Shares knowledge, gives useful feedback, and supports others to build confidence in core skills.","smashing-it":"Explains and demonstrates skills clearly, creates safe practice, checks understanding, and helps colleagues become more independent."}},"momentum":{"expectation":"Coaches others, gives clear feedback, and builds capability within the team.","ratings":{"needs-work":"Provides limited coaching, unclear feedback, or relies on personally fixing problems rather than building team capability.","great":"Coaches others, gives clear feedback, and builds capability within the team.","smashing-it":"Tailors coaching to individual needs, creates deliberate practice, tracks development over time, and increases independent performance across the team."}},"enterprise":{"expectation":"Builds long term capability through succession planning, role design, and development pathways at scale.","ratings":{"needs-work":"Capability planning is disconnected from strategy, succession depth is weak, and key roles depend on individual incumbents.","great":"Builds long term capability through succession planning, role design, and development pathways at scale.","smashing-it":"Links capability investment to strategic priorities, builds measurable readiness and mobility, and creates succession depth for critical future roles."}}}},{"id":"drives-engagement","name":"Drives engagement","definition":"Creates conditions where people are motivated, accountable, and committed to their work.","levels":{"foundations":{"expectation":"Contributes positively to the team and takes responsibility for own engagement.","ratings":{"needs-work":"Is consistently disengaged, cynical, or passive and places full responsibility for motivation on other people.","great":"Contributes positively to the team and takes responsibility for own engagement.","smashing-it":"Raises concerns constructively, supports team participation, and contributes energy and ownership even when conditions are not ideal."}},"momentum":{"expectation":"Builds trust, addresses disengagement, and creates a team environment where people want to perform.","ratings":{"needs-work":"Avoids signs of disengagement or relies mainly on messages, activities, or incentives without addressing the actual causes.","great":"Builds trust, addresses disengagement, and creates a team environment where people want to perform.","smashing-it":"Diagnoses engagement drivers, acts on what can be changed, follows up transparently, and strengthens both belonging and accountability."}},"enterprise":{"expectation":"Shapes leadership practices, expectations, and systems that sustain engagement across teams or functions.","ratings":{"needs-work":"Engagement is treated as an occasional survey or communication activity rather than an outcome of leadership, workload, systems, and decisions.","great":"Shapes leadership practices, expectations, and systems that sustain engagement across teams or functions.","smashing-it":"Aligns leadership routines, workload, recognition, employee voice, and systems, then uses evidence to sustain engagement through changing business conditions."}}}}]},{"id":"systems-execution","name":"Systems & Execution","behaviours":[{"id":"runs-daily-operations","name":"Runs daily operations","definition":"Ensures day to day work is planned, organised, and delivered reliably.","levels":{"foundations":{"expectation":"Follows established processes and completes operational tasks as required.","ratings":{"needs-work":"Processes are followed inconsistently, operational tasks are late or incomplete, or routine dependencies are overlooked.","great":"Follows established processes and completes operational tasks as required.","smashing-it":"Plans ahead, identifies routine dependencies, closes issues promptly, and suggests practical improvements to everyday work."}},"momentum":{"expectation":"Plans and coordinates work so the team delivers reliably and issues are addressed quickly.","ratings":{"needs-work":"Work is managed reactively, ownership is unclear, and recurring operational failures or bottlenecks are not addressed.","great":"Plans and coordinates work so the team delivers reliably and issues are addressed quickly.","smashing-it":"Creates clear operating rhythms, contingency plans, and continuous improvement routines that increase reliability and reduce avoidable escalation."}},"enterprise":{"expectation":"Designs operating rhythms and structures that enable consistent execution across teams or locations.","ratings":{"needs-work":"The operating model is fragmented and execution depends on local heroics. Similar teams or locations use incompatible rhythms and structures.","great":"Designs operating rhythms and structures that enable consistent execution across teams or locations.","smashing-it":"Simplifies and strengthens the operating model, standardises where it adds value, preserves necessary local flexibility, and measures execution reliability."}}}},{"id":"uses-systems-and-data","name":"Uses systems and data","definition":"Uses data, digital tools, systems, and information to support sound decisions and performance.","levels":{"foundations":{"expectation":"Uses required systems correctly, keeps information accurate, and uses basic data to support decisions.","ratings":{"needs-work":"Uses required systems incorrectly or inconsistently, keeps unreliable information, or ignores available data when making routine decisions.","great":"Uses required systems correctly, keeps information accurate, and uses basic data to support decisions.","smashing-it":"Maintains high data quality, uses available information to identify issues, and helps others use systems safely and correctly."}},"momentum":{"expectation":"Uses data and systems to track performance, test decisions, and improve how work is done.","ratings":{"needs-work":"Produces reports without useful interpretation, relies mainly on intuition, or changes work without tracking whether the change helped.","great":"Uses data and systems to track performance, test decisions, and improve how work is done.","smashing-it":"Combines data with operational context, tests likely causes, uses digital tools appropriately, and tracks whether changes improve performance."}},"enterprise":{"expectation":"Builds data and digital capability, adopts useful technology, and creates system discipline so decisions and performance are informed, comparable, and scalable.","ratings":{"needs-work":"Data definitions, digital practices, and system adoption vary across functions. Decisions are unreliable and technology is added without clear value or adoption.","great":"Builds data and digital capability, adopts useful technology, and creates system discipline so decisions and performance are informed, comparable, and scalable.","smashing-it":"Establishes strong data governance and decision rhythms, improves adoption, and selectively scales technology that measurably improves judgement, customer outcomes, or productivity."}}}},{"id":"prioritises-for-impact","name":"Prioritises for impact","definition":"Focuses effort on what will make the biggest difference.","levels":{"foundations":{"expectation":"Manages time and tasks to meet priorities.","ratings":{"needs-work":"Spends time on lower value activity, misses key deadlines, or does not raise conflicting priorities until delivery is already affected.","great":"Manages time and tasks to meet priorities.","smashing-it":"Clarifies what matters most, sequences work effectively, renegotiates early, and protects the outcomes with the greatest value or risk."}},"momentum":{"expectation":"Balances competing demands and reallocates effort to what matters most.","ratings":{"needs-work":"Spreads effort too thinly, changes priorities without clear trade offs, or keeps low value work active while critical outcomes slip.","great":"Balances competing demands and reallocates effort to what matters most.","smashing-it":"Uses impact, risk, and dependencies to allocate effort, stops or defers low value work, and communicates trade offs clearly."}},"enterprise":{"expectation":"Sets clear priorities and trade offs so resources are focused on the highest impact outcomes.","ratings":{"needs-work":"Strategic priorities proliferate, resources remain misaligned, and the organisation lacks the capacity to execute what has been committed.","great":"Sets clear priorities and trade offs so resources are focused on the highest impact outcomes.","smashing-it":"Links portfolio and resource decisions to strategy, revisits trade offs as conditions change, and actively stops work that no longer justifies its cost."}}}}]},{"id":"risk-safety-protection","name":"Risk, Safety & Protection","behaviours":[{"id":"follows-safety-and-compliance-standards","name":"Follows safety and compliance standards","definition":"Ensures required rules, policies, and practices are followed consistently.","levels":{"foundations":{"expectation":"Follows safety and compliance requirements in daily work.","ratings":{"needs-work":"Takes shortcuts, is unaware of required standards, or does not report uncertainty, incidents, or non compliance promptly.","great":"Follows safety and compliance requirements in daily work.","smashing-it":"Models the standards, checks when unsure, raises concerns early, and helps others understand the safe and compliant way to work."}},"momentum":{"expectation":"Monitors compliance and addresses issues to keep the team operating safely.","ratings":{"needs-work":"Monitoring is inconsistent, compliance is treated as administration, or identified gaps are corrected temporarily without addressing the cause.","great":"Monitors compliance and addresses issues to keep the team operating safely.","smashing-it":"Builds routine checks, investigates recurring gaps, corrects root causes, and verifies that actions have genuinely improved safety and compliance."}},"enterprise":{"expectation":"Sets clear expectations and systems that embed safety and compliance across the business.","ratings":{"needs-work":"Policies, controls, and accountability are unclear or disconnected from how work is actually performed across the business.","great":"Sets clear expectations and systems that embed safety and compliance across the business.","smashing-it":"Integrates compliance into operating design, governance, assurance, and leadership accountability, and tests whether controls are effective in practice."}}}},{"id":"identifies-and-addresses-risk-early","name":"Identifies and addresses risk early","definition":"Anticipates potential issues and acts before they escalate.","levels":{"foundations":{"expectation":"Raises risks or concerns when they are identified.","ratings":{"needs-work":"Misses, withholds, or delays raising a risk, or reports it without enough information for others to act.","great":"Raises risks or concerns when they are identified.","smashing-it":"Notices early warning signs, records and escalates the risk with useful context, and suggests sensible immediate controls."}},"momentum":{"expectation":"Assesses risk and takes action to reduce impact or prevent recurrence.","ratings":{"needs-work":"Responds mainly after incidents, uses superficial assessments, or implements actions without checking whether risk has reduced.","great":"Assesses risk and takes action to reduce impact or prevent recurrence.","smashing-it":"Assesses likelihood and consequence, implements proportionate controls, assigns ownership, and reviews whether recurrence has been prevented."}},"enterprise":{"expectation":"Builds risk awareness and controls so emerging risks are identified and managed at scale.","ratings":{"needs-work":"Risk insight is fragmented, emerging risks lack ownership, and controls are added without a coherent view of enterprise exposure.","great":"Builds risk awareness and controls so emerging risks are identified and managed at scale.","smashing-it":"Creates horizon scanning, clear ownership, aggregated risk insight, and resilience testing so the business can act before emerging threats become material."}}}},{"id":"prevents-harm-to-people-and-customers","name":"Prevents harm to people and customers","definition":"Takes action to protect people, customers, and the business from harm.","levels":{"foundations":{"expectation":"Acts safely and supports others to do the same.","ratings":{"needs-work":"Acts unsafely, stays silent when others are at risk, or assumes someone else will intervene.","great":"Acts safely and supports others to do the same.","smashing-it":"Intervenes respectfully, secures the immediate situation, reports what occurred, and follows through until the risk is controlled."}},"momentum":{"expectation":"Intervenes when safety or customer protection is at risk.","ratings":{"needs-work":"Delays intervention because of delivery pressure, applies protection standards inconsistently, or addresses the incident without removing the cause.","great":"Intervenes when safety or customer protection is at risk.","smashing-it":"Empowers immediate action, coordinates an effective response, removes root causes, and turns incidents or near misses into team learning."}},"enterprise":{"expectation":"Designs safeguards and decision frameworks that prevent harm across teams, locations, or markets.","ratings":{"needs-work":"Safeguards are designed mainly after harm occurs and vary across the business. Decisions rely on individual judgement without sufficient protection.","great":"Designs safeguards and decision frameworks that prevent harm across teams, locations, or markets.","smashing-it":"Builds layered controls, stress tests safeguards, monitors leading indicators, and adapts the operating model before changing conditions create harm."}}}}]},{"id":"customer-trust","name":"Customer Trust","behaviours":[{"id":"understands-customer-needs","name":"Understands customer needs","definition":"Seeks to understand what customers need and what fairness looks like in practice.","levels":{"foundations":{"expectation":"Listens to customers and follows customer focused practices.","ratings":{"needs-work":"Assumes what the customer needs, does not listen carefully, or applies a process without understanding the customer’s situation.","great":"Listens to customers and follows customer focused practices.","smashing-it":"Asks useful questions, clarifies the need, explains realistic options, and captures feedback that could improve the experience."}},"momentum":{"expectation":"Uses customer insight to guide decisions and improve how the team operates.","ratings":{"needs-work":"Treats customer feedback as isolated anecdotes or makes decisions mainly from an internal operational perspective.","great":"Uses customer insight to guide decisions and improve how the team operates.","smashing-it":"Synthesises customer feedback and performance evidence, identifies patterns or segments, changes team practices, and checks whether the experience improves."}},"enterprise":{"expectation":"Builds customer insight into strategy, systems, and decision making across the business.","ratings":{"needs-work":"Customer insight is ad hoc, delayed, or absent from strategy, investment, and governance decisions.","great":"Builds customer insight into strategy, systems, and decision making across the business.","smashing-it":"Creates reliable customer insight loops, embeds them into planning and investment, and tracks whether strategic choices strengthen trust and customer outcomes."}}}},{"id":"delivers-fair-consistent-experiences","name":"Delivers fair, consistent experiences","definition":"Ensures customers experience the business in a reliable and fair way.","levels":{"foundations":{"expectation":"Follows processes so customers are treated consistently.","ratings":{"needs-work":"Applies processes inconsistently, takes shortcuts, or treats similar customers differently without a sound reason.","great":"Follows processes so customers are treated consistently.","smashing-it":"Identifies ambiguity, explains decisions clearly, escalates potentially unfair processes, and helps maintain consistent treatment."}},"momentum":{"expectation":"Addresses inconsistencies and reinforces fair treatment across the team.","ratings":{"needs-work":"Accepts avoidable variation, bias, or inconsistent judgement across the team and does not calibrate expectations or decisions.","great":"Addresses inconsistencies and reinforces fair treatment across the team.","smashing-it":"Uses case reviews, feedback, and calibration to identify recurring inconsistency and fixes the team practices or process causing it."}},"enterprise":{"expectation":"Designs standards and operating models that deliver consistent customer experiences at scale.","ratings":{"needs-work":"Standards vary across channels or locations and exceptions are unmanaged, producing inconsistent or unfair customer outcomes.","great":"Designs standards and operating models that deliver consistent customer experiences at scale.","smashing-it":"Builds principles, controls, and quality measures that maintain fairness and consistency while preserving justified professional judgement."}}}},{"id":"builds-lasting-trust","name":"Builds lasting trust","definition":"Acts in ways that strengthen long term customer confidence in the business.","levels":{"foundations":{"expectation":"Acts honestly and follows through on commitments to customers.","ratings":{"needs-work":"Overpromises, avoids difficult information, fails to follow up, or does not take ownership when the customer experience goes wrong.","great":"Acts honestly and follows through on commitments to customers.","smashing-it":"Sets realistic expectations, communicates changes early, owns service recovery, and leaves the customer clear about what will happen next."}},"momentum":{"expectation":"Balances customer needs with business outcomes to maintain trust.","ratings":{"needs-work":"Optimises short term operational or commercial results at the expense of fairness, transparency, or long term customer confidence.","great":"Balances customer needs with business outcomes to maintain trust.","smashing-it":"Makes transparent trade offs, coaches the team to protect trust, and uses complaints or recovery situations to strengthen future practice."}},"enterprise":{"expectation":"Makes trade offs that protect customer trust and the reputation of the business over time.","ratings":{"needs-work":"Customer reputation is considered too late, or incentives and decisions encourage short term outcomes that weaken trust.","great":"Makes trade offs that protect customer trust and the reputation of the business over time.","smashing-it":"Embeds trust into strategy, risk, incentives, and measures, and acts early when decisions or emerging issues could damage long term confidence."}}}}]},{"id":"performance","name":"Performance","behaviours":[{"id":"sets-clear-performance-goals","name":"Sets clear performance goals","definition":"Defines what success looks like and how it will be measured.","levels":{"foundations":{"expectation":"Works to agreed goals and understands performance expectations.","ratings":{"needs-work":"Does not understand or work consistently towards agreed expectations, and progress or delivery risks are not raised early.","great":"Works to agreed goals and understands performance expectations.","smashing-it":"Clarifies measures, milestones, and dependencies, tracks progress, and raises risks early enough for action to be taken."}},"momentum":{"expectation":"Sets clear goals for the team and tracks progress against them.","ratings":{"needs-work":"Team goals are vague, activity based, misaligned, or not reviewed often enough to guide performance.","great":"Sets clear goals for the team and tracks progress against them.","smashing-it":"Sets outcome based goals, aligns ownership and resources, reviews progress frequently, and resets the plan when evidence changes."}},"enterprise":{"expectation":"Establishes performance priorities and measures that align strategy, effort, and outcomes across the business.","ratings":{"needs-work":"Measures are excessive, conflicting, or disconnected from strategy, creating competing incentives and unclear organisational focus.","great":"Establishes performance priorities and measures that align strategy, effort, and outcomes across the business.","smashing-it":"Creates a coherent performance architecture, links leading and lagging measures, and removes metrics or incentives that drive the wrong behaviour."}}}},{"id":"uses-insight-and-judgement","name":"Uses insight and judgement","definition":"Uses evidence, commercial understanding, and sound judgement to make decisions and improve performance over time.","levels":{"foundations":{"expectation":"Uses basic operational, customer, and financial information to make sound decisions and adjust own work.","ratings":{"needs-work":"Ignores available operational, customer, or financial information, repeats avoidable mistakes, or makes decisions without checking likely impact.","great":"Uses basic operational, customer, and financial information to make sound decisions and adjust own work.","smashing-it":"Looks for patterns, checks assumptions, explains the decision rationale, tests a practical change, and applies the learning to future work."}},"momentum":{"expectation":"Reviews operational, customer, people, risk, and financial results to identify patterns, make decisions, and improve team performance.","ratings":{"needs-work":"Reports results without diagnosing causes, relies on a single measure, or makes decisions without considering customer, people, risk, and financial consequences.","great":"Reviews operational, customer, people, risk, and financial results to identify patterns, make decisions, and improve team performance.","smashing-it":"Combines data and stakeholder input, tests likely causes, makes transparent trade offs, and tracks whether decisions improve the intended outcomes."}},"enterprise":{"expectation":"Uses commercial, market, customer, risk, and financial insight to guide strategy, investment, and performance at scale.","ratings":{"needs-work":"Strategic decisions rely mainly on opinion or siloed data. Commercial, market, customer, risk, or financial implications are not integrated.","great":"Uses commercial, market, customer, risk, and financial insight to guide strategy, investment, and performance at scale.","smashing-it":"Builds enterprise insight loops, separates signal from noise, tests scenarios and assumptions, and reallocates investment or effort based on evidence and post decision learning."}}}},{"id":"delivers-sustainable-outcomes","name":"Delivers sustainable outcomes","definition":"Balances short term delivery with long term commercial health, customer trust, risk, quality, and capability.","levels":{"foundations":{"expectation":"Meets targets while following required standards and using resources responsibly.","ratings":{"needs-work":"Meets targets through shortcuts, excessive effort, poor resource use, or reduced quality, or misses results because work is not planned sustainably.","great":"Meets targets while following required standards and using resources responsibly.","smashing-it":"Plans workload, protects standards, uses resources responsibly, flags trade offs early, and finds repeatable ways to deliver rather than relying on one off effort."}},"momentum":{"expectation":"Balances delivery pressures with quality, risk, customer outcomes, and team capability.","ratings":{"needs-work":"Sacrifices quality, risk, customer outcomes, or team capability for short term delivery, or avoids necessary trade offs and allows all outcomes to deteriorate.","great":"Balances delivery pressures with quality, risk, customer outcomes, and team capability.","smashing-it":"Makes explicit trade offs, protects customer trust and team capacity, builds repeatable delivery, and monitors second order effects rather than only immediate results."}},"enterprise":{"expectation":"Makes deliberate trade offs across growth, financial performance, customer trust, risk, quality, and capability to deliver sustainable long term outcomes.","ratings":{"needs-work":"Short term targets dominate decisions while hidden costs, customer harm, risk, capability erosion, or weak returns accumulate.","great":"Makes deliberate trade offs across growth, financial performance, customer trust, risk, quality, and capability to deliver sustainable long term outcomes.","smashing-it":"Optimises the portfolio across growth, financial value, customer trust, risk, quality, and capability, uses leading indicators, and corrects course before short term pressure undermines long term performance."}}}}]}]};
 
 /* ---------- Framework meta ------------------------------------------------
-   Level names and all behaviour copy come from the workbook. The tagline,
-   scope and "typically" lines are programme copy written for the app — edit
+   Behaviour copy comes from the workbook. The level identities, audiences and
+   focus lines are the programme's own language for the three stages — edit
    them here rather than in the spreadsheet.
    ------------------------------------------------------------------------- */
 
@@ -1501,26 +1546,26 @@ const LEVELS = [
   {
     id: 'foundations',
     name: 'Foundations',
+    identity: 'Leaders in Future',
     color: C.blueGreen,
-    tagline: 'Leading yourself. Doing what you say you will do, learning quickly, and lifting the people around you.',
-    scope: 'Own work and immediate team',
-    who: 'Team members and emerging leaders',
+    who: 'Emerging leaders, ASMs, MTs and high performers preparing for leadership.',
+    focus: 'Self, task and immediate influence.',
   },
   {
     id: 'momentum',
     name: 'Momentum',
+    identity: 'Leaders in Action',
     color: C.yellow,
-    tagline: 'Leading a team. Setting the standard, coaching people, and delivering results through others.',
-    scope: 'A team, store or function',
-    who: 'Store and team leaders',
+    who: 'Store Managers and functional leaders responsible for delivering through a team.',
+    focus: 'Team, consistency and performance through others.',
   },
   {
     id: 'enterprise',
     name: 'Enterprise',
+    identity: 'Leaders at Scale',
     color: C.purple,
-    tagline: 'Leading the business. Designing the systems, culture and trade offs that hold up at scale.',
-    scope: 'Multiple teams, functions or markets',
-    who: 'Senior and executive leaders',
+    who: 'Regional and senior leaders with broader business responsibility.',
+    focus: 'Systems, strategy and long term impact.',
   },
 ];
 
@@ -1772,30 +1817,19 @@ function zoomRail() {
     })
     .join('');
 
-  const labels = ['Whole framework', 'Driver or level', 'Competency', 'Behaviour'];
-  const enabled = [true, S.zoom >= 1 || !!S.comp, !!S.comp, !!S.beh];
-  const stops = labels
-    .map(
-      (label, i) =>
-        '<button class="stop" data-act="zoom" data-zoom="' + i + '" title="' + esc(label) + '" ' +
-        'aria-label="Zoom to ' + esc(label.toLowerCase()) + '" aria-current="' + (S.zoom === i) + '"' +
-        (enabled[i] ? '' : ' disabled') + '><span></span></button>'
-    )
-    .join('');
-
   const lensBtns = LEVELS.map(
     (l) =>
       '<button class="lens-btn" data-act="set-lens" data-level="' + l.id + '" ' +
-      'style="--lens-dot:' + l.color + '" aria-pressed="' + (l.id === S.lens) + '">' + esc(l.name) + '</button>'
+      'style="--lens-dot:' + l.color + '" aria-pressed="' + (l.id === S.lens) + '" ' +
+      'title="' + esc(l.identity) + '">' + esc(l.name) + '</button>'
   ).join('');
 
   return (
     '<div class="rail"><div class="rail-inner">' +
-    '<nav class="crumbs" aria-label="Framework depth">' + crumbHtml + '</nav>' +
+    '<nav class="crumbs" aria-label="Where you are">' + crumbHtml + '</nav>' +
     '<div class="rail-right">' +
-    '<div class="lens"><span class="rail-label">Level</span><div class="lens-set" role="group" aria-label="Leadership level">' +
-    lensBtns + '</div></div>' +
-    '<div class="lens"><span class="rail-label">Zoom</span><div class="stops">' + stops + '</div></div>' +
+    '<div class="lens"><span class="rail-label">Your level</span>' +
+    '<div class="lens-set" role="group" aria-label="Leadership level">' + lensBtns + '</div></div>' +
     '</div></div></div>'
   );
 }
@@ -1923,8 +1957,9 @@ function orbit(driver) {
 }
 
 /* ---------- Zoom 0: framework ---------------------------------------------
-   Two circles and nothing else. Everything below this screen is reached by
-   opening one of them, so the entry point stays legible.
+   The entry point has to orient someone who has never seen All For: 1: what
+   this is, how it is organised, which level applies to them, and what they
+   can do here — in that order, before anything asks them to explore.
    ------------------------------------------------------------------------- */
 
 function driverDial(driver) {
@@ -1947,11 +1982,12 @@ function driverDial(driver) {
     '<span class="dial-ring">' + dots +
     '<span class="dial-face">' +
     '<span class="dial-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
     '</span></span>' +
     '<span class="dial-meta">' +
+    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
     '<span class="dial-blurb">' + esc(driver.blurb) + '</span>' +
-    '<span class="dial-open">5 competencies &middot; 15 behaviours <b>Open &rarr;</b></span>' +
+    '<span class="dial-open"><span>5 competencies &middot; 15 behaviours</span>' +
+    '<b>Open &rarr;</b></span>' +
     '</span></button>'
   );
 }
@@ -1959,35 +1995,52 @@ function driverDial(driver) {
 function viewFramework() {
   const lens = levelById(S.lens);
 
-  const levelRow = LEVELS.map(
+  const levelCards = LEVELS.map(
     (l) =>
-      '<button class="level-row" data-act="open-level" data-level="' + l.id + '"' +
+      '<button class="level-card" data-act="open-level" data-level="' + l.id + '"' +
       (l.id === S.lens ? ' data-current="true"' : '') + '>' +
-      '<span class="lr-dot" style="background:' + l.color + '"></span>' +
-      '<span class="lr-text"><b>' + esc(l.name) + '</b><span>' + esc(l.who) + '</span></span>' +
-      '<span class="lr-go" aria-hidden="true">&rarr;</span></button>'
+      '<span class="lc-top"><span class="lc-dot" style="background:' + l.color + '"></span>' +
+      '<span class="lc-identity">' + esc(l.identity) + '</span></span>' +
+      '<span class="lc-name">' + esc(l.name) + '</span>' +
+      '<span class="lc-who">' + esc(l.who) + '</span>' +
+      '<span class="lc-focus"><b>Focus</b>' + esc(l.focus) + '</span>' +
+      '<span class="lc-state">' + (l.id === S.lens ? 'Your level' : 'Choose this level') + '</span>' +
+      '</button>'
   ).join('');
-
-  const body = S.query.trim()
-    ? '<div data-search-results>' + searchResults() + '</div>'
-    : '<section class="dials" aria-label="The two drivers">' + DRIVERS.map(driverDial).join('') + '</section>' +
-      '<section class="levels" aria-label="Leadership levels">' +
-      '<div class="levels-head"><h2>Three levels</h2>' +
-      '<p>The same thirty behaviours run through every level — what changes is scope. ' +
-      'You are reading at <b>' + esc(lens.name) + '</b>.</p></div>' +
-      '<div class="level-list">' + levelRow + '</div></section>' +
-      '<div data-search-results></div>';
 
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
     '<div class="hero">' +
-    '<span class="eyebrow">Cashies &middot; All For: 1</span>' +
-    '<h1 class="headline">The leadership framework</h1>' +
-    '<p class="prose lede">Two drivers hold the whole thing. Open one to see its five competencies, ' +
-    'then a competency to see the behaviours underneath it.</p>' +
+    '<span class="eyebrow">Cashies</span>' +
+    '<h1 class="headline">All For: 1 Leadership Framework</h1>' +
+    '<p class="lede-strong">A shared standard for what good leadership looks like at Cashies.</p>' +
+    '<p class="prose">The framework shows the behaviours we expect from our leaders, how those expectations ' +
+    'change as leadership scope grows, and what Needs Work, Great and Smashing It look like in practice. ' +
+    'It brings together two sides of leadership: how we build culture and how we drive operations.</p>' +
     '</div>' +
+
+    '<section data-hideable aria-labelledby="s-level">' +
+    '<div class="sec-head"><h2 id="s-level">Start with your leadership level</h2>' +
+    '<p>Choose the level that best reflects the scope you lead at today. You can change levels at any time ' +
+    'to compare how the expectations grow.</p></div>' +
+    '<div class="level-list">' + levelCards + '</div>' +
+    '<p class="sec-foot">Your level changes the expectations you see throughout the framework. ' +
+    'You are currently viewing <b>' + esc(lens.name) + '</b>.</p>' +
+    '</section>' +
+
+    '<section data-hideable aria-labelledby="s-areas">' +
+    '<div class="sec-head"><h2 id="s-areas">Explore the two sides of leadership</h2>' +
+    '<p>Every competency sits in one of two leadership areas.</p></div>' +
+    '<div class="dials">' + DRIVERS.map(driverDial).join('') + '</div>' +
+    '<p class="sec-foot">Open an area to explore its competencies and behaviours.</p>' +
+    '</section>' +
+
+    '<section class="search-sec" aria-labelledby="s-search">' +
+    '<div class="sec-head"><h2 id="s-search">Search the framework</h2>' +
+    '<p>Find a behaviour by name, definition or expectation.</p></div>' +
     searchBar('Search behaviours, definitions and expectations…') +
-    body +
+    '<div data-search-results>' + searchResults() + '</div>' +
+    '</section>' +
     '</div>'
   );
 }
@@ -2023,19 +2076,20 @@ function viewSlice() {
 
   const hero = isDriver
     ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Driver</span>' +
+      '<span class="eyebrow">Leadership area</span>' +
       '<h1 class="headline">' + esc(driver.name) + '</h1>' +
       '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
       orbit(driver) +
-      '<p class="ring-note">Pick a competency from the ring, or read them below at ' +
-      '<b>' + esc(lens.name) + '</b> level.</p>'
+      '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
+      '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency below, or change level to ' +
+      'compare what good looks like at ' +
+      esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>'
     : '<div class="slice-head">' +
-      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3</span>' +
+      '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
       '<h1 class="headline">' + esc(lens.name) + '</h1>' +
-      '<p class="prose">' + esc(lens.tagline) + '</p>' +
+      '<p class="prose">' + esc(lens.who) + '</p>' +
       '<div class="slice-meta">' +
-      '<div><span>Scope</span><b>' + esc(lens.scope) + '</b></div>' +
-      '<div><span>Typically</span><b>' + esc(lens.who) + '</b></div>' +
+      '<div><span>Focus</span><b>' + esc(lens.focus) + '</b></div>' +
       '</div></div>';
 
   let blocks;
@@ -2097,8 +2151,8 @@ function viewCompetency() {
     '<button class="eyebrow ch-driver" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
     '<h1 class="headline">' + esc(c.name) + '</h1>' +
-    '<p class="prose">Three behaviours. Read across to see how each one changes shape as scope grows — ' +
-    esc(lens.name) + ' is marked.</p>' +
+    '<p class="prose">This competency has three observable behaviours. Compare how the expectation grows from ' +
+    'Foundations to Momentum to Enterprise. Your selected level, <b>' + esc(lens.name) + '</b>, is highlighted.</p>' +
     '</div></div>' + blocks + '</div>'
   );
 }
@@ -2159,7 +2213,7 @@ function viewAssessSetup() {
   const levelChoice = (l) =>
     '<button class="choice" style="--accent:' + l.color + ';--accent-wash:' + washOf(l.color, 0.18) + '" ' +
     'data-act="set-alevel" data-level="' + l.id + '" aria-pressed="' + (a.level === l.id) + '">' +
-    '<b>' + esc(l.name) + '</b><span>' + esc(l.who) + ' &middot; ' + esc(l.scope) + '</span></button>';
+    '<b>' + esc(l.name) + '</b><span>' + esc(l.identity) + ' &middot; ' + esc(l.focus) + '</span></button>';
 
   return (
     '<div class="layer narrow" data-motion="flat">' +
@@ -2335,7 +2389,7 @@ function viewReport() {
     return (
       '<section class="dpanel" style="' + driverVars(d) + '">' +
       '<div class="dp-head">' + gauge(ds, { size: 116, color: d.core }) +
-      '<div><span class="eyebrow">Driver</span><h3>' + esc(d.name) + '</h3>' +
+      '<div><span class="eyebrow">Leadership area</span><h3>' + esc(d.name) + '</h3>' +
       '<p>' + esc(d.kicker) + '</p></div></div>' +
       '<div class="dp-scores">' + d.competencies.map(compBar).join('') + '</div>' +
       '</section>'
@@ -2653,7 +2707,7 @@ document.addEventListener('input', (e) => {
     const host = document.querySelector('[data-search-results]');
     if (host) host.innerHTML = searchResults();
     const searching = !!S.query.trim();
-    document.querySelectorAll('.layer > section').forEach((n) => {
+    document.querySelectorAll('[data-hideable]').forEach((n) => {
       n.hidden = searching;
     });
     const clear = document.querySelector('[data-act="clear-search"]');

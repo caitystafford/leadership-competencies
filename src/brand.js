@@ -31,29 +31,26 @@ const LOGO_SRC = null;
 function logoMark(opts) {
   const o = opts || {};
   const ink = o.ink || '#ffffff';
-  const accent = o.accent || C.peach;
   if (LOGO_SRC) {
     return '<img class="logo-img" src="' + LOGO_SRC + '" alt="All For: 1" />';
   }
   return (
-    '<span class="logo" role="img" aria-label="All For: 1">' +
-    '<span style="color:' + ink + '">All For</span>' +
-    '<span class="logo-colon" style="color:' + accent + '">:</span>' +
-    '<span class="logo-one" style="color:' + accent + '">1</span>' +
-    '</span>'
+    '<span class="logo" role="img" aria-label="All For: 1" style="color:' + ink + '">' +
+    'All For<span class="logo-colon">:</span><span class="logo-one">1</span></span>'
   );
 }
 
-/* ---------- Drivers -------------------------------------------------------
-   The two halves of the framework. Copy taken from the All For: 1 competency
-   artwork.
+/* ---------- Leadership areas ----------------------------------------------
+   The two halves of the framework. Called "drivers" in the methodology; the
+   interface says "leadership area", which is what a first-time reader needs.
+   The code keeps the shorter internal name.
    ------------------------------------------------------------------------- */
 
 const DRIVERS = [
   {
-    id: 'building-culture',
-    name: 'Building Culture',
-    lines: ['Building', 'Culture.'],
+    id: 'build-culture',
+    name: 'Build Culture',
+    lines: ['Build', 'Culture.'],
     kicker: 'Values-focused, leadership skillset',
     blurb: 'How leaders shape behaviour, mindset, and environment.',
     core: C.navy,

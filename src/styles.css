@@ -244,28 +244,6 @@ svg.icon { display: block; }
 .lens-btn[aria-pressed='true'] { background: var(--paper); color: var(--ink); box-shadow: var(--shadow-sm); }
 .lens-btn[aria-pressed='true']::before { opacity: 1; }
 
-.stops { display: flex; gap: 2px; background: var(--wash-deep); border-radius: 999px; padding: 3px; }
-.stop {
-  background: none;
-  border: 0;
-  cursor: pointer;
-  width: 28px;
-  height: 25px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  transition: background-color 140ms ease, opacity 140ms ease;
-}
-.stop span { display: block; border-radius: 2px; background: rgba(21, 7, 33, 0.4); transition: background-color 140ms ease; }
-.stop:nth-child(1) span { width: 15px; height: 9px; }
-.stop:nth-child(2) span { width: 12px; height: 9px; }
-.stop:nth-child(3) span { width: 9px; height: 9px; }
-.stop:nth-child(4) span { width: 6px; height: 9px; }
-.stop:hover:not(:disabled) { background: rgba(21, 7, 33, 0.06); }
-.stop:disabled { opacity: 0.26; cursor: not-allowed; }
-.stop[aria-current='true'] { background: var(--navy); }
-.stop[aria-current='true'] span { background: #fff; }
-
 /* ---------- Layers -------------------------------------------------------- */
 
 .layer { max-width: var(--wide); margin: 0 auto; padding: 52px var(--pad) 90px; }
@@ -315,18 +293,99 @@ svg.icon { display: block; }
 
 /* ---------- Hero ---------------------------------------------------------- */
 
-.hero { margin-bottom: 46px; max-width: 46ch; }
-.hero h1 { font-size: clamp(40px, 6.2vw, 62px); margin: 14px 0 0; }
-.hero .lede { margin-top: 20px; }
-
-/* ---------- Zoom 0: the two dials ----------------------------------------- */
-
-.dials {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 64px;
+.hero { margin-bottom: 56px; max-width: 62ch; }
+.hero h1 { font-size: clamp(38px, 5.6vw, 58px); margin: 14px 0 0; }
+.lede-strong {
+  margin-top: 22px;
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.34;
+  max-width: 26ch;
 }
+.hero .prose { margin-top: 16px; }
+
+/* ---------- Sections ------------------------------------------------------ */
+
+.layer > section { margin-bottom: 60px; }
+.layer > section:last-child { margin-bottom: 0; }
+
+.sec-head { margin-bottom: 22px; max-width: 62ch; }
+.sec-head h2 {
+  font-size: clamp(21px, 2.4vw, 26px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.sec-head p { margin-top: 9px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.55; }
+.sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
+.sec-foot b { color: var(--ink); }
+
+/* ---------- Level cards --------------------------------------------------- */
+
+.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+.level-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 22px 22px 18px;
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.level-card:active { transform: scale(0.99); }
+.lc-top { display: flex; align-items: center; gap: 9px; }
+.lc-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
+.lc-identity { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+.lc-name {
+  font-size: 27px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  margin: 10px 0 8px;
+}
+.lc-who { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
+.lc-focus {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+}
+.lc-focus b {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 3px;
+}
+.lc-state {
+  margin-top: 16px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.level-card[data-current='true'] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.level-card[data-current='true'] .lc-state { color: var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+  .level-card:hover { border-color: rgba(21, 7, 33, 0.32); box-shadow: var(--shadow-sm); }
+}
+
+/* ---------- The two leadership areas -------------------------------------- */
+
+.dials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; }
 
 .dial {
   position: relative;
@@ -341,7 +400,7 @@ svg.icon { display: block; }
   text-align: center;
 }
 
-.dial-ring { position: relative; display: block; width: min(100%, 400px); aspect-ratio: 1; }
+.dial-ring { position: relative; display: block; width: min(100%, 340px); aspect-ratio: 1; }
 .dial-dot {
   position: absolute;
   width: 13%;
@@ -359,11 +418,8 @@ svg.icon { display: block; }
   border-radius: 999px;
   background: var(--core);
   color: var(--core-ink);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7em;
+  display: grid;
+  place-items: center;
   padding: 12%;
   transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
 }
@@ -372,28 +428,33 @@ svg.icon { display: block; }
   text-transform: uppercase;
   letter-spacing: -0.045em;
   line-height: 0.9;
-  font-size: clamp(26px, 3.4vw, 44px);
-}
-.dial-kicker {
-  font-size: clamp(11px, 1.15vw, 14px);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--core-sub);
-  max-width: 18ch;
+  font-size: clamp(26px, 3.2vw, 42px);
 }
 
 .dial-meta { display: block; max-width: 34ch; }
-.dial-blurb { display: block; font-size: 15px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
-.dial-open {
+.dial-kicker {
   display: block;
-  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.dial-blurb { display: block; font-size: 15.5px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
+.dial-open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
-.dial-open b { color: var(--ink); margin-left: 6px; white-space: nowrap; }
+.dial-open b { color: var(--ink); white-space: nowrap; }
 
 @media (hover: hover) and (pointer: fine) {
   .dial:hover .dial-face, .dial:focus-visible .dial-face { transform: scale(0.93); box-shadow: var(--shadow-md); }
@@ -401,38 +462,9 @@ svg.icon { display: block; }
 }
 .dial:active .dial-face { transform: scale(0.9); }
 
-/* ---------- Zoom 0: levels ------------------------------------------------ */
+/* ---------- Search section ------------------------------------------------ */
 
-.levels { border-top: 1px solid var(--rule); padding-top: 34px; }
-.levels-head { margin-bottom: 22px; }
-.levels-head h2 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
-.levels-head p { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); max-width: 60ch; }
-
-.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
-.level-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  text-align: left;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out);
-}
-.level-row:active { transform: scale(0.99); }
-.level-row[data-current='true'] { border-color: var(--ink); }
-.lr-dot { width: 12px; height: 12px; border-radius: 999px; flex-shrink: 0; }
-.lr-text { flex: 1; min-width: 0; }
-.lr-text b { display: block; font-size: 16px; font-weight: 800; letter-spacing: -0.015em; }
-.lr-text span { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 1px; }
-.lr-go { color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) {
-  .level-row:hover { border-color: rgba(21, 7, 33, 0.3); }
-  .level-row:hover .lr-go { transform: translateX(3px); }
-}
+.search-sec .searchbar { margin-bottom: 18px; }
 
 /* ---------- Zoom 1: heading ----------------------------------------------- */
 
@@ -449,8 +481,21 @@ svg.icon { display: block; }
 }
 .slice-meta div b { font-size: 15px; font-weight: 800; }
 
-.ring-note { text-align: center; font-size: 14px; color: var(--ink-soft); margin: 14px 0 40px; }
-.ring-note b { color: var(--ink); }
+.level-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 15px 18px;
+  margin: 18px 0 34px;
+  font-size: 14.5px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+}
+.level-banner b { color: var(--ink); }
+.lb-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; margin-top: 6px; }
 
 /* ---------- The ring ------------------------------------------------------ */
 
@@ -1203,7 +1248,10 @@ svg.icon { display: block; }
   .rail-right { margin-left: 0; width: 100%; flex-direction: column; align-items: stretch; gap: 10px; }
   .lens { justify-content: space-between; }
   .lens-set { flex: 1; min-width: 0; }
-  .lens-btn { flex: 1; justify-content: center; padding: 8px 4px; font-size: 10px; letter-spacing: 0.04em; }
+  /* The colour dot and its gap are what tip three pills over a phone's width.
+     The active pill still reads by its white fill. */
+  .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
+  .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
   .comp-head .ch-badge { width: 60px; height: 60px; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }

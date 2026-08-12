@@ -1,7 +1,7 @@
 # All For: 1 Leadership Framework
 
 An interactive version of the Cash Converters All For: 1 leadership competency
-matrix — two drivers, ten competencies, thirty assessable behaviours, three
+matrix — two leadership areas, ten competencies, thirty assessable behaviours, three
 leadership levels — plus a self assessment and a team member assessment that
 download as a PDF.
 
@@ -11,34 +11,48 @@ off disk, email it, or drop it on any static host.
 
 ## Structure
 
-Every competency belongs to one of two drivers, matching the All For: 1
-competency artwork:
+Every competency sits in one of two **leadership areas**, and the framework is
+read at one of three **levels**.
 
-| Driver | Skillset | Competencies |
+| Leadership area | Skillset | Competencies |
 |---|---|---|
-| **Building Culture** | Values-focused, leadership | Responsibility, Community, Perseverance, Potential, Equity |
+| **Build Culture** | Values-focused, leadership | Responsibility, Community, Perseverance, Potential, Equity |
 | **Drive Operations** | Business-focused, management | People, Systems & Execution, Risk Safety & Protection, Customer Trust, Performance |
+
+| Level | Identity | Who |
+|---|---|---|
+| **Foundations** | Leaders in Future | Emerging leaders, ASMs, MTs and high performers preparing for leadership |
+| **Momentum** | Leaders in Action | Store Managers and functional leaders delivering through a team |
+| **Enterprise** | Leaders at Scale | Regional and senior leaders with broader business responsibility |
+
+The methodology calls the two areas *drivers*, and the code still does. The
+interface says "leadership area", because that is a term a first-time reader
+does not have to be taught.
 
 ## Using it
 
-**Explore** has four levels of zoom, moved through with the breadcrumb, the zoom
-control, or the `Esc` key.
+**The first screen orients before it asks you to explore.** In order: what this
+is, how it is organised, which level applies to you, and only then the two areas
+to open. Level selection sits *above* the areas, because the level you pick
+changes every expectation you will read afterwards.
 
-| Zoom | Shows |
+**Explore** goes four screens deep, moved through with the breadcrumb or `Esc`:
+
+| Screen | Shows |
 |---|---|
-| Framework | Two circles, and nothing else |
-| Driver or level | One driver expanded into its ring of five competencies, or all ten grouped by driver |
+| Framework | Orientation, level choice, and the two areas as circles |
+| Area or level | One area expanded into its ring of five competencies, or all ten grouped by area |
 | Competency | Its three behaviours, with all three levels side by side |
 | Behaviour | One behaviour at one level, with the Needs Work / Great / Smashing It descriptors |
 
-The framework page deliberately holds back: two circles, a hover that previews
-the five competencies as dots on the circumference, and a click that expands
-them into the ring. Showing all twenty competency chips at once was unreadable.
+There is no "zoom" control. The hierarchy is real, but naming it after the
+design metaphor made people learn the interface architecture; the breadcrumb
+already says where you are.
 
 **Level is a lens, not a destination.** The Foundations / Momentum / Enterprise
 control sits in the rail on every screen and re-reads whatever you are looking
-at, so you never have to navigate back out to change level. Choosing a level
-from the framework page also opens the whole framework at that level.
+at, so you never have to navigate back out to change level. Every screen states
+which level you are reading in plain words rather than assuming you remember.
 
 Press `/` to search across behaviour names, definitions, expectations and rating
 descriptors.
@@ -72,25 +86,33 @@ matrix.
 
 Not everything comes from the workbook:
 
-- **Level taglines, scope and "typically" lines** are programme copy written for
-  the app. They live in the `LEVELS` array at the top of `src/app.js`.
-- **Drivers, competency colours, orbit positions and icons** come from the
-  competency artwork, not the spreadsheet. They live in `src/brand.js` —
+- **Level identities, audiences and focus lines** are the programme's own
+  language for the three stages. They live in the `LEVELS` array at the top of
+  `src/app.js`.
+- **Leadership areas, competency colours, ring positions and icons** come from
+  the competency artwork, not the spreadsheet. They live in `src/brand.js` —
   `DRIVERS`, `COMP_META`, `SLOTS` and `ICONS`.
 
-**Known wording difference.** The artwork uses shorter labels for four
-behaviours than the workbook does: *Grows capability* / "Learns and adapts",
-*Acts ethically and fairly* / "Makes ethical decisions", *Solves problems* /
-"Finds a way", *Uses insight to improve results* / "Uses insight and judgement".
-The app follows the workbook, because those are the names the assessable rating
-descriptors are written against. If the artwork's labels are the canonical ones,
-change them in the workbook and re-run the two commands above.
+**Canonical names.** The workbook is the single source of truth for behaviour
+names, and the app follows it — those are the names the Needs Work / Great /
+Smashing It descriptors are written against. Where the artwork differs it is the
+artwork that needs updating, not this app:
+
+| Workbook (canonical) | Artwork |
+|---|---|
+| Learns and adapts | Grows capability |
+| Makes ethical decisions | Acts ethically and fairly |
+| Finds a way | Solves problems |
+| Uses insight and judgement | Uses insight to improve results |
+
+The area is **Build Culture**, not "Building Culture". Both decisions are locked
+so the app, framework PDF, decks and assessment language can be made identical.
 
 ### The logo
 
-No logo file was available, so the wordmark is built from type — the lockup in
-`logoMark()` in `src/brand.js`. To use the real asset, set `LOGO_SRC` at the top
-of that file to a path or data URI and it is used everywhere instead.
+No usable logo file was available, so the wordmark is set from type, all white,
+in `logoMark()` in `src/brand.js`. To use the real asset, set `LOGO_SRC` at the
+top of that file to a path or data URI and it is used everywhere instead.
 
 ## Layout
 
