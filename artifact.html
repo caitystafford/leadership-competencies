@@ -328,97 +328,32 @@ svg.icon { display: block; }
 .sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
 .sec-foot b { color: var(--ink); }
 
-/* ---------- Level cards --------------------------------------------------- */
+/* ---------- Zoom 0: the two domains --------------------------------------- */
 
-.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
-.level-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  width: 100%;
-  text-align: left;
+.domains { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+.domain {
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 20px;
-  padding: 22px 22px 18px;
-  cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
-}
-.level-card:active { transform: scale(0.99); }
-.lc-top { display: flex; align-items: center; gap: 9px; }
-.lc-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
-.lc-identity { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
-.lc-name {
-  font-size: 27px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.035em;
-  margin: 10px 0 8px;
-}
-.lc-who { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
-.lc-focus {
-  margin-top: 14px;
-  padding-top: 13px;
-  border-top: 1px solid var(--rule);
-  width: 100%;
-  font-size: 14px;
-  color: var(--ink-mid);
-  line-height: 1.5;
-}
-.lc-focus b {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 3px;
-}
-.lc-state {
-  margin-top: 16px;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.level-card[data-current='true'] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.level-card[data-current='true'] .lc-state { color: var(--ink); }
-@media (hover: hover) and (pointer: fine) {
-  .level-card:hover { border-color: rgba(21, 7, 33, 0.32); box-shadow: var(--shadow-sm); }
-}
-
-/* ---------- The two leadership areas -------------------------------------- */
-
-.dials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; }
-
-.dial {
-  position: relative;
+  border-radius: 24px;
+  padding: 30px 26px 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
   text-align: center;
 }
 
-.dial-ring { position: relative; display: block; width: min(100%, 340px); aspect-ratio: 1; }
-.dial-dot {
-  position: absolute;
-  width: 13%;
+.domain-dial {
+  position: relative;
+  width: min(100%, 226px);
   aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
   border-radius: 999px;
-  transform: translate(-50%, -50%) scale(0.2);
-  opacity: 0;
-  box-shadow: 0 0 0 4px var(--wash);
-  transition: transform 320ms var(--ease-out), opacity 240ms ease;
 }
-
-.dial-face {
+.dd-face {
   position: absolute;
   inset: 0;
   border-radius: 999px;
@@ -427,46 +362,189 @@ svg.icon { display: block; }
   display: grid;
   place-items: center;
   padding: 12%;
-  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+  transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
 }
-.dial-title {
+.dd-title {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.045em;
-  line-height: 0.9;
-  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 0.92;
+  font-size: clamp(21px, 2.2vw, 30px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .domain-dial:hover .dd-face, .domain-dial:focus-visible .dd-face { transform: scale(1.035); box-shadow: var(--shadow-md); }
+}
+.domain-dial:active .dd-face { transform: scale(0.99); }
+
+.domain-head { margin: 22px 0 20px; }
+.domain-blurb { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.5; max-width: 34ch; }
+
+.domain-list { display: flex; flex-direction: column; gap: 7px; width: 100%; margin-bottom: 20px; }
+.domain-cta { margin-top: auto; }
+
+/* ---------- Competency card ----------------------------------------------- */
+
+.comp-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.comp-card:active { transform: scale(0.995); }
+.cc-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.cc-text { flex: 1; min-width: 0; }
+.cc-name { display: block; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
+.cc-beh { display: block; margin-top: 3px; font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
+.cc-cta {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--wash-deep);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .comp-card:hover { border-color: rgba(21, 7, 33, 0.3); background: var(--wash); }
+  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; }
 }
 
-.dial-meta { display: block; max-width: 34ch; }
-.dial-kicker {
-  display: block;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 8px;
+.comp-list { display: flex; flex-direction: column; gap: 9px; }
+
+/* ---------- How leadership grows ------------------------------------------ */
+
+.grow-list { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--rule); }
+.grow-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
 }
-.dial-blurb { display: block; font-size: 15.5px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
-.dial-open {
+.gr-dot { width: 10px; height: 10px; border-radius: 999px; flex-shrink: 0; align-self: center; }
+.gr-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; min-width: 9ch; }
+.gr-focus { font-size: 15px; color: var(--ink-mid); flex: 1; min-width: 220px; }
+.gr-now {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--wash-deep);
+  border-radius: 999px;
+  padding: 5px 11px;
+  align-self: center;
+}
+
+.linkish {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Expanded competency ------------------------------------------- */
+
+.expand-backdrop { position: fixed; inset: 0; background: rgba(21, 7, 33, 0.44); z-index: 90; }
+.expand-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 91;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.expand-card {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: min(86vh, 900px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 7px;
-  margin-top: 14px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  background: var(--paper);
+  border-radius: 26px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
-.dial-open b { color: var(--ink); white-space: nowrap; }
+/* The behaviours scroll inside the card, so fade the bottom edge rather than
+   ending on a hard cut that reads as the end of the content. */
+.expand-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--paper));
+  pointer-events: none;
+}
+.expand-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--wash-deep);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.expand-close:hover { background: var(--navy); color: #fff; }
 
-@media (hover: hover) and (pointer: fine) {
-  .dial:hover .dial-face, .dial:focus-visible .dial-face { transform: scale(0.93); box-shadow: var(--shadow-md); }
-  .dial:hover .dial-dot, .dial:focus-visible .dial-dot { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+.xc-head { display: flex; align-items: center; gap: 15px; padding: 28px 30px 0; }
+.xc-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
-.dial:active .dial-face { transform: scale(0.9); }
+.xc-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.xc-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
+.xc-domain:hover { color: var(--ink); }
+.xc-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; margin-top: 5px; }
+.xc-lede { padding: 14px 30px 0; font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
+.xc-lede b { color: var(--ink); }
+
+.xc-body { overflow-y: auto; padding: 6px 30px 30px; margin-top: 14px; }
+.xb { border-top: 1px solid var(--rule); padding: 20px 0 4px; }
+.xb-top { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 14px; }
+.xb-num { font-size: 11px; font-weight: 800; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 5px; flex-shrink: 0; }
+.xb h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.03em; }
+.xb-top p { margin-top: 3px; font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
+.xb-rungs { display: flex; flex-direction: column; gap: 7px; }
 
 /* ---------- Search section ------------------------------------------------ */
 
@@ -641,7 +719,7 @@ svg.icon { display: block; }
 
 /* ---------- Zoom 1: the competency list ----------------------------------- */
 
-.driver-group { margin-bottom: 40px; }
+.domain-group { margin-bottom: 40px; }
 .dg-head {
   display: flex;
   align-items: center;
@@ -651,7 +729,7 @@ svg.icon { display: block; }
   border: 0;
   border-bottom: 1px solid var(--rule);
   padding: 0 0 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   cursor: pointer;
   text-align: left;
 }
@@ -659,66 +737,6 @@ svg.icon { display: block; }
 .dg-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
 .dg-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) { .dg-head:hover .dg-go { transform: translateX(3px); } }
-
-.comp-list { display: flex; flex-direction: column; gap: 10px; }
-
-.comp-row { background: var(--paper); border: 1px solid var(--rule); border-radius: 18px; overflow: hidden; }
-.cr-head {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  width: 100%;
-  background: none;
-  border: 0;
-  padding: 15px 18px;
-  cursor: pointer;
-  text-align: left;
-  transition: background-color 140ms ease;
-}
-.cr-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  background: var(--fill);
-  color: var(--node-ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.cr-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
-.cr-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) {
-  .cr-head:hover { background: var(--wash); }
-  .cr-head:hover .cr-go { transform: translateX(3px); }
-}
-
-.cr-body { border-top: 1px solid var(--rule-soft); }
-.exp-card {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--rule-soft);
-  padding: 13px 18px 13px 46px;
-  cursor: pointer;
-  position: relative;
-  transition: background-color 140ms ease;
-}
-.exp-card:last-child { border-bottom: 0; }
-.exp-card::before {
-  content: '';
-  position: absolute;
-  left: 26px;
-  top: 20px;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--fill);
-}
-.ec-name { display: block; font-size: 15px; font-weight: 800; letter-spacing: -0.015em; }
-.ec-exp { display: block; margin-top: 3px; font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
-@media (hover: hover) and (pointer: fine) { .exp-card:hover { background: var(--wash); } }
 
 /* ---------- Search -------------------------------------------------------- */
 
@@ -785,52 +803,21 @@ svg.icon { display: block; }
 
 .empty { padding: 50px 0; color: var(--ink-soft); font-size: 15px; }
 
-/* ---------- Zoom 2: competency -------------------------------------------- */
+/* ---------- Level rungs (shared by the dialog) ---------------------------- */
 
-.comp-head { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 34px; flex-wrap: wrap; }
-.comp-head .ch-badge {
-  width: 76px;
-  height: 76px;
-  border-radius: 999px;
-  background: var(--fill);
-  color: var(--node-ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.comp-head .ch-text { min-width: 260px; flex: 1; }
-.comp-head h1 { font-size: clamp(34px, 5.4vw, 54px); margin: 8px 0 14px; }
-.ch-driver { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
-.ch-driver::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
-.ch-driver:hover { color: var(--ink); }
-
-.beh-block { border-top: 1px solid var(--rule); padding: 28px 0 6px; }
-.bb-top { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
-.bb-num {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-  padding-top: 6px;
-  flex-shrink: 0;
-}
-.beh-block h3 { font-size: 24px; font-weight: 900; letter-spacing: -0.03em; }
-.bb-def { color: var(--ink-mid); font-size: 15.5px; max-width: 68ch; margin-top: 4px; }
-
-.ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .rung {
   text-align: left;
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 16px 18px;
+  border-radius: 14px;
+  padding: 13px 16px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out);
+  gap: 6px;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
 }
-.rung:active { transform: scale(0.99); }
+.rung:active { transform: scale(0.995); }
 .rung-name {
   display: flex;
   align-items: center;
@@ -842,10 +829,9 @@ svg.icon { display: block; }
   color: var(--ink-soft);
 }
 .rung-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
-.rung-exp { font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; }
-.rung[data-current='true'] { border-color: var(--ink); }
-.rung[data-current='true'] .rung-name { color: var(--ink); }
-.rung[data-current='true'] .rung-exp { color: var(--ink); }
+.rung-exp { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
+.rung[data-current='true'] { border-color: var(--ink); background: var(--wash); }
+.rung[data-current='true'] .rung-name, .rung[data-current='true'] .rung-exp { color: var(--ink); }
 @media (hover: hover) and (pointer: fine) { .rung:hover { border-color: rgba(21, 7, 33, 0.32); } }
 
 /* ---------- Zoom 3: behaviour --------------------------------------------- */
@@ -1231,7 +1217,7 @@ svg.icon { display: block; }
 /* ---------- Responsive ---------------------------------------------------- */
 
 @media (max-width: 1000px) {
-  .dials { grid-template-columns: 1fr; gap: 40px; }
+  .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
   /* The ring needs width to read. Every competency it shows is also in the
      list below it, so below this breakpoint the list is the whole story. */
@@ -1240,7 +1226,7 @@ svg.icon { display: block; }
 }
 
 @media (max-width: 900px) {
-  .ladder, .rating-grid, .opt-row { grid-template-columns: 1fr; }
+  .rating-grid, .opt-row { grid-template-columns: 1fr; }
   .rpt-head { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
 }
 
@@ -1259,7 +1245,12 @@ svg.icon { display: block; }
   .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
   .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
-  .comp-head .ch-badge { width: 60px; height: 60px; }
+  .expand-wrap { padding: 0; }
+  .expand-card { max-width: none; max-height: 100%; height: 100%; border-radius: 0; }
+  .xc-head, .xc-lede { padding-left: 20px; padding-right: 20px; }
+  .xc-body { padding: 6px 20px 26px; }
+  .comp-card { gap: 11px; padding: 11px 12px; }
+  .cc-cta { display: none; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }
 }
 
@@ -1823,7 +1814,7 @@ function zoomRail() {
     '<div class="rail"><div class="rail-inner">' +
     '<nav class="crumbs" aria-label="Where you are">' + crumbHtml + '</nav>' +
     '<div class="rail-right">' +
-    '<div class="lens"><span class="rail-label">Your level</span>' +
+    '<div class="lens"><span class="rail-label">Viewing level</span>' +
     '<div class="lens-set" role="group" aria-label="Leadership level">' + lensBtns + '</div></div>' +
     '</div></div></div>'
   );
@@ -1951,56 +1942,61 @@ function orbit(driver) {
   );
 }
 
-/* ---------- Zoom 0: framework ---------------------------------------------
-   The entry point has to orient someone who has never seen All For: 1: what
-   this is, how it is organised, which level applies to them, and what they
-   can do here — in that order, before anything asks them to explore.
+/* ---------- Competency card ------------------------------------------------
+   The unit that carries a competency everywhere it is listed. Clicking one
+   expands it in place rather than navigating, so you never lose your footing
+   in the domain you were reading.
    ------------------------------------------------------------------------- */
 
-function driverDial(driver) {
-  // Five dots previewing the ring, on the dial's own circumference at the very
-  // angles the competencies expand into. The dial is square, so this is plain
-  // trigonometry rather than the aspect-corrected polar() the diagram needs.
-  const dots = driver.competencies
-    .map((c, i) => {
-      const a = (SLOTS[c.slot].angle * Math.PI) / 180;
-      return (
-        '<span class="dial-dot" style="background:' + c.fill +
-        ';left:' + (50 + 50 * Math.cos(a)) + '%;top:' + (50 - 50 * Math.sin(a)) +
-        '%;transition-delay:' + i * 40 + 'ms"></span>'
-      );
-    })
-    .join('');
-
+function compCard(c, opts) {
+  const o = opts || {};
   return (
-    '<button class="dial" style="' + driverVars(driver) + '" data-act="open-driver" data-driver="' + driver.id + '">' +
-    '<span class="dial-ring">' + dots +
-    '<span class="dial-face">' +
-    '<span class="dial-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '</span></span>' +
-    '<span class="dial-meta">' +
-    '<span class="dial-kicker">' + esc(driver.kicker) + '</span>' +
-    '<span class="dial-blurb">' + esc(driver.blurb) + '</span>' +
-    '<span class="dial-open"><span>5 competencies &middot; 15 behaviours</span>' +
-    '<b>Open &rarr;</b></span>' +
-    '</span></button>'
+    '<button class="comp-card" style="' + compVars(c) + '" data-act="open-comp" data-comp="' + c.id + '">' +
+    '<span class="cc-badge">' + icon(c.icon, o.compact ? 22 : 26) + '</span>' +
+    '<span class="cc-text"><span class="cc-name">' + esc(c.name) + '</span>' +
+    (o.compact
+      ? ''
+      : '<span class="cc-beh">' + c.behaviours.map((b) => esc(b.name)).join(' &middot; ') + '</span>') +
+    '</span>' +
+    '<span class="cc-cta">Expand</span></button>'
+  );
+}
+
+/* ---------- Zoom 0: framework ---------------------------------------------
+   Leads with the framework itself — two domains, with the competencies inside
+   each one visible without a click. Level comes afterwards and explains
+   itself, because it is a lens on the framework rather than the way in.
+   ------------------------------------------------------------------------- */
+
+function domainPanel(driver) {
+  return (
+    '<section class="domain" style="' + driverVars(driver) + '">' +
+    '<button class="domain-dial" data-act="open-driver" data-driver="' + driver.id + '" ' +
+    'aria-label="Explore ' + esc(driver.name) + '">' +
+    '<span class="dd-face"><span class="dd-title">' +
+    driver.lines.map((t) => esc(t)).join('<br>') + '</span></span></button>' +
+    '<div class="domain-head">' +
+    '<span class="eyebrow">' + esc(driver.kicker) + '</span>' +
+    '<p class="domain-blurb">' + esc(driver.blurb) + '</p>' +
+    '</div>' +
+    '<div class="domain-list">' + driver.competencies.map((c) => compCard(c, { compact: true })).join('') + '</div>' +
+    '<button class="btn small domain-cta" data-act="open-driver" data-driver="' + driver.id + '">' +
+    'Explore ' + esc(driver.name) + ' &rarr;</button>' +
+    '</section>'
   );
 }
 
 function viewFramework() {
   const lens = levelById(S.lens);
 
-  const levelCards = LEVELS.map(
+  const levelRows = LEVELS.map(
     (l) =>
-      '<button class="level-card" data-act="open-level" data-level="' + l.id + '"' +
-      (l.id === S.lens ? ' data-current="true"' : '') + '>' +
-      '<span class="lc-top"><span class="lc-dot" style="background:' + l.color + '"></span>' +
-      '<span class="lc-identity">' + esc(l.identity) + '</span></span>' +
-      '<span class="lc-name">' + esc(l.name) + '</span>' +
-      '<span class="lc-who">' + esc(l.who) + '</span>' +
-      '<span class="lc-focus"><b>Focus</b>' + esc(l.focus) + '</span>' +
-      '<span class="lc-state">' + (l.id === S.lens ? 'Your level' : 'Choose this level') + '</span>' +
-      '</button>'
+      '<li class="grow-row"' + (l.id === S.lens ? ' data-current="true"' : '') + '>' +
+      '<span class="gr-dot" style="background:' + l.color + '"></span>' +
+      '<span class="gr-name">' + esc(l.name) + '</span>' +
+      '<span class="gr-focus">' + esc(l.focus) + '</span>' +
+      (l.id === S.lens ? '<span class="gr-now">Viewing</span>' : '') +
+      '</li>'
   ).join('');
 
   return (
@@ -2009,25 +2005,24 @@ function viewFramework() {
     '<span class="eyebrow">Cashies</span>' +
     '<h1 class="headline">All For: 1 Leadership Framework</h1>' +
     '<p class="lede-strong">A shared standard for what good leadership looks like at Cashies.</p>' +
-    '<p class="prose">The framework shows the behaviours we expect from our leaders, how those expectations ' +
-    'change as leadership scope grows, and what Needs Work, Great and Smashing It look like in practice. ' +
-    'It brings together two sides of leadership: how we build culture and how we drive operations.</p>' +
+    '<p class="prose">The framework brings together two domains of leadership, ten competencies and thirty ' +
+    'observable behaviours. Explore a domain below to see what good looks like, and how expectations grow ' +
+    'from Foundations through to Enterprise.</p>' +
     '</div>' +
 
-    '<section data-hideable aria-labelledby="s-level">' +
-    '<div class="sec-head"><h2 id="s-level">Start with your leadership level</h2>' +
-    '<p>Choose the level that best reflects the scope you lead at today. You can change levels at any time ' +
-    'to compare how the expectations grow.</p></div>' +
-    '<div class="level-list">' + levelCards + '</div>' +
-    '<p class="sec-foot">Your level changes the expectations you see throughout the framework. ' +
-    'You are currently viewing <b>' + esc(lens.name) + '</b>.</p>' +
+    '<section data-hideable aria-labelledby="s-explore">' +
+    '<div class="sec-head"><h2 id="s-explore">Explore the framework</h2></div>' +
+    '<div class="domains">' + DRIVERS.map(domainPanel).join('') + '</div>' +
     '</section>' +
 
-    '<section data-hideable aria-labelledby="s-areas">' +
-    '<div class="sec-head"><h2 id="s-areas">Explore the two sides of leadership</h2>' +
-    '<p>Every competency sits in one of two leadership areas.</p></div>' +
-    '<div class="dials">' + DRIVERS.map(driverDial).join('') + '</div>' +
-    '<p class="sec-foot">Open an area to explore its competencies and behaviours.</p>' +
+    '<section data-hideable class="grow" aria-labelledby="s-grow">' +
+    '<div class="sec-head"><h2 id="s-grow">How leadership grows</h2>' +
+    '<p>The same competencies and behaviours apply right across the framework. What changes is the scope of ' +
+    'leadership expected.</p></div>' +
+    '<ul class="grow-list">' + levelRows + '</ul>' +
+    '<p class="sec-foot">Use the level control at the top of the page to change the expectations you are ' +
+    'viewing. <button class="linkish" data-act="open-level" data-level="' + lens.id + '">' +
+    'See all ten competencies at ' + esc(lens.name) + ' &rarr;</button></p>' +
     '</section>' +
 
     '<section class="search-sec" aria-labelledby="s-search">' +
@@ -2040,28 +2035,7 @@ function viewFramework() {
   );
 }
 
-/* ---------- Zoom 1: a driver or a level ----------------------------------- */
-
-function compRow(c, lens, n) {
-  return (
-    '<section class="comp-row" style="' + compVars(c) + '">' +
-    '<button class="cr-head" data-act="open-comp" data-comp="' + c.id + '">' +
-    '<span class="cr-badge">' + icon(c.icon, 22) + '</span>' +
-    '<span class="cr-name">' + esc(c.name) + '</span>' +
-    '<span class="cr-go" aria-hidden="true">&rarr;</span></button>' +
-    '<div class="cr-body">' +
-    c.behaviours
-      .map(
-        (b) =>
-          '<button class="exp-card" data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '" ' +
-          'title="See what Needs Work, Great and Smashing It look like">' +
-          '<span class="ec-name">' + esc(b.name) + '</span>' +
-          '<span class="ec-exp">' + esc(b.levels[lens].expectation) + '</span></button>'
-      )
-      .join('') +
-    '</div></section>'
-  );
-}
+/* ---------- Zoom 1: a domain or a level ----------------------------------- */
 
 function viewSlice() {
   const slice = currentSlice();
@@ -2071,61 +2045,61 @@ function viewSlice() {
 
   const hero = isDriver
     ? '<div class="slice-head" style="' + driverVars(driver) + '">' +
-      '<span class="eyebrow">Leadership area</span>' +
+      '<span class="eyebrow">Domain</span>' +
       '<h1 class="headline">' + esc(driver.name) + '</h1>' +
       '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
-      orbit(driver) +
-      '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
-      '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency below, or change level to ' +
-      'compare what good looks like at ' +
-      esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>'
+      orbit(driver)
     : '<div class="slice-head">' +
       '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
       '<h1 class="headline">' + esc(lens.name) + '</h1>' +
       '<p class="prose">' + esc(lens.who) + '</p>' +
-      '<div class="slice-meta">' +
-      '<div><span>Focus</span><b>' + esc(lens.focus) + '</b></div>' +
-      '</div></div>';
+      '<div class="slice-meta"><div><span>Focus</span><b>' + esc(lens.focus) + '</b></div></div></div>';
 
-  let blocks;
-  if (isDriver) {
-    blocks = '<div class="comp-list">' + driver.competencies.map((c) => compRow(c, lens.id)).join('') + '</div>';
-  } else {
-    blocks = DRIVERS.map(
-      (d) =>
-        '<section class="driver-group" style="' + driverVars(d) + '">' +
-        '<button class="dg-head" data-act="open-driver" data-driver="' + d.id + '">' +
-        '<span class="dg-mark"></span><span class="dg-name">' + esc(d.name) + '</span>' +
-        '<span class="dg-go" aria-hidden="true">&rarr;</span></button>' +
-        '<div class="comp-list">' + d.competencies.map((c) => compRow(c, lens.id)).join('') + '</div>' +
-        '</section>'
-    ).join('');
-  }
+  const banner =
+    '<div class="level-banner"><span class="lb-dot" style="background:' + lens.color + '"></span>' +
+    '<span><b>Viewing ' + esc(lens.name) + ' expectations.</b> Open a competency to see its behaviours, or ' +
+    'change level to compare what good looks like at ' +
+    esc(LEVELS.filter((l) => l.id !== lens.id).map((l) => l.name).join(' or ')) + '.</span></div>';
+
+  const blocks = isDriver
+    ? '<div class="comp-list">' + driver.competencies.map((c) => compCard(c)).join('') + '</div>'
+    : DRIVERS.map(
+        (d) =>
+          '<section class="domain-group" style="' + driverVars(d) + '">' +
+          '<button class="dg-head" data-act="open-driver" data-driver="' + d.id + '">' +
+          '<span class="dg-mark"></span><span class="dg-name">' + esc(d.name) + '</span>' +
+          '<span class="dg-go" aria-hidden="true">&rarr;</span></button>' +
+          '<div class="comp-list">' + d.competencies.map((c) => compCard(c)).join('') + '</div>' +
+          '</section>'
+      ).join('');
 
   const body = S.query.trim() ? '<div data-search-results>' + searchResults() + '</div>' : blocks + '<div data-search-results></div>';
 
   return (
     '<div class="layer" data-motion="' + motionDir() + '">' +
-    hero +
+    hero + banner +
     searchBar('Search ' + esc(lens.name) + ' expectations…') +
     body +
     '</div>'
   );
 }
 
-/* ---------- Zoom 2: competency -------------------------------------------- */
+/* ---------- Zoom 2: the competency, expanded in place ----------------------
+   A dialog over whatever you were reading, rather than another full page, so
+   opening a competency never costs you your place in the domain.
+   ------------------------------------------------------------------------- */
 
-function viewCompetency() {
+function compExpand() {
   const c = compById(S.comp);
   const lens = levelById(S.lens);
 
   const blocks = c.behaviours
     .map(
       (b, i) =>
-        '<section class="beh-block">' +
-        '<div class="bb-top"><span class="bb-num">' + pad2(i + 1) + '</span>' +
-        '<div><h3>' + esc(b.name) + '</h3><p class="bb-def">' + esc(b.definition) + '</p></div></div>' +
-        '<div class="ladder">' +
+        '<div class="xb">' +
+        '<div class="xb-top"><span class="xb-num">' + pad2(i + 1) + '</span>' +
+        '<div><h3>' + esc(b.name) + '</h3><p>' + esc(b.definition) + '</p></div></div>' +
+        '<div class="xb-rungs">' +
         LEVELS.map(
           (l) =>
             '<button class="rung" data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '" ' +
@@ -2134,21 +2108,28 @@ function viewCompetency() {
             esc(l.name) + '</span>' +
             '<span class="rung-exp">' + esc(b.levels[l.id].expectation) + '</span></button>'
         ).join('') +
-        '</div></section>'
+        '</div></div>'
     )
     .join('');
 
   return (
-    '<div class="layer" data-motion="' + motionDir() + '" style="' + compVars(c) + ';' + driverVars(c.driver) + '">' +
-    '<div class="comp-head">' +
-    '<span class="ch-badge">' + icon(c.icon, 38) + '</span>' +
-    '<div class="ch-text">' +
-    '<button class="eyebrow ch-driver" data-act="open-driver" data-driver="' + c.driver.id + '">' +
+    '<div class="expand-backdrop" data-act="close-expand"></div>' +
+    '<div class="expand-wrap" data-act="close-expand">' +
+    '<div class="expand-card" style="' + compVars(c) + ';' + driverVars(c.driver) + '" role="dialog" ' +
+    'aria-modal="true" aria-label="' + esc(c.name) + '">' +
+    '<button class="expand-close" data-act="close-expand" aria-label="Close">' +
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+    'stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
+    '<div class="xc-head">' +
+    '<span class="xc-badge">' + icon(c.icon, 32) + '</span>' +
+    '<div><button class="eyebrow xc-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
-    '<h1 class="headline">' + esc(c.name) + '</h1>' +
-    '<p class="prose">This competency has three observable behaviours. Compare how the expectation grows from ' +
-    'Foundations to Momentum to Enterprise. Your selected level, <b>' + esc(lens.name) + '</b>, is highlighted.</p>' +
-    '</div></div>' + blocks + '</div>'
+    '<h2>' + esc(c.name) + '</h2></div></div>' +
+    '<p class="xc-lede">Three observable behaviours. Compare how each expectation grows from Foundations to ' +
+    'Enterprise — your level, <b>' + esc(lens.name) + '</b>, is marked. Open one to see Needs Work, Great and ' +
+    'Smashing It.</p>' +
+    '<div class="xc-body">' + blocks + '</div>' +
+    '</div></div>'
   );
 }
 
@@ -2513,9 +2494,12 @@ function currentView() {
     if (S.a.stage === 'rate') return { html: viewAssessStep(), hint: 'Draft saves as you go' };
     return { html: viewAssessSetup(), hint: 'Nothing is sent anywhere' };
   }
-  if (S.zoom === 3 && S.beh) return { html: viewBehaviour(), hint: 'Esc to zoom out' };
-  if (S.zoom === 2 && S.comp) return { html: viewCompetency(), hint: 'Esc to zoom out' };
-  if (S.zoom === 1) return { html: viewSlice(), hint: 'Esc to zoom out' };
+  if (S.zoom === 3 && S.beh) return { html: viewBehaviour(), hint: 'Esc to go back' };
+  if (S.zoom === 2 && S.comp) {
+    // Whatever you opened the competency from stays behind it.
+    return { html: (S.slice ? viewSlice() : viewFramework()) + compExpand(), hint: 'Esc to close' };
+  }
+  if (S.zoom === 1) return { html: viewSlice(), hint: 'Esc to go back' };
   S.zoom = 0;
   return { html: viewFramework(), hint: 'Press / to search' };
 }
@@ -2530,6 +2514,9 @@ function render(opts) {
     '<main>' + view.html + '</main>' +
     footer(view.hint) +
     '</div>';
+
+  const expanded = S.mode === 'explore' && S.zoom === 2;
+  document.body.style.overflow = expanded ? 'hidden' : '';
 
   lastZoom = S.zoom;
   if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: 'auto' });
@@ -2558,7 +2545,17 @@ const ACTIONS = {
     go({ mode: 'explore', zoom: 1, slice: { type: 'level', id: el.dataset.level }, comp: null, beh: null, query: '' });
   },
 
-  'open-comp': (el) => go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: null }),
+  'open-comp': (el) => {
+    const from = el.getBoundingClientRect();
+    go({ mode: 'explore', zoom: 2, comp: el.dataset.comp, beh: null }, { keepScroll: true });
+    growDialog(from);
+  },
+
+  // Closing returns to whatever was behind — the domain, or the framework.
+  'close-expand': (el, e) => {
+    if (el.classList.contains('expand-wrap') && e && e.target !== el) return;
+    go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
+  },
 
   'open-beh': (el) => {
     // Opening a specific level's rung switches the lens to that level.
@@ -2671,8 +2668,29 @@ document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-act]');
   if (!el || el.disabled) return;
   const fn = ACTIONS[el.dataset.act];
-  if (fn) fn(el);
+  if (fn) fn(el, e);
 });
+
+function growDialog(from) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const card = document.querySelector('.expand-card');
+  const backdrop = document.querySelector('.expand-backdrop');
+  if (!card) return;
+  const to = card.getBoundingClientRect();
+  if (!to.width || !from.width) return;
+  const scale = Math.min(from.width / to.width, 1);
+  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
+  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+  const ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  card.animate(
+    [
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')', opacity: 0 },
+      { transform: 'none', opacity: 1 },
+    ],
+    { duration: 340, easing: ease }
+  );
+  if (backdrop) backdrop.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
+}
 
 /* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
    Decorative only — the diagram is fully usable without it. */
@@ -2729,7 +2747,12 @@ document.addEventListener('keydown', (e) => {
 
   if (e.key === 'Escape') {
     if (typing) return;
-    if (S.mode === 'explore' && S.zoom > 0) goZoom(S.zoom - 1);
+    if (S.mode !== 'explore') return;
+    if (S.zoom === 2) {
+      go({ zoom: S.slice ? 1 : 0, comp: null }, { keepScroll: true });
+    } else if (S.zoom > 0) {
+      goZoom(S.zoom - 1);
+    }
     return;
   }
 

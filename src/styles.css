@@ -322,97 +322,32 @@ svg.icon { display: block; }
 .sec-foot { margin-top: 18px; font-size: 14px; color: var(--ink-soft); }
 .sec-foot b { color: var(--ink); }
 
-/* ---------- Level cards --------------------------------------------------- */
+/* ---------- Zoom 0: the two domains --------------------------------------- */
 
-.level-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
-.level-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-  width: 100%;
-  text-align: left;
+.domains { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+.domain {
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 20px;
-  padding: 22px 22px 18px;
-  cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
-}
-.level-card:active { transform: scale(0.99); }
-.lc-top { display: flex; align-items: center; gap: 9px; }
-.lc-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
-.lc-identity { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
-.lc-name {
-  font-size: 27px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.035em;
-  margin: 10px 0 8px;
-}
-.lc-who { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
-.lc-focus {
-  margin-top: 14px;
-  padding-top: 13px;
-  border-top: 1px solid var(--rule);
-  width: 100%;
-  font-size: 14px;
-  color: var(--ink-mid);
-  line-height: 1.5;
-}
-.lc-focus b {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 3px;
-}
-.lc-state {
-  margin-top: 16px;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.level-card[data-current='true'] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.level-card[data-current='true'] .lc-state { color: var(--ink); }
-@media (hover: hover) and (pointer: fine) {
-  .level-card:hover { border-color: rgba(21, 7, 33, 0.32); box-shadow: var(--shadow-sm); }
-}
-
-/* ---------- The two leadership areas -------------------------------------- */
-
-.dials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; }
-
-.dial {
-  position: relative;
+  border-radius: 24px;
+  padding: 30px 26px 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
   text-align: center;
 }
 
-.dial-ring { position: relative; display: block; width: min(100%, 340px); aspect-ratio: 1; }
-.dial-dot {
-  position: absolute;
-  width: 13%;
+.domain-dial {
+  position: relative;
+  width: min(100%, 226px);
   aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
   border-radius: 999px;
-  transform: translate(-50%, -50%) scale(0.2);
-  opacity: 0;
-  box-shadow: 0 0 0 4px var(--wash);
-  transition: transform 320ms var(--ease-out), opacity 240ms ease;
 }
-
-.dial-face {
+.dd-face {
   position: absolute;
   inset: 0;
   border-radius: 999px;
@@ -421,46 +356,189 @@ svg.icon { display: block; }
   display: grid;
   place-items: center;
   padding: 12%;
-  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+  transition: transform 260ms var(--ease-out), box-shadow 260ms var(--ease-out);
 }
-.dial-title {
+.dd-title {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.045em;
-  line-height: 0.9;
-  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 0.92;
+  font-size: clamp(21px, 2.2vw, 30px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .domain-dial:hover .dd-face, .domain-dial:focus-visible .dd-face { transform: scale(1.035); box-shadow: var(--shadow-md); }
+}
+.domain-dial:active .dd-face { transform: scale(0.99); }
+
+.domain-head { margin: 22px 0 20px; }
+.domain-blurb { margin-top: 8px; font-size: 15.5px; color: var(--ink-mid); line-height: 1.5; max-width: 34ch; }
+
+.domain-list { display: flex; flex-direction: column; gap: 7px; width: 100%; margin-bottom: 20px; }
+.domain-cta { margin-top: auto; }
+
+/* ---------- Competency card ----------------------------------------------- */
+
+.comp-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
+}
+.comp-card:active { transform: scale(0.995); }
+.cc-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.cc-text { flex: 1; min-width: 0; }
+.cc-name { display: block; font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
+.cc-beh { display: block; margin-top: 3px; font-size: 13.5px; color: var(--ink-mid); line-height: 1.45; }
+.cc-cta {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--wash-deep);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .comp-card:hover { border-color: rgba(21, 7, 33, 0.3); background: var(--wash); }
+  .comp-card:hover .cc-cta { background: var(--navy); color: #fff; }
 }
 
-.dial-meta { display: block; max-width: 34ch; }
-.dial-kicker {
-  display: block;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 8px;
+.comp-list { display: flex; flex-direction: column; gap: 9px; }
+
+/* ---------- How leadership grows ------------------------------------------ */
+
+.grow-list { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid var(--rule); }
+.grow-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
 }
-.dial-blurb { display: block; font-size: 15.5px; font-weight: 500; color: var(--ink-mid); line-height: 1.5; }
-.dial-open {
+.gr-dot { width: 10px; height: 10px; border-radius: 999px; flex-shrink: 0; align-self: center; }
+.gr-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; min-width: 9ch; }
+.gr-focus { font-size: 15px; color: var(--ink-mid); flex: 1; min-width: 220px; }
+.gr-now {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--wash-deep);
+  border-radius: 999px;
+  padding: 5px 11px;
+  align-self: center;
+}
+
+.linkish {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Expanded competency ------------------------------------------- */
+
+.expand-backdrop { position: fixed; inset: 0; background: rgba(21, 7, 33, 0.44); z-index: 90; }
+.expand-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 91;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.expand-card {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  max-height: min(86vh, 900px);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 7px;
-  margin-top: 14px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  background: var(--paper);
+  border-radius: 26px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
-.dial-open b { color: var(--ink); white-space: nowrap; }
+/* The behaviours scroll inside the card, so fade the bottom edge rather than
+   ending on a hard cut that reads as the end of the content. */
+.expand-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--paper));
+  pointer-events: none;
+}
+.expand-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--wash-deep);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.expand-close:hover { background: var(--navy); color: #fff; }
 
-@media (hover: hover) and (pointer: fine) {
-  .dial:hover .dial-face, .dial:focus-visible .dial-face { transform: scale(0.93); box-shadow: var(--shadow-md); }
-  .dial:hover .dial-dot, .dial:focus-visible .dial-dot { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+.xc-head { display: flex; align-items: center; gap: 15px; padding: 28px 30px 0; }
+.xc-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: var(--fill);
+  color: var(--node-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
-.dial:active .dial-face { transform: scale(0.9); }
+.xc-domain { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.xc-domain::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
+.xc-domain:hover { color: var(--ink); }
+.xc-head h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; margin-top: 5px; }
+.xc-lede { padding: 14px 30px 0; font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
+.xc-lede b { color: var(--ink); }
+
+.xc-body { overflow-y: auto; padding: 6px 30px 30px; margin-top: 14px; }
+.xb { border-top: 1px solid var(--rule); padding: 20px 0 4px; }
+.xb-top { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 14px; }
+.xb-num { font-size: 11px; font-weight: 800; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 5px; flex-shrink: 0; }
+.xb h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.03em; }
+.xb-top p { margin-top: 3px; font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
+.xb-rungs { display: flex; flex-direction: column; gap: 7px; }
 
 /* ---------- Search section ------------------------------------------------ */
 
@@ -635,7 +713,7 @@ svg.icon { display: block; }
 
 /* ---------- Zoom 1: the competency list ----------------------------------- */
 
-.driver-group { margin-bottom: 40px; }
+.domain-group { margin-bottom: 40px; }
 .dg-head {
   display: flex;
   align-items: center;
@@ -645,7 +723,7 @@ svg.icon { display: block; }
   border: 0;
   border-bottom: 1px solid var(--rule);
   padding: 0 0 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   cursor: pointer;
   text-align: left;
 }
@@ -653,66 +731,6 @@ svg.icon { display: block; }
 .dg-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
 .dg-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) { .dg-head:hover .dg-go { transform: translateX(3px); } }
-
-.comp-list { display: flex; flex-direction: column; gap: 10px; }
-
-.comp-row { background: var(--paper); border: 1px solid var(--rule); border-radius: 18px; overflow: hidden; }
-.cr-head {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  width: 100%;
-  background: none;
-  border: 0;
-  padding: 15px 18px;
-  cursor: pointer;
-  text-align: left;
-  transition: background-color 140ms ease;
-}
-.cr-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  background: var(--fill);
-  color: var(--node-ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.cr-name { font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
-.cr-go { margin-left: auto; color: var(--ink-soft); transition: transform 160ms var(--ease-out); }
-@media (hover: hover) and (pointer: fine) {
-  .cr-head:hover { background: var(--wash); }
-  .cr-head:hover .cr-go { transform: translateX(3px); }
-}
-
-.cr-body { border-top: 1px solid var(--rule-soft); }
-.exp-card {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--rule-soft);
-  padding: 13px 18px 13px 46px;
-  cursor: pointer;
-  position: relative;
-  transition: background-color 140ms ease;
-}
-.exp-card:last-child { border-bottom: 0; }
-.exp-card::before {
-  content: '';
-  position: absolute;
-  left: 26px;
-  top: 20px;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--fill);
-}
-.ec-name { display: block; font-size: 15px; font-weight: 800; letter-spacing: -0.015em; }
-.ec-exp { display: block; margin-top: 3px; font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
-@media (hover: hover) and (pointer: fine) { .exp-card:hover { background: var(--wash); } }
 
 /* ---------- Search -------------------------------------------------------- */
 
@@ -779,52 +797,21 @@ svg.icon { display: block; }
 
 .empty { padding: 50px 0; color: var(--ink-soft); font-size: 15px; }
 
-/* ---------- Zoom 2: competency -------------------------------------------- */
+/* ---------- Level rungs (shared by the dialog) ---------------------------- */
 
-.comp-head { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 34px; flex-wrap: wrap; }
-.comp-head .ch-badge {
-  width: 76px;
-  height: 76px;
-  border-radius: 999px;
-  background: var(--fill);
-  color: var(--node-ink);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.comp-head .ch-text { min-width: 260px; flex: 1; }
-.comp-head h1 { font-size: clamp(34px, 5.4vw, 54px); margin: 8px 0 14px; }
-.ch-driver { background: none; border: 0; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
-.ch-driver::before { content: ''; width: 9px; height: 9px; border-radius: 999px; background: var(--core); }
-.ch-driver:hover { color: var(--ink); }
-
-.beh-block { border-top: 1px solid var(--rule); padding: 28px 0 6px; }
-.bb-top { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
-.bb-num {
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
-  padding-top: 6px;
-  flex-shrink: 0;
-}
-.beh-block h3 { font-size: 24px; font-weight: 900; letter-spacing: -0.03em; }
-.bb-def { color: var(--ink-mid); font-size: 15.5px; max-width: 68ch; margin-top: 4px; }
-
-.ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .rung {
   text-align: left;
   background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 16px;
-  padding: 16px 18px;
+  border-radius: 14px;
+  padding: 13px 16px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  transition: border-color 160ms ease, transform 160ms var(--ease-out);
+  gap: 6px;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms var(--ease-out);
 }
-.rung:active { transform: scale(0.99); }
+.rung:active { transform: scale(0.995); }
 .rung-name {
   display: flex;
   align-items: center;
@@ -836,10 +823,9 @@ svg.icon { display: block; }
   color: var(--ink-soft);
 }
 .rung-dot { width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
-.rung-exp { font-size: 14.5px; color: var(--ink-mid); line-height: 1.55; }
-.rung[data-current='true'] { border-color: var(--ink); }
-.rung[data-current='true'] .rung-name { color: var(--ink); }
-.rung[data-current='true'] .rung-exp { color: var(--ink); }
+.rung-exp { font-size: 14.5px; color: var(--ink-mid); line-height: 1.5; }
+.rung[data-current='true'] { border-color: var(--ink); background: var(--wash); }
+.rung[data-current='true'] .rung-name, .rung[data-current='true'] .rung-exp { color: var(--ink); }
 @media (hover: hover) and (pointer: fine) { .rung:hover { border-color: rgba(21, 7, 33, 0.32); } }
 
 /* ---------- Zoom 3: behaviour --------------------------------------------- */
@@ -1225,7 +1211,7 @@ svg.icon { display: block; }
 /* ---------- Responsive ---------------------------------------------------- */
 
 @media (max-width: 1000px) {
-  .dials { grid-template-columns: 1fr; gap: 40px; }
+  .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
   /* The ring needs width to read. Every competency it shows is also in the
      list below it, so below this breakpoint the list is the whole story. */
@@ -1234,7 +1220,7 @@ svg.icon { display: block; }
 }
 
 @media (max-width: 900px) {
-  .ladder, .rating-grid, .opt-row { grid-template-columns: 1fr; }
+  .rating-grid, .opt-row { grid-template-columns: 1fr; }
   .rpt-head { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
 }
 
@@ -1253,7 +1239,12 @@ svg.icon { display: block; }
   .lens-btn { flex: 1; min-width: 0; justify-content: center; padding: 8px 6px; font-size: 9.5px; letter-spacing: 0.02em; }
   .lens-btn::before { display: none; }
   .rpt-head, .dpanel, .find, .det { padding: 22px 20px; }
-  .comp-head .ch-badge { width: 60px; height: 60px; }
+  .expand-wrap { padding: 0; }
+  .expand-card { max-width: none; max-height: 100%; height: 100%; border-radius: 0; }
+  .xc-head, .xc-lede { padding-left: 20px; padding-right: 20px; }
+  .xc-body { padding: 6px 20px 26px; }
+  .comp-card { gap: 11px; padding: 11px 12px; }
+  .cc-cta { display: none; }
   .score-row { grid-template-columns: minmax(0, 1fr) 70px 34px; gap: 10px; }
 }
 

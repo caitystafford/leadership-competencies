@@ -1,7 +1,7 @@
 # All For: 1 Leadership Framework
 
 An interactive version of the Cash Converters All For: 1 leadership competency
-matrix — two leadership areas, ten competencies, thirty assessable behaviours, three
+matrix — two domains, ten competencies, thirty assessable behaviours, three
 leadership levels — plus a self assessment and a team member assessment that
 download as a PDF.
 
@@ -11,10 +11,10 @@ off disk, email it, or drop it on any static host.
 
 ## Structure
 
-Every competency sits in one of two **leadership areas**, and the framework is
-read at one of three **levels**.
+Every competency sits in one of two **domains**, and the framework is read at
+one of three **levels**.
 
-| Leadership area | Skillset | Competencies |
+| Domain | Skillset | Competencies |
 |---|---|---|
 | **Build Culture** | Values-focused, leadership | Responsibility, Community, Perseverance, Potential, Equity |
 | **Drive Operations** | Business-focused, management | People, Systems & Execution, Risk Safety & Protection, Customer Trust, Performance |
@@ -25,34 +25,40 @@ read at one of three **levels**.
 | **Momentum** | Leaders in Action | Store Managers and functional leaders delivering through a team |
 | **Enterprise** | Leaders at Scale | Regional and senior leaders with broader business responsibility |
 
-The methodology calls the two areas *drivers*, and the code still does. The
-interface says "leadership area", because that is a term a first-time reader
-does not have to be taught.
+The methodology calls the two domains *drivers*, and the code still does. The
+interface says "domain", because it is the word the framework overview itself
+uses and a first-time reader does not have to be taught it.
 
 ## Using it
 
-**The first screen orients before it asks you to explore.** In order: what this
-is, how it is organised, which level applies to you, and only then the two areas
-to open. Level selection sits *above* the areas, because the level you pick
-changes every expectation you will read afterwards.
+**The first screen is the framework itself.** Two domains, with the five
+competencies inside each one visible immediately — nobody should have to click
+Build Culture to discover what Build Culture contains. Level comes *after* the
+framework and explains itself, because it is a lens on what you are reading
+rather than the way in.
 
 **Explore** goes four screens deep, moved through with the breadcrumb or `Esc`:
 
 | Screen | Shows |
 |---|---|
-| Framework | Orientation, level choice, and the two areas as circles |
-| Area or level | One area expanded into its ring of five competencies, or all ten grouped by area |
-| Competency | Its three behaviours, with all three levels side by side |
+| Framework | Both domains, with all ten competencies visible without a click |
+| Domain or level | One domain as its ring of five competencies, or all ten grouped by domain |
+| Competency | Expands in place over what you were reading — three behaviours, three levels each |
 | Behaviour | One behaviour at one level, with the Needs Work / Great / Smashing It descriptors |
+
+**A competency expands rather than navigates.** Clicking one opens it as a
+dialog over the domain you were reading, growing out of the card you clicked,
+so you never lose your place. `Esc`, the close button or a click outside
+returns you exactly where you were.
 
 There is no "zoom" control. The hierarchy is real, but naming it after the
 design metaphor made people learn the interface architecture; the breadcrumb
 already says where you are.
 
-**Level is a lens, not a destination.** The Foundations / Momentum / Enterprise
-control sits in the rail on every screen and re-reads whatever you are looking
-at, so you never have to navigate back out to change level. Every screen states
-which level you are reading in plain words rather than assuming you remember.
+**Level is a lens, not a classification.** The rail says *Viewing level*, not
+*Your level* — a Store Manager may well switch to Enterprise to see what growth
+looks like. It sits on every screen and re-reads whatever you are looking at,
+and every screen states which level you are reading in plain words.
 
 Press `/` to search across behaviour names, definitions, expectations and rating
 descriptors.
@@ -89,7 +95,7 @@ Not everything comes from the workbook:
 - **Level identities, audiences and focus lines** are the programme's own
   language for the three stages. They live in the `LEVELS` array at the top of
   `src/app.js`.
-- **Leadership areas, competency colours, ring positions and icons** come from
+- **Domains, competency colours, ring positions and icons** come from
   the competency artwork, not the spreadsheet. They live in `src/brand.js` —
   `DRIVERS`, `COMP_META`, `SLOTS` and `ICONS`.
 
@@ -105,7 +111,7 @@ artwork that needs updating, not this app:
 | Finds a way | Solves problems |
 | Uses insight and judgement | Uses insight to improve results |
 
-The area is **Build Culture**, not "Building Culture". Both decisions are locked
+The domain is **Build Culture**, not "Building Culture". Both decisions are locked
 so the app, framework PDF, decks and assessment language can be made identical.
 
 ### The logo
@@ -134,13 +140,13 @@ Light-first, built around the competency artwork rather than the dark app
 shell: white cards on a warm off-white ground, a navy rail top and bottom.
 
 **Colour is rationed.** The page itself is paper, ink and one warm neutral.
-Navy and peach carry the two drivers and nothing else. The ten competency
-colours from the artwork appear only once you are inside a driver — five at a
+Navy and peach carry the two domains and nothing else. The ten competency
+colours from the artwork appear only once you are inside a domain — five at a
 time, never twenty — and levels and ratings are reduced to dots and pills
 rather than filled cards.
 
 Typography is Archivo throughout, per the All For: 1 app brand standard. The
-artwork sets its two driver names in a rounded geometric face that is not
+artwork sets its two domain names in a rounded geometric face that is not
 Archivo; that face is not identified anywhere available, so the app uses Archivo
 at heavy weight instead. Name it and it is a one-line change.
 
@@ -150,7 +156,7 @@ Two notes on the palette:
   Protection are deep red with white type**, because that is what the artwork
   does. This is a deliberate departure from the app brand standard's rule that
   green is only for growth indicators and red only for warnings.
-- **A 1200px wide layer.** The framework and driver views need more room than
+- **A 1180px wide layer.** The framework and domain views need more room than
   the 900px width that reports and the assessment use.
 
 Levels take spectrum positions 1, 3 and 5 — blue-green for Foundations, yellow
