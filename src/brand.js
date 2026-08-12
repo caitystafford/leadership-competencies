@@ -96,32 +96,42 @@ const COMP_META = {
    angles are degrees anticlockwise from three o'clock, matching the artwork.
    ------------------------------------------------------------------------- */
 
-const BOX = { w: 1000, h: 520 };
-
-/* `y` is a percentage of the box height; `size` a percentage of its width. */
-const CORE = { y: 64, size: 33 };
-
-const RING = {
-  icon: 16.5, // = the core's radius, so each disc straddles its circumference
-  chip: 27.5, // where the chip's inner edge and its pointer sit
-  disc: 4.6, // radius of a satellite disc, for where the dotted lead starts
-};
-
-const SLOTS = {
-  top: { angle: 90, chip: 'top' },
-  'upper-left': { angle: 146, chip: 'left' },
-  'lower-left': { angle: 193, chip: 'left' },
-  'upper-right': { angle: 31, chip: 'right' },
-  'lower-right': { angle: -17, chip: 'right' },
+/* Two ring geometries: five satellites around a domain, three around a
+   competency. Same maths, different box — a three-point ring wants a squarer
+   frame than a five-point one. */
+const RINGS = {
+  domain: {
+    box: { w: 1000, h: 520 },
+    core: { y: 64, size: 33 },
+    r: { icon: 16.5, chip: 27.5, disc: 4.6 },
+    slots: {
+      top: { angle: 90, chip: 'top' },
+      'upper-left': { angle: 146, chip: 'left' },
+      'lower-left': { angle: 193, chip: 'left' },
+      'upper-right': { angle: 31, chip: 'right' },
+      'lower-right': { angle: -17, chip: 'right' },
+    },
+  },
+  competency: {
+    box: { w: 1000, h: 623 },
+    core: { y: 64, size: 34 },
+    r: { icon: 17, chip: 29, disc: 5 },
+    // Clockwise from the top, so the three behaviours read in workbook order.
+    slots: {
+      0: { angle: 90, chip: 'top' },
+      1: { angle: -32, chip: 'right' },
+      2: { angle: 212, chip: 'left' },
+    },
+  },
 };
 
 /* Polar to percentage-of-box. A vertical offset given in width units has to be
    restated as a percentage of the height, hence the aspect correction. */
-function polar(angle, radius) {
+function polar(geo, angle, radius) {
   const a = (angle * Math.PI) / 180;
   return {
     x: 50 + radius * Math.cos(a),
-    y: CORE.y - radius * Math.sin(a) * (BOX.w / BOX.h),
+    y: geo.core.y - radius * Math.sin(a) * (geo.box.w / geo.box.h),
   };
 }
 

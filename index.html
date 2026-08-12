@@ -587,7 +587,7 @@ svg.icon { display: block; }
 /* ---------- The ring ------------------------------------------------------ */
 
 .orbit-wrap { position: relative; padding: 8px 0 0; }
-.orbit { position: relative; width: 100%; aspect-ratio: 1000 / 520; container-type: inline-size; }
+.orbit { position: relative; width: 100%; container-type: inline-size; }
 
 .orbit-leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .orbit-leads line {
@@ -632,6 +632,16 @@ svg.icon { display: block; }
   padding: 4%;
   animation: popIn 460ms var(--ease-out) both;
 }
+.orbit-core .core-icon { display: block; margin-bottom: 0.35em; }
+.node-num {
+  font-size: clamp(11px, 1.5cqw, 17px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.xc-body .orbit-wrap { margin: 4px 0 18px; }
+.xc-body .orbit-core .core-title { text-transform: uppercase; font-size: clamp(13px, 2.4cqw, 26px); }
+
 .orbit-core .core-title {
   font-weight: 900;
   text-transform: uppercase;
@@ -1222,9 +1232,10 @@ svg.icon { display: block; }
 @media (max-width: 1000px) {
   .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
-  /* The ring needs width to read. Every competency it shows is also in the
-     list below it, so below this breakpoint the list is the whole story. */
-  .orbit-wrap { display: none; }
+  /* The page ring needs width to read. Every competency it shows is also in
+     the list below it, so below this breakpoint the list is the whole story.
+     The dialog's ring is sized by the dialog, so it stays. */
+  .page-ring { display: none; }
   .ring-note { display: none; }
 }
 
@@ -1424,32 +1435,42 @@ const COMP_META = {
    angles are degrees anticlockwise from three o'clock, matching the artwork.
    ------------------------------------------------------------------------- */
 
-const BOX = { w: 1000, h: 520 };
-
-/* `y` is a percentage of the box height; `size` a percentage of its width. */
-const CORE = { y: 64, size: 33 };
-
-const RING = {
-  icon: 16.5, // = the core's radius, so each disc straddles its circumference
-  chip: 27.5, // where the chip's inner edge and its pointer sit
-  disc: 4.6, // radius of a satellite disc, for where the dotted lead starts
-};
-
-const SLOTS = {
-  top: { angle: 90, chip: 'top' },
-  'upper-left': { angle: 146, chip: 'left' },
-  'lower-left': { angle: 193, chip: 'left' },
-  'upper-right': { angle: 31, chip: 'right' },
-  'lower-right': { angle: -17, chip: 'right' },
+/* Two ring geometries: five satellites around a domain, three around a
+   competency. Same maths, different box — a three-point ring wants a squarer
+   frame than a five-point one. */
+const RINGS = {
+  domain: {
+    box: { w: 1000, h: 520 },
+    core: { y: 64, size: 33 },
+    r: { icon: 16.5, chip: 27.5, disc: 4.6 },
+    slots: {
+      top: { angle: 90, chip: 'top' },
+      'upper-left': { angle: 146, chip: 'left' },
+      'lower-left': { angle: 193, chip: 'left' },
+      'upper-right': { angle: 31, chip: 'right' },
+      'lower-right': { angle: -17, chip: 'right' },
+    },
+  },
+  competency: {
+    box: { w: 1000, h: 623 },
+    core: { y: 64, size: 34 },
+    r: { icon: 17, chip: 29, disc: 5 },
+    // Clockwise from the top, so the three behaviours read in workbook order.
+    slots: {
+      0: { angle: 90, chip: 'top' },
+      1: { angle: -32, chip: 'right' },
+      2: { angle: 212, chip: 'left' },
+    },
+  },
 };
 
 /* Polar to percentage-of-box. A vertical offset given in width units has to be
    restated as a percentage of the height, hence the aspect correction. */
-function polar(angle, radius) {
+function polar(geo, angle, radius) {
   const a = (angle * Math.PI) / 180;
   return {
     x: 50 + radius * Math.cos(a),
-    y: CORE.y - radius * Math.sin(a) * (BOX.w / BOX.h),
+    y: geo.core.y - radius * Math.sin(a) * (geo.box.w / geo.box.h),
   };
 }
 
@@ -1885,22 +1906,25 @@ function searchResults() {
   );
 }
 
-/* ---------- The orbit ------------------------------------------------------
-   The signature diagram: a driver at the centre, its five competencies in
-   orbit, each linked to a chip listing its three behaviours.
+/* ---------- The ring -------------------------------------------------------
+   One renderer for both levels of the framework: a domain with its five
+   competencies, and a competency with its three behaviours. Satellites sit on
+   the core's circumference and animate outward, each linked by a dotted lead
+   to a chip that points back down the spoke at it.
    ------------------------------------------------------------------------- */
 
-function orbit(driver) {
-  const placed = driver.competencies.map((c) => {
-    const slot = SLOTS[c.slot];
+function ring(cfg) {
+  const geo = cfg.geo;
+  const placed = cfg.items.map((it) => {
+    const slot = geo.slots[it.slot];
     return {
-      c,
+      it,
       slot,
-      disc: polar(slot.angle, RING.icon),
+      disc: polar(geo, slot.angle, geo.r.icon),
       // The lead starts at the disc's outer edge, not its centre, so the whole
       // dotted run is visible instead of half-hidden under the icon.
-      from: polar(slot.angle, RING.icon + RING.disc),
-      to: polar(slot.angle, RING.chip),
+      from: polar(geo, slot.angle, geo.r.icon + geo.r.disc),
+      to: polar(geo, slot.angle, geo.r.chip),
     };
   });
 
@@ -1908,43 +1932,82 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<line x1="' + p.from.x + '%" y1="' + p.from.y + '%" x2="' + p.to.x + '%" y2="' + p.to.y + '%" ' +
-        'data-comp="' + p.c.id + '" style="animation-delay:' + (260 + i * 60) + 'ms"/>'
+        'data-key="' + esc(p.it.key) + '" style="animation-delay:' + (240 + i * 70) + 'ms"/>'
     )
     .join('');
 
   const nodes = placed
     .map(
       (p, i) =>
-        '<button class="orbit-node" style="' + compVars(p.c) +
-        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
-        'data-act="open-comp" data-comp="' + p.c.id + '" aria-label="' + esc(p.c.name) + '">' +
-        icon(p.c.icon, 30) + '</button>'
+        '<button class="orbit-node" style="' + p.it.vars +
+        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (110 + i * 70) + 'ms" ' +
+        'data-key="' + esc(p.it.key) + '" ' + p.it.act + ' aria-label="' + esc(p.it.name) + '">' +
+        (p.it.icon ? icon(p.it.icon, 28) : '<span class="node-num">' + esc(p.it.num || '') + '</span>') +
+        '</button>'
     )
     .join('');
 
-  // Chips carry the competency name only. The behaviours live in the list
-  // below the ring — putting all fifteen on the diagram made it unreadable.
   const chips = placed
     .map(
       (p, i) =>
-        '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + compVars(p.c) +
-        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
-        'data-act="open-comp" data-comp="' + p.c.id + '">' +
-        '<span class="chip-name">' + esc(p.c.name) + '</span></button>'
+        '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + p.it.vars +
+        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (290 + i * 70) + 'ms" ' +
+        'data-key="' + esc(p.it.key) + '" ' + p.it.act + '>' +
+        '<span class="chip-name">' + esc(p.it.name) + '</span></button>'
     )
     .join('');
 
-  const core =
-    '<div class="orbit-core" style="top:' + CORE.y + '%;width:' + CORE.size + '%"><span class="core-title">' +
-    driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '<span class="core-kicker">' + esc(driver.kicker) + '</span></div>';
-
   return (
-    '<div class="orbit-wrap" style="' + driverVars(driver) + '"><div class="orbit" data-focus="">' +
+    '<div class="orbit-wrap ' + (cfg.cls || '') + '" style="' + cfg.vars + '">' +
+    '<div class="orbit" data-focus="" style="aspect-ratio:' + geo.box.w + ' / ' + geo.box.h + '">' +
     '<svg class="orbit-leads" preserveAspectRatio="none" aria-hidden="true">' + leads + '</svg>' +
-    core + nodes + chips +
+    '<div class="orbit-core" style="top:' + geo.core.y + '%;width:' + geo.core.size + '%">' +
+    cfg.core +
+    '</div>' + nodes + chips +
     '</div></div>'
   );
+}
+
+function domainRing(driver) {
+  return ring({
+    geo: RINGS.domain,
+    cls: 'page-ring',
+    vars: driverVars(driver),
+    core:
+      '<span class="core-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
+      '<span class="core-kicker">' + esc(driver.kicker) + '</span>',
+    items: driver.competencies.map((c) => ({
+      key: c.id,
+      name: c.name,
+      icon: c.icon,
+      slot: c.slot,
+      vars: compVars(c),
+      act: 'data-act="open-comp" data-comp="' + c.id + '"',
+    })),
+  });
+}
+
+function competencyRing(c) {
+  return ring({
+    geo: RINGS.competency,
+    vars:
+      '--core:' + c.fill + ';--core-ink:' + c.ink +
+      ';--core-sub:' + (c.ink === '#ffffff' ? 'rgba(255,255,255,0.8)' : 'rgba(21,7,33,0.7)'),
+    core:
+      '<span class="core-icon">' + icon(c.icon, 34) + '</span>' +
+      '<span class="core-title">' + esc(c.name) + '</span>',
+    items: c.behaviours.map((b, i) => ({
+      key: b.key,
+      name: b.name,
+      num: pad2(i + 1),
+      slot: i,
+      // The competency colour identifies the core; its behaviours invert to
+      // navy so three same-coloured discs do not dissolve into the circle
+      // behind them.
+      vars: '--fill:' + C.navy + ';--node-ink:#ffffff;--chip-ink:#ffffff;--halo:rgba(21,7,33,0.16)',
+      act: 'data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '"',
+    })),
+  });
 }
 
 /* ---------- Competency card ------------------------------------------------
@@ -2053,7 +2116,7 @@ function viewSlice() {
       '<span class="eyebrow">Domain</span>' +
       '<h1 class="headline">' + esc(driver.name) + '</h1>' +
       '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
-      orbit(driver)
+      domainRing(driver)
     : '<div class="slice-head">' +
       '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
       '<h1 class="headline">' + esc(lens.name) + '</h1>' +
@@ -2130,10 +2193,9 @@ function compExpand() {
     '<div><button class="eyebrow xc-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
     '<h2>' + esc(c.name) + '</h2></div></div>' +
-    '<p class="xc-lede">Three observable behaviours. Compare how each expectation grows from Foundations to ' +
-    'Enterprise — your level, <b>' + esc(lens.name) + '</b>, is marked. Open one to see Needs Work, Great and ' +
-    'Smashing It.</p>' +
-    '<div class="xc-body">' + blocks + '</div>' +
+    '<p class="xc-lede">Three observable behaviours. Pick one from the ring, or read how each expectation ' +
+    'grows from Foundations to Enterprise below — your level, <b>' + esc(lens.name) + '</b>, is marked.</p>' +
+    '<div class="xc-body">' + competencyRing(c) + blocks + '</div>' +
     '</div></div>'
   );
 }
@@ -2699,10 +2761,10 @@ function growDialog(from) {
 
 /* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
    Decorative only — the diagram is fully usable without it. */
-function focusOrbit(orbit, compId) {
-  orbit.setAttribute('data-focus', compId || '');
+function focusOrbit(orbit, key) {
+  orbit.setAttribute('data-focus', key || '');
   orbit.querySelectorAll('.orbit-node, .orbit-chip, .orbit-leads line').forEach((n) => {
-    n.classList.toggle('is-focus', !!compId && n.dataset.comp === compId);
+    n.classList.toggle('is-focus', !!key && n.dataset.key === key);
   });
 }
 
@@ -2712,8 +2774,8 @@ document.addEventListener('pointerover', (e) => {
     document.querySelectorAll('.orbit:not([data-focus=""])').forEach((o) => focusOrbit(o, null));
     return;
   }
-  const part = e.target.closest('[data-comp]');
-  focusOrbit(orbit, part ? part.dataset.comp : null);
+  const part = e.target.closest('[data-key]');
+  focusOrbit(orbit, part && orbit.contains(part) ? part.dataset.key : null);
 });
 
 document.addEventListener('input', (e) => {

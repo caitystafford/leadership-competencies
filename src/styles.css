@@ -578,7 +578,7 @@ svg.icon { display: block; }
 /* ---------- The ring ------------------------------------------------------ */
 
 .orbit-wrap { position: relative; padding: 8px 0 0; }
-.orbit { position: relative; width: 100%; aspect-ratio: 1000 / 520; container-type: inline-size; }
+.orbit { position: relative; width: 100%; container-type: inline-size; }
 
 .orbit-leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .orbit-leads line {
@@ -623,6 +623,16 @@ svg.icon { display: block; }
   padding: 4%;
   animation: popIn 460ms var(--ease-out) both;
 }
+.orbit-core .core-icon { display: block; margin-bottom: 0.35em; }
+.node-num {
+  font-size: clamp(11px, 1.5cqw, 17px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.xc-body .orbit-wrap { margin: 4px 0 18px; }
+.xc-body .orbit-core .core-title { text-transform: uppercase; font-size: clamp(13px, 2.4cqw, 26px); }
+
 .orbit-core .core-title {
   font-weight: 900;
   text-transform: uppercase;
@@ -1213,9 +1223,10 @@ svg.icon { display: block; }
 @media (max-width: 1000px) {
   .domains { grid-template-columns: 1fr; }
   .dpanels, .findings { grid-template-columns: 1fr; }
-  /* The ring needs width to read. Every competency it shows is also in the
-     list below it, so below this breakpoint the list is the whole story. */
-  .orbit-wrap { display: none; }
+  /* The page ring needs width to read. Every competency it shows is also in
+     the list below it, so below this breakpoint the list is the whole story.
+     The dialog's ring is sized by the dialog, so it stays. */
+  .page-ring { display: none; }
   .ring-note { display: none; }
 }
 

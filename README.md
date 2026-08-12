@@ -178,12 +178,19 @@ one per driver in its driver colour, then the five competencies under each as
 plain bars. A tick on every gauge and a line on every bar marks the standard —
 Great across the board, 2.0 of 3.
 
-### The orbit diagram
+### The ring
 
-All of its geometry is polar and lives in `BOX`, `CORE`, `RING` and `SLOTS` in
-`src/brand.js`: the five discs sit *on* the core's circumference, and each chip
-hangs off the same angle with a dotted lead and a pointer aimed back down the
-spoke. Hovering any part of a spoke quiets the other four.
+Both levels of the framework use the same radial diagram, from one renderer:
+a domain with its five competencies, and a competency with its three
+behaviours. The discs sit *on* the core's circumference, and each chip hangs
+off the same angle with a dotted lead and a pointer aimed back down the spoke.
+Hovering any part of a spoke quiets the others.
+
+Geometry for both lives in `RINGS` in `src/brand.js` — a five-point ring wants
+a wider box than a three-point one, so each has its own, but the maths is
+shared. In a competency ring the competency colour identifies the core and its
+behaviours invert to navy, so three same-coloured discs do not dissolve into
+the circle behind them.
 
 The layout is verified by measurement rather than by eye — no chip spills its
 box, collides with the core, another chip or another node; no disc covers the

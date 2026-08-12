@@ -364,22 +364,25 @@ function searchResults() {
   );
 }
 
-/* ---------- The orbit ------------------------------------------------------
-   The signature diagram: a driver at the centre, its five competencies in
-   orbit, each linked to a chip listing its three behaviours.
+/* ---------- The ring -------------------------------------------------------
+   One renderer for both levels of the framework: a domain with its five
+   competencies, and a competency with its three behaviours. Satellites sit on
+   the core's circumference and animate outward, each linked by a dotted lead
+   to a chip that points back down the spoke at it.
    ------------------------------------------------------------------------- */
 
-function orbit(driver) {
-  const placed = driver.competencies.map((c) => {
-    const slot = SLOTS[c.slot];
+function ring(cfg) {
+  const geo = cfg.geo;
+  const placed = cfg.items.map((it) => {
+    const slot = geo.slots[it.slot];
     return {
-      c,
+      it,
       slot,
-      disc: polar(slot.angle, RING.icon),
+      disc: polar(geo, slot.angle, geo.r.icon),
       // The lead starts at the disc's outer edge, not its centre, so the whole
       // dotted run is visible instead of half-hidden under the icon.
-      from: polar(slot.angle, RING.icon + RING.disc),
-      to: polar(slot.angle, RING.chip),
+      from: polar(geo, slot.angle, geo.r.icon + geo.r.disc),
+      to: polar(geo, slot.angle, geo.r.chip),
     };
   });
 
@@ -387,43 +390,82 @@ function orbit(driver) {
     .map(
       (p, i) =>
         '<line x1="' + p.from.x + '%" y1="' + p.from.y + '%" x2="' + p.to.x + '%" y2="' + p.to.y + '%" ' +
-        'data-comp="' + p.c.id + '" style="animation-delay:' + (260 + i * 60) + 'ms"/>'
+        'data-key="' + esc(p.it.key) + '" style="animation-delay:' + (240 + i * 70) + 'ms"/>'
     )
     .join('');
 
   const nodes = placed
     .map(
       (p, i) =>
-        '<button class="orbit-node" style="' + compVars(p.c) +
-        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (120 + i * 60) + 'ms" ' +
-        'data-act="open-comp" data-comp="' + p.c.id + '" aria-label="' + esc(p.c.name) + '">' +
-        icon(p.c.icon, 30) + '</button>'
+        '<button class="orbit-node" style="' + p.it.vars +
+        ';left:' + p.disc.x + '%;top:' + p.disc.y + '%;animation-delay:' + (110 + i * 70) + 'ms" ' +
+        'data-key="' + esc(p.it.key) + '" ' + p.it.act + ' aria-label="' + esc(p.it.name) + '">' +
+        (p.it.icon ? icon(p.it.icon, 28) : '<span class="node-num">' + esc(p.it.num || '') + '</span>') +
+        '</button>'
     )
     .join('');
 
-  // Chips carry the competency name only. The behaviours live in the list
-  // below the ring — putting all fifteen on the diagram made it unreadable.
   const chips = placed
     .map(
       (p, i) =>
-        '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + compVars(p.c) +
-        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (300 + i * 60) + 'ms" ' +
-        'data-act="open-comp" data-comp="' + p.c.id + '">' +
-        '<span class="chip-name">' + esc(p.c.name) + '</span></button>'
+        '<button class="orbit-chip" data-side="' + p.slot.chip + '" style="' + p.it.vars +
+        ';left:' + p.to.x + '%;top:' + p.to.y + '%;animation-delay:' + (290 + i * 70) + 'ms" ' +
+        'data-key="' + esc(p.it.key) + '" ' + p.it.act + '>' +
+        '<span class="chip-name">' + esc(p.it.name) + '</span></button>'
     )
     .join('');
 
-  const core =
-    '<div class="orbit-core" style="top:' + CORE.y + '%;width:' + CORE.size + '%"><span class="core-title">' +
-    driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
-    '<span class="core-kicker">' + esc(driver.kicker) + '</span></div>';
-
   return (
-    '<div class="orbit-wrap" style="' + driverVars(driver) + '"><div class="orbit" data-focus="">' +
+    '<div class="orbit-wrap ' + (cfg.cls || '') + '" style="' + cfg.vars + '">' +
+    '<div class="orbit" data-focus="" style="aspect-ratio:' + geo.box.w + ' / ' + geo.box.h + '">' +
     '<svg class="orbit-leads" preserveAspectRatio="none" aria-hidden="true">' + leads + '</svg>' +
-    core + nodes + chips +
+    '<div class="orbit-core" style="top:' + geo.core.y + '%;width:' + geo.core.size + '%">' +
+    cfg.core +
+    '</div>' + nodes + chips +
     '</div></div>'
   );
+}
+
+function domainRing(driver) {
+  return ring({
+    geo: RINGS.domain,
+    cls: 'page-ring',
+    vars: driverVars(driver),
+    core:
+      '<span class="core-title">' + driver.lines.map((t) => esc(t)).join('<br>') + '</span>' +
+      '<span class="core-kicker">' + esc(driver.kicker) + '</span>',
+    items: driver.competencies.map((c) => ({
+      key: c.id,
+      name: c.name,
+      icon: c.icon,
+      slot: c.slot,
+      vars: compVars(c),
+      act: 'data-act="open-comp" data-comp="' + c.id + '"',
+    })),
+  });
+}
+
+function competencyRing(c) {
+  return ring({
+    geo: RINGS.competency,
+    vars:
+      '--core:' + c.fill + ';--core-ink:' + c.ink +
+      ';--core-sub:' + (c.ink === '#ffffff' ? 'rgba(255,255,255,0.8)' : 'rgba(21,7,33,0.7)'),
+    core:
+      '<span class="core-icon">' + icon(c.icon, 34) + '</span>' +
+      '<span class="core-title">' + esc(c.name) + '</span>',
+    items: c.behaviours.map((b, i) => ({
+      key: b.key,
+      name: b.name,
+      num: pad2(i + 1),
+      slot: i,
+      // The competency colour identifies the core; its behaviours invert to
+      // navy so three same-coloured discs do not dissolve into the circle
+      // behind them.
+      vars: '--fill:' + C.navy + ';--node-ink:#ffffff;--chip-ink:#ffffff;--halo:rgba(21,7,33,0.16)',
+      act: 'data-act="open-beh" data-comp="' + c.id + '" data-beh="' + b.id + '"',
+    })),
+  });
 }
 
 /* ---------- Competency card ------------------------------------------------
@@ -532,7 +574,7 @@ function viewSlice() {
       '<span class="eyebrow">Domain</span>' +
       '<h1 class="headline">' + esc(driver.name) + '</h1>' +
       '<p class="prose">' + esc(driver.kicker) + '. ' + esc(driver.blurb) + '</p></div>' +
-      orbit(driver)
+      domainRing(driver)
     : '<div class="slice-head">' +
       '<span class="eyebrow">Level ' + (LEVELS.indexOf(lens) + 1) + ' of 3 &middot; ' + esc(lens.identity) + '</span>' +
       '<h1 class="headline">' + esc(lens.name) + '</h1>' +
@@ -609,10 +651,9 @@ function compExpand() {
     '<div><button class="eyebrow xc-domain" data-act="open-driver" data-driver="' + c.driver.id + '">' +
     esc(c.driver.name) + '</button>' +
     '<h2>' + esc(c.name) + '</h2></div></div>' +
-    '<p class="xc-lede">Three observable behaviours. Compare how each expectation grows from Foundations to ' +
-    'Enterprise — your level, <b>' + esc(lens.name) + '</b>, is marked. Open one to see Needs Work, Great and ' +
-    'Smashing It.</p>' +
-    '<div class="xc-body">' + blocks + '</div>' +
+    '<p class="xc-lede">Three observable behaviours. Pick one from the ring, or read how each expectation ' +
+    'grows from Foundations to Enterprise below — your level, <b>' + esc(lens.name) + '</b>, is marked.</p>' +
+    '<div class="xc-body">' + competencyRing(c) + blocks + '</div>' +
     '</div></div>'
   );
 }
@@ -1178,10 +1219,10 @@ function growDialog(from) {
 
 /* Pointing at any part of a spoke lights the whole spoke and quiets the rest.
    Decorative only — the diagram is fully usable without it. */
-function focusOrbit(orbit, compId) {
-  orbit.setAttribute('data-focus', compId || '');
+function focusOrbit(orbit, key) {
+  orbit.setAttribute('data-focus', key || '');
   orbit.querySelectorAll('.orbit-node, .orbit-chip, .orbit-leads line').forEach((n) => {
-    n.classList.toggle('is-focus', !!compId && n.dataset.comp === compId);
+    n.classList.toggle('is-focus', !!key && n.dataset.key === key);
   });
 }
 
@@ -1191,8 +1232,8 @@ document.addEventListener('pointerover', (e) => {
     document.querySelectorAll('.orbit:not([data-focus=""])').forEach((o) => focusOrbit(o, null));
     return;
   }
-  const part = e.target.closest('[data-comp]');
-  focusOrbit(orbit, part ? part.dataset.comp : null);
+  const part = e.target.closest('[data-key]');
+  focusOrbit(orbit, part && orbit.contains(part) ? part.dataset.key : null);
 });
 
 document.addEventListener('input', (e) => {
