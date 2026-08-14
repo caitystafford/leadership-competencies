@@ -310,25 +310,25 @@
             "foundations": {
               "expectation": "Seeks to understand by asking questions and testing ideas.",
               "ratings": {
-                "needs-work": "Makes assumptions, asks only surface questions, or accepts the first answer without testing whether it is accurate or useful.",
-                "great": "Seeks to understand by asking questions and testing ideas.",
-                "smashing-it": "Asks thoughtful questions, runs small tests, and connects learning to customer, team, or business impact."
+                "needs-work": "Assumes, relies on the first answer, or asks questions without using the information.",
+                "great": "Seeks relevant perspectives and tests assumptions before acting.",
+                "smashing-it": "Identifies emerging patterns, connects insight across areas and creates better questions for others."
               }
             },
             "momentum": {
               "expectation": "Shares insights and connects dots to improve work.",
               "ratings": {
-                "needs-work": "Works within a narrow view, shares observations without turning them into action, or overlooks useful links between information and operational issues.",
-                "great": "Shares insights and connects dots to improve work.",
-                "smashing-it": "Synthesises data, experience, and stakeholder input to identify patterns and convert insight into practical improvements."
+                "needs-work": "Assumes, relies on the first answer, or asks questions without using the information.",
+                "great": "Seeks relevant perspectives and tests assumptions before acting.",
+                "smashing-it": "Identifies emerging patterns, connects insight across areas and creates better questions for others."
               }
             },
             "enterprise": {
               "expectation": "Scans customer, market, regulatory, technology, and emerging business trends to identify future risks and opportunities and inform strategic choices.",
               "ratings": {
-                "needs-work": "Focuses mainly on internal historical information. Customer, market, regulatory, technology, or competitor shifts are noticed too late.",
-                "great": "Scans customer, market, regulatory, technology, and emerging business trends to identify future risks and opportunities and inform strategic choices.",
-                "smashing-it": "Creates systematic horizon scanning and experimentation, challenges strategic assumptions, and converts weak signals into clear choices, scenarios, and investment decisions."
+                "needs-work": "Assumes, relies on the first answer, or asks questions without using the information.",
+                "great": "Seeks relevant perspectives and tests assumptions before acting.",
+                "smashing-it": "Identifies emerging patterns, connects insight across areas and creates better questions for others."
               }
             }
           }
@@ -341,25 +341,25 @@
             "foundations": {
               "expectation": "Brings fresh thinking and voices ideas that could make things better.",
               "ratings": {
-                "needs-work": "Accepts inefficient practices without question, or raises complaints without offering a constructive idea or evidence.",
-                "great": "Brings fresh thinking and voices ideas that could make things better.",
-                "smashing-it": "Offers evidence based improvements, tests ideas safely, and uses feedback to refine the approach rather than defending the first solution."
+                "needs-work": "Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns.",
+                "great": "Constructively questions processes and suggests practical improvements.",
+                "smashing-it": "Leads thoughtful challenge to entrenched practices and helps others test better ways of working."
               }
             },
             "momentum": {
               "expectation": "Tests assumptions and takes smart risks to spark progress.",
               "ratings": {
-                "needs-work": "Challenges inconsistently, takes unnecessary risks, or introduces change without a clear hypothesis, stakeholder support, or learning plan.",
-                "great": "Tests assumptions and takes smart risks to spark progress.",
-                "smashing-it": "Frames clear hypotheses, builds support, runs controlled tests, and scales or stops ideas based on evidence."
+                "needs-work": "Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns.",
+                "great": "Constructively questions processes and suggests practical improvements.",
+                "smashing-it": "Leads thoughtful challenge to entrenched practices and helps others test better ways of working."
               }
             },
             "enterprise": {
               "expectation": "Challenges entrenched thinking and redirects effort or investment to improve future outcomes at scale.",
               "ratings": {
-                "needs-work": "Protects the status quo despite evidence, or drives large change without sufficient analysis of value, risk, and organisational capacity.",
-                "great": "Challenges entrenched thinking and redirects effort or investment to improve future outcomes at scale.",
-                "smashing-it": "Builds a disciplined portfolio of change, stops low value work, reallocates resources decisively, and measures whether strategic outcomes improve."
+                "needs-work": "Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns.",
+                "great": "Constructively questions processes and suggests practical improvements.",
+                "smashing-it": "Leads thoughtful challenge to entrenched practices and helps others test better ways of working."
               }
             }
           }
@@ -372,25 +372,25 @@
             "foundations": {
               "expectation": "Seeks feedback, recognises strengths and development gaps, and applies learning to improve.",
               "ratings": {
-                "needs-work": "Avoids or dismisses feedback, has limited awareness of their impact, or repeats the same approach despite evidence it is not working.",
-                "great": "Seeks feedback, recognises strengths and development gaps, and applies learning to improve. Reflects on outcomes and adjusts behaviour.",
-                "smashing-it": "Actively seeks varied feedback, tests new approaches, tracks their impact, and shares learning that helps peers adapt."
+                "needs-work": "Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue.",
+                "great": "Seeks feedback, applies learning and changes approach when evidence requires it.",
+                "smashing-it": "Builds learning loops for others and adapts direction early in response to new information."
               }
             },
             "momentum": {
               "expectation": "Reflects on their impact, adapts their leadership approach, and models continuous learning for the team.",
               "ratings": {
-                "needs-work": "Defends their usual approach, reacts poorly to feedback, or expects the team to adapt while their own behaviour remains unchanged.",
-                "great": "Reflects on their impact, adapts their leadership approach, and models continuous learning for the team.",
-                "smashing-it": "Creates regular reflection and feedback loops, adapts style to people and context, and normalises experimentation and learning from mistakes."
+                "needs-work": "Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue.",
+                "great": "Seeks feedback, applies learning and changes approach when evidence requires it.",
+                "smashing-it": "Builds learning loops for others and adapts direction early in response to new information."
               }
             },
             "enterprise": {
               "expectation": "Builds an adaptive learning culture, tests strategic assumptions, and evolves leadership practices as conditions change.",
               "ratings": {
-                "needs-work": "Leadership practices remain fixed despite changing conditions, feedback is filtered, or failed assumptions are defended rather than examined.",
-                "great": "Builds an adaptive learning culture, tests strategic assumptions, and evolves leadership practices as conditions change.",
-                "smashing-it": "Builds enterprise feedback and learning loops, changes course early when evidence shifts, and models visible unlearning that increases organisational adaptability."
+                "needs-work": "Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue.",
+                "great": "Seeks feedback, applies learning and changes approach when evidence requires it.",
+                "smashing-it": "Builds learning loops for others and adapts direction early in response to new information."
               }
             }
           }
