@@ -89,24 +89,24 @@ All competencies, all behaviours, all three levels — Needs Work / Great / Smas
 | Level | Needs Work | Great | Smashing It |
 |---|---|---|---|
 | Foundations | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
-| Momentum | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
-| Enterprise | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
+| Momentum | Works within a narrow view, shares observations without turning them into action, or overlooks useful links between information and operational issues. | Shares insights and connects dots to improve work. | Synthesises data, experience, and stakeholder input to identify patterns and convert insight into practical improvements. |
+| Enterprise | Focuses mainly on internal historical information. Customer, market, regulatory, technology, or competitor shifts are noticed too late. | Scans customer, market, regulatory, technology, and emerging business trends to identify future risks and opportunities and inform strategic choices. | Creates systematic horizon scanning and experimentation, challenges strategic assumptions, and converts weak signals into clear choices, scenarios, and investment decisions. |
 
 ### Challenges the norm
 
 | Level | Needs Work | Great | Smashing It |
 |---|---|---|---|
 | Foundations | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
-| Momentum | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
-| Enterprise | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
+| Momentum | Challenges inconsistently, takes unnecessary risks, or introduces change without a clear hypothesis, stakeholder support, or learning plan. | Tests assumptions and takes smart risks to spark progress. | Frames clear hypotheses, builds support, runs controlled tests, and scales or stops ideas based on evidence. |
+| Enterprise | Protects the status quo despite evidence, or drives large change without sufficient analysis of value, risk, and organisational capacity. | Challenges entrenched thinking and redirects effort or investment to improve future outcomes at scale. | Builds a disciplined portfolio of change, stops low value work, reallocates resources decisively, and measures whether strategic outcomes improve. |
 
 ### Learns and adapts
 
 | Level | Needs Work | Great | Smashing It |
 |---|---|---|---|
 | Foundations | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
-| Momentum | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
-| Enterprise | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
+| Momentum | Defends their usual approach, reacts poorly to feedback, or expects the team to adapt while their own behaviour remains unchanged. | Reflects on their impact, adapts their leadership approach, and models continuous learning for the team. | Creates regular reflection and feedback loops, adapts style to people and context, and normalises experimentation and learning from mistakes. |
+| Enterprise | Leadership practices remain fixed despite changing conditions, feedback is filtered, or failed assumptions are defended rather than examined. | Builds an adaptive learning culture, tests strategic assumptions, and evolves leadership practices as conditions change. | Builds enterprise feedback and learning loops, changes course early when evidence shifts, and models visible unlearning that increases organisational adaptability. |
 
 ## Equity
 
