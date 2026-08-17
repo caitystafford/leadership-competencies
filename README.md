@@ -65,6 +65,23 @@ behaviour at all three levels at once, with the one you are viewing marked.
 Press `/` to search across behaviour names, definitions, expectations and rating
 descriptors.
 
+**The tour.** Eight stops that drive the app themselves — each one sets the
+state it needs, then spotlights something real on the screen, so a first-time
+reader watches the interface work rather than reading a description of it. It
+offers itself once on a first visit, with *No thanks* on the opening card, and
+the answer is remembered either way. After that it lives at the bottom of the
+menu and on the framework screen. Arrow keys step through it and `Esc` leaves.
+
+Steps whose target changes with the viewport name a fallback — the five-point
+rings become lists below 1010px, so the ring stop points at the list instead —
+and a target that resolves to nothing dims the whole screen rather than
+spotlighting a collapsed box.
+
+**Every screen says what to do on it.** A single quiet line, the same shape
+everywhere, sits above the content: click a competency to open it, click a level
+row to read the full wording, pick one rating per behaviour, download the PDF to
+keep the report. They are `howto()` calls in `src/app.js`.
+
 **Assessment** covers the same thirty behaviours, one competency per screen,
 rated against a single level. Ratings are scored Needs Work 1, Great 2,
 Smashing It 3, and each competency reports the average of its three behaviours.

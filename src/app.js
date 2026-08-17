@@ -119,10 +119,14 @@ let S = {
 
 let lastZoom = 0;
 let pendingConfirm = null;
+/* The tour is deliberately not part of S: it is a layer over whatever screen
+   you are on, and it must never end up in the saved draft. */
+let tourStep = null;
+let seenTour = false;
 
 function save() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({ a: S.a, lens: S.lens }));
+    localStorage.setItem(STORE_KEY, JSON.stringify({ a: S.a, lens: S.lens, seenTour: seenTour }));
   } catch (e) {
     /* Private browsing or a full quota — the app still works, it just forgets. */
   }
@@ -135,6 +139,7 @@ function restore() {
     const saved = JSON.parse(raw);
     if (saved && saved.a && typeof saved.a === 'object') S.a = Object.assign(blankAssessment(), saved.a);
     if (saved && LEVELS.some((l) => l.id === saved.lens)) S.lens = saved.lens;
+    if (saved && saved.seenTour === true) seenTour = true;
   } catch (e) {
     /* Corrupt or unreadable draft — start clean rather than crash. */
   }
@@ -300,6 +305,8 @@ function drawer() {
     '<div class="dw-lenses">' + lensRow + '</div></div>' +
     '<div class="dw-sec"><span class="dw-label">Assessment</span>' +
     '<button class="dw-link" data-act="mode" data-mode="assess">Rate yourself or a team member</button></div>' +
+    '<div class="dw-sec"><span class="dw-label">New here?</span>' +
+    '<button class="dw-link" data-act="tour-start">Take the guided tour</button></div>' +
     '</div></aside>'
   );
 }
@@ -346,8 +353,20 @@ const compVars = (c) =>
 
 const driverVars = (d) =>
   '--core:' + d.core + ';--core-ink:' + d.coreInk + ';--core-sub:' + d.coreSub +
-  ';--core-rule:' + (d.id === 'building-culture' ? 'rgba(255,255,255,0.2)' : 'rgba(21,7,33,0.2)') +
+  ';--core-rule:' + (d.id === 'build-culture' ? 'rgba(255,255,255,0.2)' : 'rgba(21,7,33,0.2)') +
   ';--tint:' + d.tint;
+
+/* A one-line "what do I do here" for every screen. Plain language, no jargon,
+   and always the same shape so it reads as furniture rather than a warning. */
+const howto = (html, opts) => {
+  const o = opts || {};
+  return (
+    '<div class="howto' + (o.cls ? ' ' + o.cls : '') + '">' +
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+    'stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11.2v4.6M12 7.7v.3"/></svg>' +
+    '<span>' + html + '</span>' + (o.action || '') + '</div>'
+  );
+};
 
 function searchBar(placeholder) {
   return (
@@ -581,6 +600,12 @@ function viewFramework() {
     '<ol class="steps">' + steps + '</ol>' +
     '</div>' +
 
+    howto(
+      '<b>New here?</b> Click a competency name on either ring below to open it, or use <b>Menu</b> at the ' +
+        'top left to jump straight to any part of the framework.',
+      { action: '<button class="btn ghost small howto-cta" data-act="tour-start">Take the 60-second tour</button>' }
+    ) +
+
     '<div data-hideable>' + DRIVERS.map(domainSection).join('') + '</div>' +
 
     '<section data-hideable class="grow" aria-labelledby="s-grow">' +
@@ -650,6 +675,11 @@ function viewCompetency() {
     '<span><b>Reading at ' + esc(lens.name) + '.</b> Every behaviour below is written out at all three ' +
     'levels so you can see how the expectation grows — the level you are viewing is marked.</span></div>' +
 
+    howto(
+      '<b>Click any level row below</b> to open that behaviour in full, with the Needs Work, Great and ' +
+        'Smashing It wording used in the assessment.'
+    ) +
+
     '<div class="xbs">' + blocks + '</div>' +
 
     '<section class="more"><div class="sec-head"><h2>More in ' + esc(c.driver.name) + '</h2></div>' +
@@ -690,6 +720,10 @@ function viewBehaviour() {
     '<div class="expectation"><span class="eyebrow">' + esc(l.name) + ' expectation</span>' +
     '<p>' + esc(cell.expectation) + '</p></div>' +
     '<div class="note" style="margin-bottom:20px"><span class="flag"></span><span>' + esc(STANDARD_NOTE) + '</span></div>' +
+    howto(
+      '<b>These three descriptions are exactly what the assessment rates against.</b> Change the level in ' +
+        'the rail above to see the same behaviour at a wider scope, or use the arrows at the bottom to keep reading.'
+    ) +
     '<div class="rating-grid">' +
     RATINGS.map(
       (r) =>
@@ -726,6 +760,10 @@ function viewAssessSetup() {
     '<p class="prose lede">Thirty behaviours across both drivers, rated against one level. It takes about fifteen minutes. ' +
     'Nothing is sent anywhere — the draft is saved in this browser only, and you download the finished assessment as a PDF.</p>' +
     '</div>' +
+    howto(
+      '<b>Fill in the details, then rate.</b> Ten screens, three behaviours on each. Your answers save ' +
+        'automatically as you go, so you can stop and come back to it.'
+    ) +
     (hasDraft
       ? '<div class="note" style="margin-bottom:26px"><span class="flag"></span><span>' +
         'You have a draft in progress — <b>' + ratedCount() + ' of 30</b> behaviours rated. ' +
@@ -812,6 +850,10 @@ function viewAssessStep() {
     '<span class="micro">Competency ' + (a.step + 1) + ' of 10 &middot; ' + done + '/30 rated</span>' +
     '</div>' +
     '<div class="track"><div class="fill" style="width:' + Math.max((done / 30) * 100, 2) + '%"></div></div>' +
+    howto(
+      '<b>Pick one rating for each of the three behaviours below.</b> Nothing is locked in — the coloured ' +
+        'dots at the bottom jump between competencies, and you can change any answer before you finish.'
+    ) +
     blocks +
     '<div class="q-block">' +
     '<div class="field" style="margin:0"><label for="f-notes">Evidence or notes on ' + esc(c.name) +
@@ -949,6 +991,11 @@ function viewReport() {
     '<button class="btn ghost small" data-act="edit-answers">Edit answers</button>' +
     '<button class="btn ghost small" data-act="reset">Start a new assessment</button>' +
     '</div>' +
+    howto(
+      '<b>Download as PDF to keep or share this.</b> It lives in this browser only — clearing site data or ' +
+        'switching device loses it. <b>Edit answers</b> takes you back without losing anything.',
+      { cls: 'print-hide' }
+    ) +
     '<div class="print-brand print-only"><span>Cashies &middot; All For: 1 Leadership Framework</span>' +
     '<span>' + esc(formatDate(a.date)) + '</span></div>' +
 
@@ -1027,6 +1074,214 @@ function currentView() {
   return { html: viewFramework(), hint: 'Menu jumps anywhere · press / to search' };
 }
 
+/* ---------- The tour -------------------------------------------------------
+   Seven stops that drive the app themselves — each one sets the state it needs
+   before pointing at something real on the screen, so the reader watches the
+   interface work rather than reading a description of it.
+   ------------------------------------------------------------------------- */
+
+const TOUR = [
+  {
+    title: 'Welcome — here is how this works',
+    body:
+      'This is the shared standard for what good leadership looks like at Cashies: two domains, ' +
+      'ten competencies and thirty behaviours. The quick tour points out the four things worth knowing.',
+    next: 'Show me around',
+    skip: 'No thanks',
+    state: { mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' },
+  },
+  {
+    target: '#domain-build-culture .orbit',
+    alt: '#domain-build-culture .page-list',
+    title: 'Two domains, ten competencies',
+    body:
+      'Every competency name you can see is a button — click one to open its three behaviours. Build Culture ' +
+      'is the first domain, and Drive Operations sits just below it with five more.',
+    state: { mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' },
+  },
+  {
+    target: '.xb',
+    title: 'Three behaviours inside every competency',
+    body:
+      'Behaviours are the things actually observed and rated. Each one is written out at all three levels ' +
+      'so you can see how the expectation grows — click any level row to read the full wording.',
+    state: { mode: 'explore', zoom: 1, comp: 'potential', beh: null, menu: false, query: '' },
+  },
+  {
+    target: '.lens',
+    title: 'Level is a lens, not a label',
+    body:
+      'Switch between Foundations, Momentum and Enterprise whenever you like. The page you are on re-reads ' +
+      'at that level — it changes what good looks like, not what is being measured.',
+    pad: 8,
+  },
+  {
+    target: '.menu-btn',
+    title: 'Menu jumps you anywhere',
+    body:
+      'Every domain, all ten competencies and the three levels sit in the menu, so changing subject never ' +
+      'means retracing your steps back up the diagram.',
+    pad: 8,
+  },
+  {
+    target: '.search-sec',
+    title: 'Or just search for a word',
+    body:
+      'Searches all thirty behaviours at once — names, definitions, expectations and the rating wording. ' +
+      'Press the / key from this screen to jump straight into it.',
+    state: { mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' },
+  },
+  {
+    target: '.modes',
+    title: 'When you are ready, assess',
+    body:
+      'Rate yourself or someone in your team against the same thirty behaviours. It takes about fifteen ' +
+      'minutes, saves as you go, and downloads as a PDF at the end.',
+    pad: 7,
+  },
+  {
+    title: 'That is the whole thing',
+    body:
+      'Start anywhere — click a competency, or open the menu. You can run this tour again at any time from ' +
+      'the bottom of the menu.',
+    next: 'Start exploring',
+    state: { mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' },
+  },
+];
+
+function tourLayer() {
+  const s = TOUR[tourStep];
+  const last = tourStep === TOUR.length - 1;
+  return (
+    '<div class="tour-block" data-dim="' + (s.target ? 'false' : 'true') + '"></div>' +
+    '<div class="tour-spot" aria-hidden="true"' + (s.target ? '' : ' hidden') + '></div>' +
+    '<div class="tour-card" role="dialog" aria-modal="true" aria-label="Guided tour" ' +
+    'data-center="' + (s.target ? 'false' : 'true') + '">' +
+    '<span class="tc-count">' + (tourStep + 1) + ' of ' + TOUR.length + '</span>' +
+    '<h2>' + esc(s.title) + '</h2><p>' + esc(s.body) + '</p>' +
+    '<div class="tc-nav">' +
+    (tourStep > 0 ? '<button class="btn ghost small" data-act="tour-back">Back</button>' : '') +
+    '<button class="btn small" data-act="tour-next">' + esc(s.next || (last ? 'Done' : 'Next')) + '</button>' +
+    (last ? '' : '<button class="tc-skip" data-act="tour-end">' + esc(s.skip || 'Skip tour') + '</button>') +
+    '</div></div>'
+  );
+}
+
+/* Resolve a step to something actually on screen. Several targets swap out at
+   narrow widths — the five-point rings become lists below 1010px — so each
+   step may name a fallback, and anything zero-sized is treated as absent. */
+function tourTarget(s) {
+  for (const q of [s.target, s.alt]) {
+    if (!q) continue;
+    const el = document.querySelector(q);
+    if (!el) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width > 8 && r.height > 8) return el;
+  }
+  return null;
+}
+
+/* Measure after paint: the layer is written by render(), so the target only
+   exists once the new screen is in the document. */
+function tourPlace() {
+  if (tourStep === null) return;
+  const s = TOUR[tourStep];
+  const card = document.querySelector('.tour-card');
+  const spot = document.querySelector('.tour-spot');
+  const block = document.querySelector('.tour-block');
+  if (!card || !spot) return;
+
+  const el = tourTarget(s);
+  if (block) block.dataset.dim = el ? 'false' : 'true';
+  if (!el) {
+    card.style.left = '';
+    card.style.top = '';
+    card.dataset.center = 'true';
+    spot.hidden = true;
+    return;
+  }
+
+  spot.hidden = false;
+  card.dataset.center = 'false';
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const m = 8;
+  const gap = 14;
+  const pad = s.pad == null ? 12 : s.pad;
+
+  // Clamped to the viewport: a target taller than the screen gets its visible
+  // slice lit rather than a spotlight running off both edges.
+  const r = el.getBoundingClientRect();
+  const x = Math.max(m, r.left - pad);
+  const y = Math.max(m, r.top - pad);
+  const w = Math.max(28, Math.min(vw - m, r.right + pad) - x);
+  const h = Math.max(28, Math.min(vh - m, r.bottom + pad) - y);
+  spot.style.left = x + 'px';
+  spot.style.top = y + 'px';
+  spot.style.width = w + 'px';
+  spot.style.height = h + 'px';
+
+  const cw = card.offsetWidth;
+  const ch = card.offsetHeight;
+  const midX = Math.min(Math.max(m + 2, x + w / 2 - cw / 2), Math.max(m + 2, vw - cw - m - 2));
+  const midY = Math.min(Math.max(m + 2, y + h / 2 - ch / 2), Math.max(m + 2, vh - ch - m - 2));
+  let top;
+  let left;
+
+  if (y + h + gap + ch <= vh - m) {
+    top = y + h + gap;
+    left = midX;
+  } else if (y - gap - ch >= m) {
+    top = y - gap - ch;
+    left = midX;
+  } else if (x + w + gap + cw <= vw - m) {
+    top = midY;
+    left = x + w + gap;
+  } else if (x - gap - cw >= m) {
+    top = midY;
+    left = x - gap - cw;
+  } else {
+    // The target fills the screen — sit in the corner rather than off it.
+    top = vh - ch - 14;
+    left = vw - cw - 14;
+  }
+
+  card.style.top = Math.round(top) + 'px';
+  card.style.left = Math.round(left) + 'px';
+}
+
+/* Bring the target somewhere comfortable before pointing at it. */
+function tourScroll() {
+  if (tourStep === null) return;
+  const el = tourTarget(TOUR[tourStep]);
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  if (r.top >= 90 && r.bottom <= window.innerHeight - 90) return;
+  const to = window.scrollY + r.top - Math.max(96, (window.innerHeight - r.height) / 2);
+  window.scrollTo({ top: Math.max(0, to), behavior: 'smooth' });
+}
+
+function tourGo(i) {
+  if (i < 0) return;
+  if (i >= TOUR.length) return tourEnd();
+  tourStep = i;
+  const s = TOUR[i];
+  if (s.state) Object.assign(S, s.state);
+  render({ keepScroll: true });
+  tourScroll();
+}
+
+function tourEnd() {
+  tourStep = null;
+  seenTour = true;
+  save();
+  go({ mode: 'explore', zoom: 0, comp: null, beh: null, menu: false, query: '' });
+}
+
+window.addEventListener('resize', tourPlace);
+window.addEventListener('scroll', tourPlace, { passive: true });
+
 function confirmDialog() {
   return (
     '<div class="confirm-backdrop">' +
@@ -1050,7 +1305,8 @@ function render(opts) {
     footer(view.hint) +
     '</div>' +
     (S.menu ? drawer() : '') +
-    (pendingConfirm ? confirmDialog() : '');
+    (pendingConfirm ? confirmDialog() : '') +
+    (tourStep !== null ? tourLayer() : '');
 
   document.body.style.overflow = (S.menu || pendingConfirm) ? 'hidden' : '';
   if (S.menu) {
@@ -1060,6 +1316,7 @@ function render(opts) {
 
   lastZoom = S.zoom;
   if (!opts || !opts.keepScroll) window.scrollTo({ top: 0, behavior: 'auto' });
+  if (tourStep !== null) requestAnimationFrame(tourPlace);
 }
 
 /* ---------- Events -------------------------------------------------------- */
@@ -1217,6 +1474,11 @@ const ACTIONS = {
     pendingConfirm = null;
     render({ keepScroll: true });
   },
+
+  'tour-start': () => tourGo(0),
+  'tour-next': () => tourGo(tourStep + 1),
+  'tour-back': () => tourGo(tourStep - 1),
+  'tour-end': () => tourEnd(),
 };
 
 document.addEventListener('click', (e) => {
@@ -1284,6 +1546,16 @@ document.addEventListener('input', (e) => {
 document.addEventListener('keydown', (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
 
+  // The tour owns the keyboard while it is up.
+  if (tourStep !== null) {
+    if (e.key === 'Escape') tourEnd();
+    else if (e.key === 'ArrowRight' || e.key === 'Enter') tourGo(tourStep + 1);
+    else if (e.key === 'ArrowLeft') tourGo(tourStep - 1);
+    else return;
+    e.preventDefault();
+    return;
+  }
+
   if (e.key === 'Escape') {
     if (S.menu) {
       go({ menu: false }, { keepScroll: true });
@@ -1307,4 +1579,7 @@ document.addEventListener('keydown', (e) => {
 /* ---------- Boot ---------------------------------------------------------- */
 
 restore();
+// First visit gets the tour offered rather than imposed — step one is a card
+// with "No thanks" on it, and the choice is remembered either way.
+if (!seenTour) tourStep = 0;
 render();
