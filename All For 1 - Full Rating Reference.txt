@@ -1,0 +1,268 @@
+ALL FOR: 1 LEADERSHIP FRAMEWORK — FULL RATING REFERENCE
+All competencies, all behaviours, all three levels — Needs Work / Great / Smashing It
+
+
+# BUILD CULTURE
+
+## Responsibility
+
+### Shows up consistently
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Commitments are missed or completed inconsistently. Requires reminders, communicates late, or becomes unreliable when pressure increases. | Does what’s asked, shows dependability, and follows through. Communicates early when a commitment is at risk. | Anticipates commitments, plans ahead, and follows through without prompting. Helps others deliver reliably and strengthens confidence in the team. |
+| Momentum | Personal standards fluctuate and the team sees inconsistent follow through. Pressure leads to lowered expectations, avoidable delays, or unhelpful shortcuts. | Leads by example and keeps standards high, even under pressure. Reinforces reliable delivery across the team. | Creates practical routines that improve team reliability, addresses slippage early, and maintains high standards without creating unnecessary pressure or dependency. |
+| Enterprise | Reliability depends on individual effort or heroics. Expectations and operating rhythms vary across teams, creating inconsistent outcomes. | Designs systems, rhythms, and expectations that create consistent performance and reliability at scale. | Uses data and feedback to strengthen reliability across the business, removes recurring points of failure, and reduces variation without creating excessive bureaucracy. |
+
+### Owns the outcome
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Waits for others to solve problems, focuses on blame, or stops once their immediate task is complete. Issues remain unresolved. | Steps up to own results and fix what isn’t working. Follows the issue through to a clear outcome. | Takes ownership early, identifies the underlying cause, fixes the issue, and shares the learning so the same problem is less likely to recur. |
+| Momentum | Accountability is inconsistent. Avoids difficult follow up, accepts incomplete delivery, or does not address missed commitments within the team. | Holds self and others to commitments and sees things through. Makes ownership and follow up clear. | Creates strong accountability without blame, removes barriers to delivery, and uses missed commitments to improve expectations, capability, and team systems. |
+| Enterprise | Focuses on local or short term results while avoiding difficult enterprise trade offs. Consequences for customers, risk, or integrity are addressed too late. | Owns complex, long term outcomes and makes deliberate trade offs that protect customer trust and business integrity. | Anticipates second order consequences, communicates trade offs transparently, and embeds learning into strategy, governance, and future decisions. |
+
+### Sets shared expectations
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Assumes others understand, leaves roles or outcomes unclear, or begins work without confirming expectations. Rework and confusion result. | Asks thoughtful questions and checks for shared understanding before moving forward. | Clarifies outcomes, roles, timeframes, and constraints, then checks understanding and adjusts the approach before confusion becomes a problem. |
+| Momentum | Priorities or standards are vague, conflicting, or frequently changed without explanation. Team members interpret success differently. | Defines what success looks like and aligns the team around clear priorities and standards. | Translates priorities into practical measures, ownership, and operating rhythms, and resolves ambiguity or competing expectations early. |
+| Enterprise | Purpose and strategy are not translated into consistent expectations. Standards vary across functions, messages conflict, or people cannot see how their work connects to direction. | Connects purpose and strategy to clear, non negotiable expectations, systems, and leadership behaviour so people understand the direction and act consistently. | Builds a compelling line of sight from purpose and strategy to measures, governance, systems, and leadership practice, tests understanding, and corrects drift early. |
+
+## Community
+
+### Communicates with clarity
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Information is unclear, incomplete, late, or overly complicated. Does not check whether others understand what is required. | Explains ideas clearly and checks understanding in everyday interactions. | Communicates concisely, confirms actions and ownership, and adapts the level of detail so others can act confidently. |
+| Momentum | Uses the same message for every audience or communicates in a way that creates unnecessary confusion, overload, or misalignment. | Adjusts message and style to suit the audience, keeping teams aligned and informed. | Anticipates information needs, makes complex issues easy to understand, and uses the right channel and timing to maintain alignment. |
+| Enterprise | Communication is fragmented or overly tactical. Different groups receive competing messages, trade offs are obscured, or people cannot translate the message into coordinated action. | Shapes communication across teams and functions, creating a clear and consistent narrative that supports strategic alignment and action. | Creates a coherent organisational narrative, surfaces trade offs clearly, equips leaders to carry the message consistently, and establishes communication rhythms that support fast, aligned decisions. |
+
+### Resolves conflict
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Avoids tension, lets issues build, reacts emotionally, or discusses the problem with others rather than addressing it appropriately. | Listens with empathy, raises issues early, and seeks support to resolve them. | Raises concerns respectfully, listens for the underlying issue, contributes to a fair resolution, and follows up to confirm the relationship and work are back on track. |
+| Momentum | Delays difficult conversations, takes sides, or handles similar conflicts inconsistently. The issue continues to affect performance or trust. | Addresses conflict directly and fairly, balancing honesty with respect to keep teams aligned and productive. | Facilitates productive challenge, addresses root causes rather than symptoms, and restores clarity, accountability, and trust after conflict. |
+| Enterprise | Cross functional tension is tolerated, politicised, or repeatedly escalated without resolution. Structural causes are left unchanged. | Creates conditions where healthy challenge is expected, conflict is addressed early, and trust is maintained across teams or functions. | Builds organisational capability and mechanisms for constructive disagreement, identifies recurring conflict patterns, and changes systems that create avoidable friction. |
+
+### Strengthens team culture
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Is passive or negative about team culture, excludes others, or behaves in ways that reduce trust, cooperation, or psychological safety. | Contributes positively to team relationships and ways of working. | Models inclusion, supports colleagues, reinforces useful team norms, and helps create an environment where people can contribute confidently. |
+| Momentum | Ignores behaviours that damage trust or inclusion, relies on informal goodwill, or allows standards to vary across the team. | Builds trust within the team and addresses behaviours that undermine performance or inclusion. | Deliberately shapes team rituals, standards, and feedback, and builds shared ownership for a healthy, accountable culture. |
+| Enterprise | Culture is treated as messaging, relationships are narrow, stakeholder dynamics are ignored, and cross functional barriers or political friction repeatedly undermine outcomes. | Builds relationships and uses organisational influence across functions to align stakeholders, resolve barriers, and deliberately shape a collaborative, high performing culture at scale. | Builds influential networks, aligns incentives and leadership systems, measures culture drivers, and mobilises stakeholders across boundaries around shared outcomes. |
+
+## Perseverance
+
+### Keeps going
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Gives up too quickly, loses focus after setbacks, or leaves work unfinished when the path becomes difficult or unclear. | Pushes through setbacks and follows things through to the end. | Stays steady, adjusts the plan when needed, seeks help early, and closes the loop even when the work becomes difficult. |
+| Momentum | Becomes rigid or reactive when priorities change. The team experiences confusion, unnecessary churn, or loss of momentum. | Balances focus with flexibility when priorities shift. | Helps the team reprioritise calmly, protects essential outcomes, and adapts the plan without losing accountability or creating avoidable disruption. |
+| Enterprise | Prolonged complexity creates strategic drift, reactive decisions, or sustained overload. Performance depends on repeated crisis responses. | Sustains momentum through prolonged complexity or uncertainty and prevents disruption to performance at scale. | Anticipates pressure points, sequences decisions deliberately, protects organisational capacity, and preserves strategic focus through extended uncertainty. |
+
+### Lifts others
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Passes stress to others, focuses mainly on what is going wrong, or withdraws support when pressure increases. | Stays positive and encourages teammates. | Notices when others are struggling, offers practical support, and recognises progress without minimising genuine challenges. |
+| Momentum | Motivation is inconsistent or relies on generic encouragement. Pressure reduces confidence, ownership, or energy across the team. | Builds belief in others and celebrates progress. | Builds confidence through clear context, coaching, recognition, and meaningful ownership, especially when results are difficult. |
+| Enterprise | Leadership is invisible or inconsistent during major change. Messages lack credibility or fail to create confidence and focus. | Creates stability and focus through visible leadership during sustained pressure or change. | Sustains confidence across the business through transparent communication, visible decisions, practical support systems, and consistent leadership behaviour. |
+
+### Finds a way
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Waits for someone else to solve routine obstacles, repeats an approach that is not working, or stops without escalating appropriately. | Looks for ways around small roadblocks. | Tests practical alternatives, uses available resources, escalates with useful context, and shares solutions that may help others. |
+| Momentum | Accepts barriers as fixed, removes only immediate symptoms, or allows recurring obstacles to consume team time and energy. | Removes obstacles so the team can keep moving. | Coordinates resources, addresses root causes, and improves processes so the same barrier is less likely to recur. |
+| Enterprise | Systemic barriers remain in place while teams rely on local workarounds. Constraints are shifted between functions rather than resolved. | Anticipates systemic barriers and reshapes conditions so progress can continue across teams, functions, or markets. | Redesigns structures, policies, or investment decisions to remove systemic constraints and tracks whether progress improves without creating new barriers elsewhere. |
+
+## Potential
+
+### Asks and explores
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
+| Momentum | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
+| Enterprise | Assumes, relies on the first answer, or asks questions without using the information. | Seeks relevant perspectives and tests assumptions before acting. | Identifies emerging patterns, connects insight across areas and creates better questions for others. |
+
+### Challenges the norm
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
+| Momentum | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
+| Enterprise | Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns. | Constructively questions processes and suggests practical improvements. | Leads thoughtful challenge to entrenched practices and helps others test better ways of working. |
+
+### Learns and adapts
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
+| Momentum | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
+| Enterprise | Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue. | Seeks feedback, applies learning and changes approach when evidence requires it. | Builds learning loops for others and adapts direction early in response to new information. |
+
+## Equity
+
+### Values differences
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Dismisses, interrupts, or excludes different perspectives, or becomes defensive when others challenge their view. | Is respectful of others’ views, even when different from their own. | Actively seeks different perspectives, changes their view when evidence supports it, and helps others contribute safely and confidently. |
+| Momentum | Consults the same voices, treats inclusion as a formality, or gathers input without allowing it to influence the decision. | Invites different perspectives to broaden thinking and decisions. | Designs inclusive decision processes, addresses bias or unequal participation, and shows how diverse input improved the outcome. |
+| Enterprise | Diversity is treated symbolically rather than embedded in governance, talent, strategy, or decision processes. | Builds environments where diverse perspectives are actively used to improve decision quality and reduce bias at scale. | Embeds diverse input into governance, data, workforce, and strategic decisions, and measures whether decision quality and equity outcomes improve. |
+
+### Makes ethical decisions
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Ignores standards, hides concerns, takes convenient shortcuts, or proceeds despite uncertainty without checking what is right. | Acts with integrity and checks decisions align with our standards. | Identifies conflicts early, seeks appropriate advice, documents the rationale, and speaks up when a decision may not meet the organisation’s standards. |
+| Momentum | Applies values inconsistently in grey areas or allows delivery pressure, relationships, or personal preference to override sound judgement. | Navigates grey areas using judgement, facts, and values. | Creates a transparent decision process, balances evidence and values, and helps others make principled decisions without avoiding accountability. |
+| Enterprise | Ethical boundaries and escalation paths are unclear, or exceptions are normalised when pressure increases. | Sets ethical boundaries for the business and supports leaders to make principled decisions under pressure and uncertainty. | Embeds ethical governance, tests the broader consequences of decisions, learns from near misses, and maintains integrity when the commercial pressure is highest. |
+
+### Shows empathy
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Interrupts, judges, overlooks personal impact, or responds in a way that makes others less willing to speak openly. | Shows empathy, listens without judgement, and includes others in daily interactions. | Listens for what is said and unsaid, adapts support to the person, and checks whether the interaction led to a respectful and useful outcome. |
+| Momentum | Uses a one size fits all approach, or shows empathy without maintaining clear standards, accountability, and fair treatment. | Adapts behaviour to meet people where they are, ensuring diverse perspectives shape team decisions. | Balances care, clarity, and accountability, and ensures team decisions reflect the genuine needs and perspectives of affected people. |
+| Enterprise | Major decisions are detached from human impact or produce uneven consequences that are identified only after implementation. | Balances empathy with accountability, ensuring decisions are fair, humane, and sustainable across teams or communities. | Uses impact assessment and stakeholder feedback to design humane, sustainable decisions, and acts early where outcomes are unfair or disproportionately harmful. |
+
+
+# DRIVE OPERATIONS
+
+## People
+
+### Leads the employee lifecycle
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Has limited awareness of lifecycle requirements, misses process steps, or provides poor handovers during onboarding, development, or transition activities. | Understands the stages of the lifecycle and supports basic processes where directed. | Prepares well, completes lifecycle tasks accurately and on time, and helps people understand what to expect during key transitions. |
+| Momentum | Hiring, onboarding, development, or exit practices are inconsistent and create avoidable capability, experience, or compliance gaps. | Manages hiring, onboarding, development, and exits to maintain team stability and capability. | Uses feedback and people data to improve lifecycle quality, addresses recurring experience or capability gaps, and plans transitions before they become disruptive. |
+| Enterprise | Workforce planning is reactive and people practices are fragmented across the business. Future capability needs are not translated into action. | Designs and improves people practices and workforce planning to support sustainable capability across the business. | Anticipates future skills and workforce shifts, integrates talent and workforce planning, and measures whether people practices improve capability, mobility, and sustainability. |
+
+### Builds capability
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Holds knowledge, gives vague or unhelpful feedback, or takes over tasks rather than supporting others to learn. | Shares knowledge, gives useful feedback, and supports others to build confidence in core skills. | Explains and demonstrates skills clearly, creates safe practice, checks understanding, and helps colleagues become more independent. |
+| Momentum | Provides limited coaching, unclear feedback, or relies on personally fixing problems rather than building team capability. | Coaches others, gives clear feedback, and builds capability within the team. | Tailors coaching to individual needs, creates deliberate practice, tracks development over time, and increases independent performance across the team. |
+| Enterprise | Capability planning is disconnected from strategy, succession depth is weak, and key roles depend on individual incumbents. | Builds long term capability through succession planning, role design, and development pathways at scale. | Links capability investment to strategic priorities, builds measurable readiness and mobility, and creates succession depth for critical future roles. |
+
+### Drives engagement
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Is consistently disengaged, cynical, or passive and places full responsibility for motivation on other people. | Contributes positively to the team and takes responsibility for own engagement. | Raises concerns constructively, supports team participation, and contributes energy and ownership even when conditions are not ideal. |
+| Momentum | Avoids signs of disengagement or relies mainly on messages, activities, or incentives without addressing the actual causes. | Builds trust, addresses disengagement, and creates a team environment where people want to perform. | Diagnoses engagement drivers, acts on what can be changed, follows up transparently, and strengthens both belonging and accountability. |
+| Enterprise | Engagement is treated as an occasional survey or communication activity rather than an outcome of leadership, workload, systems, and decisions. | Shapes leadership practices, expectations, and systems that sustain engagement across teams or functions. | Aligns leadership routines, workload, recognition, employee voice, and systems, then uses evidence to sustain engagement through changing business conditions. |
+
+## Systems & Execution
+
+### Runs daily operations
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Processes are followed inconsistently, operational tasks are late or incomplete, or routine dependencies are overlooked. | Follows established processes and completes operational tasks as required. | Plans ahead, identifies routine dependencies, closes issues promptly, and suggests practical improvements to everyday work. |
+| Momentum | Work is managed reactively, ownership is unclear, and recurring operational failures or bottlenecks are not addressed. | Plans and coordinates work so the team delivers reliably and issues are addressed quickly. | Creates clear operating rhythms, contingency plans, and continuous improvement routines that increase reliability and reduce avoidable escalation. |
+| Enterprise | The operating model is fragmented and execution depends on local heroics. Similar teams or locations use incompatible rhythms and structures. | Designs operating rhythms and structures that enable consistent execution across teams or locations. | Simplifies and strengthens the operating model, standardises where it adds value, preserves necessary local flexibility, and measures execution reliability. |
+
+### Uses systems and data
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Uses required systems incorrectly or inconsistently, keeps unreliable information, or ignores available data when making routine decisions. | Uses required systems correctly, keeps information accurate, and uses basic data to support decisions. | Maintains high data quality, uses available information to identify issues, and helps others use systems safely and correctly. |
+| Momentum | Produces reports without useful interpretation, relies mainly on intuition, or changes work without tracking whether the change helped. | Uses data and systems to track performance, test decisions, and improve how work is done. | Combines data with operational context, tests likely causes, uses digital tools appropriately, and tracks whether changes improve performance. |
+| Enterprise | Data definitions, digital practices, and system adoption vary across functions. Decisions are unreliable and technology is added without clear value or adoption. | Builds data and digital capability, adopts useful technology, and creates system discipline so decisions and performance are informed, comparable, and scalable. | Establishes strong data governance and decision rhythms, improves adoption, and selectively scales technology that measurably improves judgement, customer outcomes, or productivity. |
+
+### Prioritises for impact
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Spends time on lower value activity, misses key deadlines, or does not raise conflicting priorities until delivery is already affected. | Manages time and tasks to meet priorities. | Clarifies what matters most, sequences work effectively, renegotiates early, and protects the outcomes with the greatest value or risk. |
+| Momentum | Spreads effort too thinly, changes priorities without clear trade offs, or keeps low value work active while critical outcomes slip. | Balances competing demands and reallocates effort to what matters most. | Uses impact, risk, and dependencies to allocate effort, stops or defers low value work, and communicates trade offs clearly. |
+| Enterprise | Strategic priorities proliferate, resources remain misaligned, and the organisation lacks the capacity to execute what has been committed. | Sets clear priorities and trade offs so resources are focused on the highest impact outcomes. | Links portfolio and resource decisions to strategy, revisits trade offs as conditions change, and actively stops work that no longer justifies its cost. |
+
+## Risk, Safety & Protection
+
+### Follows safety and compliance standards
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Takes shortcuts, is unaware of required standards, or does not report uncertainty, incidents, or non compliance promptly. | Follows safety and compliance requirements in daily work. | Models the standards, checks when unsure, raises concerns early, and helps others understand the safe and compliant way to work. |
+| Momentum | Monitoring is inconsistent, compliance is treated as administration, or identified gaps are corrected temporarily without addressing the cause. | Monitors compliance and addresses issues to keep the team operating safely. | Builds routine checks, investigates recurring gaps, corrects root causes, and verifies that actions have genuinely improved safety and compliance. |
+| Enterprise | Policies, controls, and accountability are unclear or disconnected from how work is actually performed across the business. | Sets clear expectations and systems that embed safety and compliance across the business. | Integrates compliance into operating design, governance, assurance, and leadership accountability, and tests whether controls are effective in practice. |
+
+### Identifies and addresses risk early
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Misses, withholds, or delays raising a risk, or reports it without enough information for others to act. | Raises risks or concerns when they are identified. | Notices early warning signs, records and escalates the risk with useful context, and suggests sensible immediate controls. |
+| Momentum | Responds mainly after incidents, uses superficial assessments, or implements actions without checking whether risk has reduced. | Assesses risk and takes action to reduce impact or prevent recurrence. | Assesses likelihood and consequence, implements proportionate controls, assigns ownership, and reviews whether recurrence has been prevented. |
+| Enterprise | Risk insight is fragmented, emerging risks lack ownership, and controls are added without a coherent view of enterprise exposure. | Builds risk awareness and controls so emerging risks are identified and managed at scale. | Creates horizon scanning, clear ownership, aggregated risk insight, and resilience testing so the business can act before emerging threats become material. |
+
+### Prevents harm to people and customers
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Acts unsafely, stays silent when others are at risk, or assumes someone else will intervene. | Acts safely and supports others to do the same. | Intervenes respectfully, secures the immediate situation, reports what occurred, and follows through until the risk is controlled. |
+| Momentum | Delays intervention because of delivery pressure, applies protection standards inconsistently, or addresses the incident without removing the cause. | Intervenes when safety or customer protection is at risk. | Empowers immediate action, coordinates an effective response, removes root causes, and turns incidents or near misses into team learning. |
+| Enterprise | Safeguards are designed mainly after harm occurs and vary across the business. Decisions rely on individual judgement without sufficient protection. | Designs safeguards and decision frameworks that prevent harm across teams, locations, or markets. | Builds layered controls, stress tests safeguards, monitors leading indicators, and adapts the operating model before changing conditions create harm. |
+
+## Customer Trust
+
+### Understands customer needs
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Assumes what the customer needs, does not listen carefully, or applies a process without understanding the customer’s situation. | Listens to customers and follows customer focused practices. | Asks useful questions, clarifies the need, explains realistic options, and captures feedback that could improve the experience. |
+| Momentum | Treats customer feedback as isolated anecdotes or makes decisions mainly from an internal operational perspective. | Uses customer insight to guide decisions and improve how the team operates. | Synthesises customer feedback and performance evidence, identifies patterns or segments, changes team practices, and checks whether the experience improves. |
+| Enterprise | Customer insight is ad hoc, delayed, or absent from strategy, investment, and governance decisions. | Builds customer insight into strategy, systems, and decision making across the business. | Creates reliable customer insight loops, embeds them into planning and investment, and tracks whether strategic choices strengthen trust and customer outcomes. |
+
+### Delivers fair, consistent experiences
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Applies processes inconsistently, takes shortcuts, or treats similar customers differently without a sound reason. | Follows processes so customers are treated consistently. | Identifies ambiguity, explains decisions clearly, escalates potentially unfair processes, and helps maintain consistent treatment. |
+| Momentum | Accepts avoidable variation, bias, or inconsistent judgement across the team and does not calibrate expectations or decisions. | Addresses inconsistencies and reinforces fair treatment across the team. | Uses case reviews, feedback, and calibration to identify recurring inconsistency and fixes the team practices or process causing it. |
+| Enterprise | Standards vary across channels or locations and exceptions are unmanaged, producing inconsistent or unfair customer outcomes. | Designs standards and operating models that deliver consistent customer experiences at scale. | Builds principles, controls, and quality measures that maintain fairness and consistency while preserving justified professional judgement. |
+
+### Builds lasting trust
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Overpromises, avoids difficult information, fails to follow up, or does not take ownership when the customer experience goes wrong. | Acts honestly and follows through on commitments to customers. | Sets realistic expectations, communicates changes early, owns service recovery, and leaves the customer clear about what will happen next. |
+| Momentum | Optimises short term operational or commercial results at the expense of fairness, transparency, or long term customer confidence. | Balances customer needs with business outcomes to maintain trust. | Makes transparent trade offs, coaches the team to protect trust, and uses complaints or recovery situations to strengthen future practice. |
+| Enterprise | Customer reputation is considered too late, or incentives and decisions encourage short term outcomes that weaken trust. | Makes trade offs that protect customer trust and the reputation of the business over time. | Embeds trust into strategy, risk, incentives, and measures, and acts early when decisions or emerging issues could damage long term confidence. |
+
+## Performance
+
+### Sets clear performance goals
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Does not understand or work consistently towards agreed expectations, and progress or delivery risks are not raised early. | Works to agreed goals and understands performance expectations. | Clarifies measures, milestones, and dependencies, tracks progress, and raises risks early enough for action to be taken. |
+| Momentum | Team goals are vague, activity based, misaligned, or not reviewed often enough to guide performance. | Sets clear goals for the team and tracks progress against them. | Sets outcome based goals, aligns ownership and resources, reviews progress frequently, and resets the plan when evidence changes. |
+| Enterprise | Measures are excessive, conflicting, or disconnected from strategy, creating competing incentives and unclear organisational focus. | Establishes performance priorities and measures that align strategy, effort, and outcomes across the business. | Creates a coherent performance architecture, links leading and lagging measures, and removes metrics or incentives that drive the wrong behaviour. |
+
+### Uses insight and judgement
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Ignores available operational, customer, or financial information, repeats avoidable mistakes, or makes decisions without checking likely impact. | Uses basic operational, customer, and financial information to make sound decisions and adjust own work. | Looks for patterns, checks assumptions, explains the decision rationale, tests a practical change, and applies the learning to future work. |
+| Momentum | Reports results without diagnosing causes, relies on a single measure, or makes decisions without considering customer, people, risk, and financial consequences. | Reviews operational, customer, people, risk, and financial results to identify patterns, make decisions, and improve team performance. | Combines data and stakeholder input, tests likely causes, makes transparent trade offs, and tracks whether decisions improve the intended outcomes. |
+| Enterprise | Strategic decisions rely mainly on opinion or siloed data. Commercial, market, customer, risk, or financial implications are not integrated. | Uses commercial, market, customer, risk, and financial insight to guide strategy, investment, and performance at scale. | Builds enterprise insight loops, separates signal from noise, tests scenarios and assumptions, and reallocates investment or effort based on evidence and post decision learning. |
+
+### Delivers sustainable outcomes
+
+| Level | Needs Work | Great | Smashing It |
+|---|---|---|---|
+| Foundations | Meets targets through shortcuts, excessive effort, poor resource use, or reduced quality, or misses results because work is not planned sustainably. | Meets targets while following required standards and using resources responsibly. | Plans workload, protects standards, uses resources responsibly, flags trade offs early, and finds repeatable ways to deliver rather than relying on one off effort. |
+| Momentum | Sacrifices quality, risk, customer outcomes, or team capability for short term delivery, or avoids necessary trade offs and allows all outcomes to deteriorate. | Balances delivery pressures with quality, risk, customer outcomes, and team capability. | Makes explicit trade offs, protects customer trust and team capacity, builds repeatable delivery, and monitors second order effects rather than only immediate results. |
+| Enterprise | Short term targets dominate decisions while hidden costs, customer harm, risk, capability erosion, or weak returns accumulate. | Makes deliberate trade offs across growth, financial performance, customer trust, risk, quality, and capability to deliver sustainable long term outcomes. | Optimises the portfolio across growth, financial value, customer trust, risk, quality, and capability, uses leading indicators, and corrects course before short term pressure undermines long term performance. |
