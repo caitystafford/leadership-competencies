@@ -6,94 +6,94 @@
       "name": "Responsibility",
       "behaviours": [
         {
-          "id": "shows-up-consistently",
-          "name": "Shows up consistently",
-          "definition": "Delivers reliably and models commitment, especially when it counts.",
+          "id": "earns-trust",
+          "name": "Earns trust",
+          "definition": "Builds confidence through honesty, integrity and consistency between words and actions.",
           "levels": {
             "foundations": {
-              "expectation": "Does what’s asked, shows dependability, and follows through.",
+              "expectation": "Gives accurate information, acknowledges mistakes, handles sensitive information appropriately and follows the standards expected of others.",
               "ratings": {
-                "needs-work": "Commitments are missed or completed inconsistently. Requires reminders, communicates late, or becomes unreliable when pressure increases.",
-                "great": "Does what’s asked, shows dependability, and follows through. Communicates early when a commitment is at risk.",
-                "smashing-it": "Anticipates commitments, plans ahead, and follows through without prompting. Helps others deliver reliably and strengthens confidence in the team."
+                "needs-work": "Updates are incomplete, overstated, or not corrected once they turn out to be wrong. Mistakes are explained away, private information is repeated, or personal standards differ from what they ask of others.",
+                "great": "Gives accurate information, acknowledges mistakes, handles sensitive information appropriately and follows the standards expected of others.",
+                "smashing-it": "Separates what is confirmed from what is still being checked, corrects an error before anyone has to ask, and holds a confidentiality boundary without inventing a reason. Others rely on their account of a situation."
               }
             },
             "momentum": {
-              "expectation": "Leads by example and keeps standards high, even under pressure.",
+              "expectation": "Gives the team honest information, explains decisions and changes, acknowledges mistakes and models the behaviour expected of others.",
               "ratings": {
-                "needs-work": "Personal standards fluctuate and the team sees inconsistent follow through. Pressure leads to lowered expectations, avoidable delays, or unhelpful shortcuts.",
-                "great": "Leads by example and keeps standards high, even under pressure. Reinforces reliable delivery across the team.",
-                "smashing-it": "Creates practical routines that improve team reliability, addresses slippage early, and maintains high standards without creating unnecessary pressure or dependency."
+                "needs-work": "Passes on decisions without explanation, softens or delays difficult news, or defends a mistake rather than naming it. The team hears a different standard from the one they see.",
+                "great": "Gives the team honest information, explains decisions and changes, acknowledges mistakes and models the behaviour expected of others.",
+                "smashing-it": "Explains the reasoning behind a decision even when it is unpopular, says plainly what is not yet settled, and treats their own error as something to be seen and corrected. The team tests information with them rather than around them."
               }
             },
             "enterprise": {
-              "expectation": "Designs systems, rhythms, and expectations that create consistent performance and reliability at scale.",
+              "expectation": "Provides accurate information about performance and significant decisions, acts consistently with stated priorities and addresses leadership behaviour that undermines trust.",
               "ratings": {
-                "needs-work": "Reliability depends on individual effort or heroics. Expectations and operating rhythms vary across teams, creating inconsistent outcomes.",
-                "great": "Designs systems, rhythms, and expectations that create consistent performance and reliability at scale.",
-                "smashing-it": "Uses data and feedback to strengthen reliability across the business, removes recurring points of failure, and reduces variation without creating excessive bureaucracy."
+                "needs-work": "Performance and decision information is filtered, late or optimistic. Stated priorities and funded priorities differ, and leadership behaviour that damages trust is tolerated.",
+                "great": "Provides accurate information about performance and significant decisions, acts consistently with stated priorities and addresses leadership behaviour that undermines trust.",
+                "smashing-it": "Gives an unvarnished account of performance including what has gone wrong, keeps stated and actual priorities aligned when holding them is costly, and addresses trust-damaging leadership behaviour early and directly."
               }
             }
           }
         },
         {
-          "id": "owns-the-outcome",
-          "name": "Owns the outcome",
-          "definition": "Takes responsibility for results and stays accountable through consequences.",
+          "id": "addresses-difficult-issues",
+          "name": "Addresses difficult issues",
+          "definition": "Raises concerns, confronts problems and takes necessary action, even when conversations or decisions are uncomfortable.",
           "levels": {
             "foundations": {
-              "expectation": "Steps up to own results and fix what isn’t working.",
+              "expectation": "Raises concerns respectfully, explains the issue, acts within their authority and seeks support when needed.",
               "ratings": {
-                "needs-work": "Waits for others to solve problems, focuses on blame, or stops once their immediate task is complete. Issues remain unresolved.",
-                "great": "Steps up to own results and fix what isn’t working. Follows the issue through to a clear outcome.",
-                "smashing-it": "Takes ownership early, identifies the underlying cause, fixes the issue, and shares the learning so the same problem is less likely to recur."
+                "needs-work": "Stays quiet about problems, raises them indirectly or with the wrong person, or waits until the issue has grown. Concerns are framed as complaints about a person rather than a specific issue.",
+                "great": "Raises concerns respectfully, explains the issue, acts within their authority and seeks support when needed.",
+                "smashing-it": "Raises the issue early and specifically, separates what they observed from what they assumed, invites the other person's view, and knows which decisions to take to a leader rather than make themselves."
               }
             },
             "momentum": {
-              "expectation": "Holds self and others to commitments and sees things through.",
+              "expectation": "Addresses performance and behaviour concerns promptly, gives specific and constructive feedback, makes necessary decisions and supports people who raise concerns.",
               "ratings": {
-                "needs-work": "Accountability is inconsistent. Avoids difficult follow up, accepts incomplete delivery, or does not address missed commitments within the team.",
-                "great": "Holds self and others to commitments and sees things through. Makes ownership and follow up clear.",
-                "smashing-it": "Creates strong accountability without blame, removes barriers to delivery, and uses missed commitments to improve expectations, capability, and team systems."
+                "needs-work": "Performance and behaviour concerns are delayed, generalised, or handled only once they escalate. Feedback is too vague to act on, decisions are deferred, or people who raise concerns are left exposed.",
+                "great": "Addresses performance and behaviour concerns promptly, gives specific and constructive feedback, makes necessary decisions and supports people who raise concerns.",
+                "smashing-it": "Deals with the concern while it is still small, gives feedback precise enough to act on, makes the decision the situation needs, and makes it safe for people to bring them bad news."
               }
             },
             "enterprise": {
-              "expectation": "Owns complex, long term outcomes and makes deliberate trade offs that protect customer trust and business integrity.",
+              "expectation": "Addresses difficult issues across teams and with peers or senior stakeholders, challenges decisions when necessary and ensures significant concerns receive a clear response.",
               "ratings": {
-                "needs-work": "Focuses on local or short term results while avoiding difficult enterprise trade offs. Consequences for customers, risk, or integrity are addressed too late.",
-                "great": "Owns complex, long term outcomes and makes deliberate trade offs that protect customer trust and business integrity.",
-                "smashing-it": "Anticipates second order consequences, communicates trade offs transparently, and embeds learning into strategy, governance, and future decisions."
+                "needs-work": "Issues that cross teams or involve a senior peer are avoided or routed around. Poor decisions go unchallenged, and significant concerns raised from the business get no clear answer.",
+                "great": "Addresses difficult issues across teams and with peers or senior stakeholders, challenges decisions when necessary and ensures significant concerns receive a clear response.",
+                "smashing-it": "Takes on the issue that crosses boundaries or involves a senior peer, challenges a decision on the evidence rather than the politics, and makes sure every significant concern gets a response people can see."
               }
             }
           }
         },
         {
-          "id": "sets-shared-expectations",
-          "name": "Sets shared expectations",
-          "definition": "Connects purpose, priorities, roles, and standards so people understand what good looks like and how to deliver it.",
+          "id": "ensures-accountability",
+          "name": "Ensures accountability",
+          "definition": "Establishes clear expectations, takes ownership of results and follows through when commitments are not met.",
           "levels": {
             "foundations": {
-              "expectation": "Asks thoughtful questions and checks for shared understanding before moving forward.",
+              "expectation": "Clarifies expectations, owns their work, checks progress and takes corrective action when delivery falls short.",
               "ratings": {
-                "needs-work": "Assumes others understand, leaves roles or outcomes unclear, or begins work without confirming expectations. Rework and confusion result.",
-                "great": "Asks thoughtful questions and checks for shared understanding before moving forward.",
-                "smashing-it": "Clarifies outcomes, roles, timeframes, and constraints, then checks understanding and adjusts the approach before confusion becomes a problem."
+                "needs-work": "Starts work without confirming what is expected, assumes a handover has been accepted, or stops at reporting a problem. Slippage is noticed only once the deadline has passed.",
+                "great": "Clarifies expectations, owns their work, checks progress and takes corrective action when delivery falls short.",
+                "smashing-it": "Confirms what complete looks like and who owns each part before starting, flags a barrier while there is still time to act on it, and follows a correction through to a checked outcome."
               }
             },
             "momentum": {
-              "expectation": "Defines what success looks like and aligns the team around clear priorities and standards.",
+              "expectation": "Sets clear outcomes, responsibilities and standards, provides appropriate authority and support, reviews progress and addresses gaps in delivery.",
               "ratings": {
-                "needs-work": "Priorities or standards are vague, conflicting, or frequently changed without explanation. Team members interpret success differently.",
-                "great": "Defines what success looks like and aligns the team around clear priorities and standards.",
-                "smashing-it": "Translates priorities into practical measures, ownership, and operating rhythms, and resolves ambiguity or competing expectations early."
+                "needs-work": "Outcomes and ownership are left loose, people are held to standards they were never given, or progress is reviewed too late to change anything. Missed delivery passes without correction.",
+                "great": "Sets clear outcomes, responsibilities and standards, provides appropriate authority and support, reviews progress and addresses gaps in delivery.",
+                "smashing-it": "Agrees outcomes, ownership and standards up front and gives people the authority to deliver them, builds a review rhythm that surfaces problems early, and corrects a delivery gap without turning it into blame."
               }
             },
             "enterprise": {
-              "expectation": "Connects purpose and strategy to clear, non negotiable expectations, systems, and leadership behaviour so people understand the direction and act consistently.",
+              "expectation": "Establishes clear accountability and decision authority across their area, resolves gaps between teams and holds leaders accountable for outcomes and corrective action.",
               "ratings": {
-                "needs-work": "Purpose and strategy are not translated into consistent expectations. Standards vary across functions, messages conflict, or people cannot see how their work connects to direction.",
-                "great": "Connects purpose and strategy to clear, non negotiable expectations, systems, and leadership behaviour so people understand the direction and act consistently.",
-                "smashing-it": "Builds a compelling line of sight from purpose and strategy to measures, governance, systems, and leadership practice, tests understanding, and corrects drift early."
+                "needs-work": "Accountability and decision rights are ambiguous, work falls between teams, and leaders are not held to the outcomes or the corrective action they agreed.",
+                "great": "Establishes clear accountability and decision authority across their area, resolves gaps between teams and holds leaders accountable for outcomes and corrective action.",
+                "smashing-it": "Makes accountability and decision authority explicit enough that nothing sits in the gap between teams, closes handover points that repeatedly fail, and holds leaders to both the outcome and the correction."
               }
             }
           }
@@ -310,9 +310,9 @@
             "foundations": {
               "expectation": "Seeks to understand by asking questions and testing ideas.",
               "ratings": {
-                "needs-work": "Assumes, relies on the first answer, or asks questions without using the information.",
-                "great": "Seeks relevant perspectives and tests assumptions before acting.",
-                "smashing-it": "Identifies emerging patterns, connects insight across areas and creates better questions for others."
+                "needs-work": "Makes assumptions, asks only surface questions, or accepts the first answer without testing whether it is accurate or useful.",
+                "great": "Seeks to understand by asking questions and testing ideas.",
+                "smashing-it": "Asks thoughtful questions, runs small tests, and connects learning to customer, team, or business impact."
               }
             },
             "momentum": {
@@ -341,9 +341,9 @@
             "foundations": {
               "expectation": "Brings fresh thinking and voices ideas that could make things better.",
               "ratings": {
-                "needs-work": "Accepts inefficient practice, complains without proposing a solution, or avoids raising concerns.",
-                "great": "Constructively questions processes and suggests practical improvements.",
-                "smashing-it": "Leads thoughtful challenge to entrenched practices and helps others test better ways of working."
+                "needs-work": "Accepts inefficient practices without question, or raises complaints without offering a constructive idea or evidence.",
+                "great": "Brings fresh thinking and voices ideas that could make things better.",
+                "smashing-it": "Offers evidence based improvements, tests ideas safely, and uses feedback to refine the approach rather than defending the first solution."
               }
             },
             "momentum": {
@@ -372,9 +372,9 @@
             "foundations": {
               "expectation": "Seeks feedback, recognises strengths and development gaps, and applies learning to improve.",
               "ratings": {
-                "needs-work": "Repeats ineffective approaches, resists feedback or treats setbacks as someone else's issue.",
-                "great": "Seeks feedback, applies learning and changes approach when evidence requires it.",
-                "smashing-it": "Builds learning loops for others and adapts direction early in response to new information."
+                "needs-work": "Avoids or dismisses feedback, has limited awareness of their impact, or repeats the same approach despite evidence it is not working.",
+                "great": "Seeks feedback, recognises strengths and development gaps, and applies learning to improve. Reflects on outcomes and adjusts behaviour.",
+                "smashing-it": "Actively seeks varied feedback, tests new approaches, tracks their impact, and shares learning that helps peers adapt."
               }
             },
             "momentum": {
@@ -699,8 +699,8 @@
       "name": "Risk, Safety & Protection",
       "behaviours": [
         {
-          "id": "follows-safety-and-compliance-standards",
-          "name": "Follows safety and compliance standards",
+          "id": "follows-standards",
+          "name": "Follows standards",
           "definition": "Ensures required rules, policies, and practices are followed consistently.",
           "levels": {
             "foundations": {
@@ -761,8 +761,8 @@
           }
         },
         {
-          "id": "prevents-harm-to-people-and-customers",
-          "name": "Prevents harm to people and customers",
+          "id": "prevents-harm",
+          "name": "Prevents harm",
           "definition": "Takes action to protect people, customers, and the business from harm.",
           "levels": {
             "foundations": {
